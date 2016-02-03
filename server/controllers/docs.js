@@ -167,6 +167,13 @@
       });
     },
 
+    getAllPublicDocs: function(req, res) {
+      console.log('Called');
+      Document.find({'accessLevel': 3}, function(err, docs) {
+        res.status(200).send(docs);
+      })
+    },
+
     getDocumenstByCategory: function(req, res) {
       // find the categoryId
       Category.find({

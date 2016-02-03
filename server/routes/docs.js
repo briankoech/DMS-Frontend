@@ -6,6 +6,7 @@
     var api = express.Router();
 
     //api.use(Users.getToken);
+    api.get('/docs', Document.getAllPublicDocs);
     api.post('/document', Document.create);
     api.get('/document', Document.getAllDocuments);
     api.get('/role/document', Document.getAllDocumentsByRole);

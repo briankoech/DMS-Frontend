@@ -1,6 +1,7 @@
 (function() {
   'use strict';
   var Users = require('../controllers/users');
+  var Documents = require('../controllers/docs');
 
   module.exports = function(app, express) {
     var api = express.Router();

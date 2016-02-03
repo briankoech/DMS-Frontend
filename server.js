@@ -3,10 +3,18 @@
   var express = require('express'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
+    path = require('path'),
     mongoose = require('mongoose'),
     config = require('./server/config/config'),
     routes = require('./server/routes'),
     app = express();
+
+  var httpProxy = require('http-proxy');
+  var proxy = httpProxy.createProxyServer();
+
+  var isProduction = process.env.NODE_ENV === 'production';
+  var port = isProduction ? process.env.PORT : 3000;
+  var publicPath = path.resolve(__dirname, 'public');
 
   // establish connection to mongoose
   mongoose.connect(config.database, function(err) {
@@ -22,13 +30,31 @@
   }));
   app.use(bodyParser.json());
   app.use(morgan('dev'));
+  app.use(express.static(publicPath));
 
   // all our routes goes here
   routes(app, express);
 
-  app.listen(config.port, function(err) {
+  if(!isProduction) {
+    var bundle = require('./bundle.js');
+    bundle();
+
+    // Any requests to localhost:3000/build is proxied
+    // to webpack-dev-server
+    app.all('/public/*', function(req, res) {
+      proxy.web(req, res, {
+        target: 'http://localhost:8080'
+      });
+    })
+  }
+
+  proxy.on('error', function(e) {
+      console.log('Could not connect to proxy, please try again....');
+  });
+
+  app.listen(port, function(err) {
     if (err) throw err;
-    console.log('listening on port:' + config.port);
+    console.log('listening on port:' + port);
   });
 
   module.exports = app;
