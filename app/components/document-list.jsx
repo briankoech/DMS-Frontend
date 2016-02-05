@@ -1,34 +1,76 @@
 import React from 'react';
 import Document from './document.jsx';
-import Actions from '../actions';
+import Progress from './landing-page/progress.jsx'
 import connectToStores from 'alt-utils/lib/connectToStores';
 import DocumentStore from '../stores/DocumentStore';
+import Actions from '../actions';
 
+// grid start
+import GridList from 'material-ui/lib/grid-list/grid-list';
+import GridTile from 'material-ui/lib/grid-list/grid-tile';
+import StarBorder from 'material-ui/lib/svg-icons/toggle/star-border';
+import IconButton from 'material-ui/lib/icon-button';
+
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  gridList: {
+    width: 500,
+    height: 400,
+    overflowY: 'auto',
+    marginBottom: 24,
+  },
+};
+// @connectToStores(DocumentStore);
 class DocumentList extends React.Component {
-
-  static getStores() {
-    return [DocumentStore]
+  constructor() {
+    super();
   }
 
-  static getPropsFromStores() {
+  static getStores(props) {
+    return [DocumentStore];
+  }
+
+  static getPropsFromStores(props) {
     // called when stores experience change in state
+    console.log('change occured', this.props);
     return DocumentStore.getState();
   }
 
-  componentWillMount() {
-    Actions.getPublicDocs();
+  componentDidMount() {
+    Actions.fetchDocuments();
+    DocumentStore;
   }
 
   render() {
-    console.log(this.props.documents);
-    var documentNodes = this.state.documents.map((document) => {
+    var documentNodes;
+    if(!this.props.documents.length) {
       return (
-        <div key={document.id}><Document document={document} /></div>
+        <Progress />
       );
-    });
+    }
+    if(this.props.documents) {
+      documentNodes = this.props.documents.map((document) => {
+        return (
+          <GridTile key={document._id}>
+            <Document document={document} />
+          </GridTile>
+        );
+      });
+    } else {
+      documentNodes = function()  { return (<div>THis is okey too</div>); };
+      console.log('this called', documentNodes);
+    }
 
     return (
-        <div>{documentNodes}</div>
+      <div style={styles.root}>
+        <GridList cellHeight={200} style={styles.gridList}>
+          <div>{documentNodes}</div>
+        </GridList>
+      </div>
     );
   }
 }

@@ -6,14 +6,12 @@
     path = require('path'),
     mongoose = require('mongoose'),
     config = require('./server/config/config'),
-    routes = require('./server/routes'),
     app = express();
 
   var httpProxy = require('http-proxy');
   var proxy = httpProxy.createProxyServer();
 
   var isProduction = process.env.NODE_ENV === 'production';
-  var port = isProduction ? process.env.PORT : 3000;
   var publicPath = path.resolve(__dirname, 'public');
 
   // establish connection to mongoose
@@ -32,8 +30,6 @@
   app.use(morgan('dev'));
   app.use(express.static(publicPath));
 
-  // all our routes goes here
-  routes(app, express);
 
   if(!isProduction) {
     var bundle = require('./bundle.js');
@@ -51,6 +47,12 @@
   proxy.on('error', function(e) {
       console.log('Could not connect to proxy, please try again....');
   });
+
+  let port = process.env.PORT ||  3000;
+
+  var routes = require('./server/routes');
+  // all our routes goes here
+  routes(app, express);
 
   app.listen(port, function(err) {
     if (err) throw err;
