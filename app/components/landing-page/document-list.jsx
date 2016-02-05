@@ -1,9 +1,9 @@
 import React from 'react';
 import Document from './document.jsx';
-import Progress from './landing-page/progress.jsx'
+import Progress from './progress.jsx'
 import connectToStores from 'alt-utils/lib/connectToStores';
-import DocumentStore from '../stores/DocumentStore';
-import Actions from '../actions';
+import DocumentStore from '../../stores/DocumentStore';
+import Actions from '../../actions';
 
 // grid start
 import GridList from 'material-ui/lib/grid-list/grid-list';

@@ -1,13 +1,13 @@
 import React from 'react';
+import SideBar from '../side-bar/side-card.jsx';
 import AppBar from 'material-ui/lib/app-bar';
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import IconButton from 'material-ui/lib/icon-button';
 import FontIcon from 'material-ui/lib/font-icon';
 import FlatButton from 'material-ui/lib/flat-button';
-import SideCard from './side-card.jsx';
-import Login from './login-page/login.jsx';
-import Signup from './signup-page/signup.jsx';
+import Login from '../login-page/login.jsx';
+import Signup from '../signup-page/signup.jsx';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
@@ -61,7 +61,7 @@ export default class App extends React.Component {
         >
 
 
-          <SideCard />
+          <SideBar />
           <MenuItem onTouchTap={this.handleClose}> <i className="fa fa-home"></i> Home</MenuItem>
         </LeftNav>
       </div>
