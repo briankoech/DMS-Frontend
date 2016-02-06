@@ -29,6 +29,7 @@
     "body-parser": "^1.14.1",
     "eslint": "^1.10.3",
     "express": "^4.13.3",
+    "flexboxgrid": "^6.3.0",
     "history": "^1.17.0",
     "jasmine": "^2.4.1",
     "jasmine-node": "^1.14.5",

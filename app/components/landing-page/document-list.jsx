@@ -18,8 +18,8 @@ const styles = {
     justifyContent: 'space-around',
   },
   gridList: {
-    width: 500,
-    height: 400,
+    width: '100%',
+    height: 900,
     overflowY: 'auto',
     marginBottom: 24,
   },
@@ -55,9 +55,7 @@ class DocumentList extends React.Component {
     if(this.props.documents) {
       documentNodes = this.props.documents.map((document) => {
         return (
-          <GridTile key={document._id}>
-            <Document document={document} />
-          </GridTile>
+            <Document key={document._id} document={document} />
         );
       });
     } else {

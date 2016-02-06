@@ -59,8 +59,6 @@ export default class App extends React.Component {
           open={this.state.open}
           onRequestChange={open => this.setState({open})}
         >
-
-
           <SideBar />
           <MenuItem onTouchTap={this.handleClose}> <i className="fa fa-home"></i> Home</MenuItem>
         </LeftNav>
