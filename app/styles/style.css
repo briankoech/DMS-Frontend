@@ -1,3 +1,43 @@
 body {
   margin: 0;
 }
+
+.container {
+  margin: 0 auto;
+}
+
+.box {
+  margin-top: 10px;
+}
+
+.loginDialog {
+  margin: 0 auto;
+}
+
+.loginDialog h3 {
+  font-style: Trebuchet Ms;
+}
+
+.loginDialog p {
+  font-size: 1em;
+  font-family: sans-serif;
+}
+
+.trial {
+  border: 2px solid blue;
+}
+
+.loginbtn {
+  width: 100%;
+  margin: 5px 0 10px 0;
+}
+
+.signupbtn {
+  width: 100%;
+  margin-top: 10px;
+  margin: 5px 0 10px 0;
+}
+
+.forgotpswd {
+  color: #732983;
+}

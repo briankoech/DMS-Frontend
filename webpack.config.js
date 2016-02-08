@@ -30,7 +30,7 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       include: path.join(__dirname, 'app'),
-      loader: 'react-hot!babel',
+      loader: 'react-hot!babel-loader',
       exclude: [nodeModulesPath],
     }, {
       test: /\.css?$/,

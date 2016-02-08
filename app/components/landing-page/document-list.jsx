@@ -3,7 +3,7 @@ import Document from './document.jsx';
 import Progress from './progress.jsx'
 import connectToStores from 'alt-utils/lib/connectToStores';
 import DocumentStore from '../../stores/DocumentStore';
-import Actions from '../../actions';
+import Actions from '../../actions/documentActions';
 
 // grid start
 import GridList from 'material-ui/lib/grid-list/grid-list';
@@ -28,6 +28,9 @@ const styles = {
 class DocumentList extends React.Component {
   constructor() {
     super();
+    this.state = {user: '', documents: []};
+
+    this.onChange = this.onChange.bind(this);
   }
 
   static getStores(props) {
@@ -35,39 +38,47 @@ class DocumentList extends React.Component {
   }
 
   static getPropsFromStores(props) {
-    // called when stores experience change in state
-    console.log('change occured', this.props);
     return DocumentStore.getState();
   }
 
   componentDidMount() {
     Actions.fetchDocuments();
-    DocumentStore;
+    DocumentStore.listen(this.onChange);
+  }
+
+  onChange(state) {
+    this.setState({documents: state.documents})
   }
 
   render() {
     var documentNodes;
-    if(!this.props.documents.length) {
+    if(!this.state.documents.length) {
       return (
         <Progress />
       );
     }
-    if(this.props.documents) {
+    if(this.state.documents) {
       documentNodes = this.props.documents.map((document) => {
         return (
-            <Document key={document._id} document={document} />
+          <div key={document._id} className="col-xs-12
+                col-sm-8
+                col-md-6
+                col-lg-4">
+            <Document document={document} className="box" />
+          </div>
         );
       });
     } else {
       documentNodes = function()  { return (<div>THis is okey too</div>); };
-      console.log('this called', documentNodes);
     }
 
     return (
-      <div style={styles.root}>
-        <GridList cellHeight={200} style={styles.gridList}>
-          <div>{documentNodes}</div>
-        </GridList>
+      <div>
+          <div className="row titleHead">
+            <h1 className="col-md-12 dmshead">Document Management System</h1><br />
+            <p>Create, edit, save documents for free</p>
+          </div>
+          <div className="row">{documentNodes}</div>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import alt from '../alt';
-import Actions from '../actions';
+import Actions from '../actions/documentActions';
 
 class DocumentStore {
   constructor() {
@@ -14,7 +14,6 @@ class DocumentStore {
   }
 
   handleDocumentsFetch(docs) {
-    console.log(docs);
     this.setState({documents: docs});
   }
   handleFetchDocuments(docs) {

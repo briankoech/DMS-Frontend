@@ -169,7 +169,7 @@
 
     getAllPublicDocs: function(req, res) {
       console.log('Called');
-      Document.find({'accessLevel': 3}, function(err, docs) {
+      Document.find({}, function(err, docs) {
         res.status(200).send(docs);
       })
     },

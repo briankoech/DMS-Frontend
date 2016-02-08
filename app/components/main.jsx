@@ -10,7 +10,7 @@ export default class Main extends React.Component {
     return (
       <div>
         <Nav />
-        <div className="">
+        <div className="container">
           {this.props.children}
         </div>
       </div>

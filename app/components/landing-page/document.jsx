@@ -14,27 +14,16 @@ export default class Document extends React.Component {
   }
 
   render () {
-    console.log(this.props.document);
     return (
       <Card>
-        <CardHeader
-          title={this.props.document.title}
-          subtitle="Subtitle"
-          avatar="http://lorempixel.com/100/100/nature/"
-        />
         <CardMedia
-          overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
         >
           <img src="http://lorempixel.com/600/337/nature/" />
         </CardMedia>
-        <CardTitle title="Card title" subtitle="Card subtitle" />
+        <CardTitle title={this.props.document.title} subtitle="Brian Koech" />
         <CardText>
-          {this.props.document.content}
+          <h5>{this.props.document.createdAt}</h5>
         </CardText>
-        <CardActions>
-          <FlatButton label="Action1" />
-          <FlatButton label="Action2" />
-        </CardActions>
       </Card>
     );
   }

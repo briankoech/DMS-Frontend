@@ -10,6 +10,8 @@
 
     api.post('/users/login', Users.login); // close sign in
 
+    api.get('/docs', Documents.getAllPublicDocs);
+
     api.use(Users.getToken); // Middleware to allow one to continue
 
     api.get('/users/token', Users.getToken);
