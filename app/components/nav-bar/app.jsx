@@ -9,6 +9,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import Login from '../login-page/login.jsx';
 import Signup from '../signup-page/signup.jsx';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import CategoryList from '../side-bar/Category-list.jsx';
 injectTapEventPlugin();
 
 export default class App extends React.Component {
@@ -61,6 +62,7 @@ export default class App extends React.Component {
         >
           <SideBar />
           <MenuItem onTouchTap={this.handleClose}> <i className="fa fa-home"></i> Home</MenuItem>
+          <CategoryList />
         </LeftNav>
       </div>
     );
