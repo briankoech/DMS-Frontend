@@ -22,7 +22,7 @@ export default class App extends React.Component {
       openlogin: false,
       opensignup: false,
       opensnackbar: false,
-      user: true,
+      user: false,
     };
   }
 

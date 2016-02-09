@@ -4,6 +4,7 @@ import Progress from './progress.jsx'
 import connectToStores from 'alt-utils/lib/connectToStores';
 import DocumentStore from '../../stores/DocumentStore';
 import Actions from '../../actions/documentActions';
+import LoginStore from '../../stores/LoginStore';
 
 // grid start
 import GridList from 'material-ui/lib/grid-list/grid-list';
@@ -26,15 +27,16 @@ const styles = {
 };
 // @connectToStores(DocumentStore);
 class DocumentList extends React.Component {
-  constructor() {
-    super();
-    this.state = {user: '', documents: []};
+  constructor(props) {
+    super(props);
+    this.state = {user: '', documents: [], role: ''};
 
     this.onChange = this.onChange.bind(this);
+    this.userLoggedIn = this.userLoggedIn.bind(this);
   }
 
   static getStores(props) {
-    return [DocumentStore];
+    return [DocumentStore, LoginStore];
   }
 
   static getPropsFromStores(props) {
@@ -42,10 +44,26 @@ class DocumentList extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     Actions.fetchDocuments();
     DocumentStore.listen(this.onChange);
+    LoginStore.listen(this.userLoggedIn);
   }
-
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    //this.setState({role: this.props.state})
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
+  }
+  userLoggedIn(state) {
+    // get the user role
+    // update the data on the dashboard
+    if(state.message) {
+      console.log('someone just logged in', state);
+      this.setState({role: state.message.user.role.title})
+    }
+  }
   onChange(state) {
     this.setState({documents: state.documents})
   }
@@ -64,7 +82,7 @@ class DocumentList extends React.Component {
                 col-sm-8
                 col-md-6
                 col-lg-4">
-            <Document document={document} className="box" />
+            <Document role={this.state.role} document={document} className="box" />
           </div>
         );
       });

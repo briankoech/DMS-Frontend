@@ -68,7 +68,7 @@ export default class Document extends React.Component {
               {/*{this.props.document.category}*/}
             </div>
             {
-              (this.props.user) ?
+              (this.props.role === 'admin') ?
               <div>
             <Divider />
             <div className="row right" style={{marginTop: 20}}>

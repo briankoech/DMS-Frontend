@@ -93,7 +93,9 @@
               }
             }, {
               new: true
-            }, function(err, result) {
+            })
+            .populate('role')
+            .exec(function(err, result) {
               if (err) {
                 res.status(500).send({
                   error: err

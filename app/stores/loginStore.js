@@ -10,7 +10,7 @@ class LoginStore {
       loginError: LoginActions.loginError,
     });
   }
-  
+
   handleLogin() {
     this.setState({message: '', error: ''})
   }
