@@ -10,12 +10,20 @@ import Login from '../login-page/login.jsx';
 import Signup from '../signup-page/signup.jsx';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import CategoryList from '../side-bar/Category-list.jsx';
+import Snackbar from 'material-ui/lib/snackbar';
+import ToolBar from './tool-bar.jsx';
 injectTapEventPlugin();
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {open: false, openlogin: false, opensignup: false};
+    this.state = {
+      open: false,
+      openlogin: false,
+      opensignup: false,
+      opensnackbar: false,
+      user: true,
+    };
   }
 
   handleToggle = () => {this.setState({open: !this.state.open}); console.log('Cliked');};
@@ -30,6 +38,11 @@ export default class App extends React.Component {
 
   handlesignupclose = () => this.setState({opensignup: false});
 
+  handleSnackBar = () => this.setState({opensnackbar: true});
+
+  handleSnackBarClose = () => this.setState({opensnackbar: false});
+
+
   render() {
     return (
       <div>
@@ -41,18 +54,21 @@ export default class App extends React.Component {
             </IconButton>
           }
           iconElementRight={
-              <FlatButton label="Login" onTouchTap={this.handleLogin}/>
-            }
+            (this.state.user) ? <ToolBar />
+                : <FlatButton label="Login" onTouchTap={this.handleLogin}/>
+          }
         />
       <Login
         openlogin={this.state.openlogin}
         onClick={this.handleloginclose.bind(this)}
         signupAction={this.handlesignup.bind(this)}
+        snackbar={this.handleSnackBar.bind(this)}
       />
       <Signup
         opensignup={this.state.opensignup}
         onClick={this.handlesignupclose.bind(this)}
         loginAction={this.handleLogin.bind(this)}
+        snackbar={this.handleSnackBar.bind(this)}
       />
         <LeftNav
           docked={false}
@@ -64,6 +80,11 @@ export default class App extends React.Component {
           <MenuItem onTouchTap={this.handleClose}> <i className="fa fa-home"></i> Home</MenuItem>
           <CategoryList />
         </LeftNav>
+        <Snackbar
+         open={this.state.opensnackbar}
+         message="Welcome to DMS"
+         autoHideDuration={4000}
+       />
       </div>
     );
   }

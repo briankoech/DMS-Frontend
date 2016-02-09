@@ -44,10 +44,12 @@ class Login extends React.Component {
   }
 
   onChange(state) {
-    console.log('state', state.message.success);
     if(state && state.message.success) {
       // redirect
-      console.log('redirect to login');
+      console.log('redirect to login', state);
+      this.props.snackbar();
+      this.props.onClick();
+      localStorage.setItem('x-access-token', state.message.token);
     } else {
       console.log('error');
     }

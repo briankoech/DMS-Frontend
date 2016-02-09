@@ -1,8 +1,11 @@
 import alt from '../alt';
-//import DocumentSource from '../sources/DocumentSource';
+// import BaseActions from './BaseActions.js';
 import request from 'superagent';
 
 class Actions {
+  constructor() {
+  }
+
   updateDocuments(documents) {
     console.log('triggred');
     return documents;
