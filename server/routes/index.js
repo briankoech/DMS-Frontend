@@ -3,7 +3,7 @@
 
   module.exports = function(app, express) {
 
-    //require('./users')(app, express);
+    require('./users')(app, express);
     require('./docs')(app, express);
     require('./category')(app, express);
     require('./roles')(app, express);

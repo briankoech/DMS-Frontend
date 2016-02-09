@@ -1,5 +1,5 @@
 import React from 'react';
-import App from './app.jsx';
+import Nav from './nav-bar/app.jsx';
 
 export default class Main extends React.Component {
   constructor() {
@@ -9,8 +9,8 @@ export default class Main extends React.Component {
   render() {
     return (
       <div>
-        <App />
-        <div className="">
+        <Nav />
+        <div className="container">
           {this.props.children}
         </div>
       </div>
