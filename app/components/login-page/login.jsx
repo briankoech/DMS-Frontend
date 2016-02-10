@@ -50,6 +50,7 @@ class Login extends React.Component {
       this.props.snackbar();
       this.props.onClick();
       localStorage.setItem('x-access-token', state.message.token);
+      localStorage.setItem('user', state.message.user);
     } else {
       console.log('error');
     }

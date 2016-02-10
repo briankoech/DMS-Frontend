@@ -4,6 +4,7 @@ body {
 
 .container {
   margin: 0 auto;
+  text-align: center;
 }
 
 .box {
@@ -40,4 +41,21 @@ body {
 
 .forgotpswd {
   color: #732983;
+}
+.mastheadtitle {
+  color: #2196F3;
+  text-shadow: 0.1em 0.1em 0.1em #234CA7;
+  text-transform: uppercase;
+  text-justify: inter-word;
+  font-size: 10em;
+  margin: 0;
+}
+.masthead {
+  color: #2196F3;
+  text-shadow: 1px 2px #234CA7;
+  font-size: 4em;
+  font-family: inherit;;
+  text-justify: inter-word;
+  font-weight: lighter;
+  margin: 0;
 }

@@ -60,8 +60,9 @@ class DocumentList extends React.Component {
     // get the user role
     // update the data on the dashboard
     if(state.message) {
-      console.log('someone just logged in', state);
-      this.setState({role: state.message.user.role.title})
+      console.log('someone just logged in', state.message.user);
+      this.setState({user: state.message.user});
+      console.log(this.state.user.role.title);
     }
   }
   onChange(state) {
@@ -82,7 +83,7 @@ class DocumentList extends React.Component {
                 col-sm-8
                 col-md-6
                 col-lg-4">
-            <Document role={this.state.role} document={document} className="box" />
+            <Document user={this.state.user} document={document} className="box" />
           </div>
         );
       });
@@ -91,13 +92,7 @@ class DocumentList extends React.Component {
     }
 
     return (
-      <div>
-          <div className="row titleHead">
-            <h1 className="col-md-12 dmshead">Document Management System</h1><br />
-            <p>Create, edit, save documents for free</p>
-          </div>
-          <div className="row">{documentNodes}</div>
-      </div>
+        <div className="row">{documentNodes}</div>
     );
   }
 }
