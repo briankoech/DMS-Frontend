@@ -59,3 +59,20 @@ body {
   font-weight: lighter;
   margin: 0;
 }
+.docTitle {
+  text-align: center;
+  margin: 0 auto;
+  padding: 10px 10px;
+  font-weight: lighter;
+  font-size: 3em;
+}
+.content {
+  text-align: center;
+  justify: center;
+  text-justify: inter-word;
+  font-weight: lighter;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 100%;
+  vertical-align: super;
+}
