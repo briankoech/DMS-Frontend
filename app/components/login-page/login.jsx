@@ -25,7 +25,6 @@ class Login extends React.Component {
 
   static getPropsFromStores(props) {
     // called when stores experience change in state
-    console.log('change occured');
     return LoginStore.getState();
   }
 
@@ -45,12 +44,16 @@ class Login extends React.Component {
 
   onChange(state) {
     if(state && state.message.success) {
-      // redirect
-      console.log('redirect to login', state);
       this.props.snackbar();
       this.props.onClick();
       localStorage.setItem('x-access-token', state.message.token);
-      localStorage.setItem('user', state.message.user);
+      var user = {
+        username: state.message.user.username,
+        id: state.message.user._id,
+        roleId: state.message.user.role._id,
+        title: state.message.user.role.title,
+      };
+      localStorage.setItem('user', JSON.stringify(user));
     } else {
       console.log('error');
     }
@@ -61,7 +64,6 @@ class Login extends React.Component {
       username: this.state.username,
       password: this.state.password,
     };
-    console.log(user);
     LoginActions.loginUser(user);
   }
 

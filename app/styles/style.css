@@ -44,10 +44,11 @@ body {
 }
 .mastheadtitle {
   color: #2196F3;
-  text-shadow: 0.1em 0.1em 0.1em #234CA7;
+  text-shadow: 0.08em 0.06em 0.0em #234CA7;
   text-transform: uppercase;
   text-justify: inter-word;
   font-size: 10em;
+  font-family: sans-serif;;
   margin: 0;
 }
 .masthead {

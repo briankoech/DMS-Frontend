@@ -13,8 +13,9 @@ import styles from 'material-ui/lib/styles';
 import Avatar from 'material-ui/lib/avatar';
 
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
-import ContentAdd from 'material-ui/lib/svg-icons/content/send';
+import Content from 'material-ui/lib/svg-icons/content/send';
 import DocActions from './document-actions.jsx';
+import {Router, Route, Link} from 'react-router';
 
 const colors = styles.Colors;
 
@@ -23,13 +24,14 @@ export default class Document extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
+  componentWillMount() {
 
   }
 
   render () {
     let ActionNodes = () => {
-      if(this.props.user._id === this.props.document.ownerId) {
+      let user = JSON.parse(localStorage.getItem('user')) || {};
+      if(user.id === this.props.document.ownerId) {
         return (<DocActions />);
       } else {
         return;
@@ -46,8 +48,8 @@ export default class Document extends React.Component {
             <CardTitle title={this.props.document.title} />
           </div>
           <div className="col-md-2">
-            <FloatingActionButton primary>
-              <ContentAdd />
+            <FloatingActionButton primary linkButton href={'/#/document/' + this.props.document._id}  >
+              <Content />
             </FloatingActionButton>
           </div>
         </div>

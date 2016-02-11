@@ -7,17 +7,17 @@
     var api = express.Router();
 
     //api.use(Users.getToken);
-    api.post('/document', Document.create);
-    api.get('/document', Document.getAllDocuments);
-    api.get('/role/document', Document.getAllDocumentsByRole);
-    api.get('/document/date', Document.getAllDocumentsByDate);
-    api.get('/document/category', Document.getDocumenstByCategory);
-    api.get('/document/:_id', Document.findOne);
-    api.put('/document/:_id', Document.update);
-    api.put('/document/contributors/:_id', Document.addContributors);
-    api.delete('/document/:_id', Document.delete);
-
-    api.get('/users/documents/:userId', Document.getAllById);
+    api.get('/publicDocs', Document.getAllPublicDocs);
+    api.post('/document', Users.getToken, Document.create);
+    api.get('/document', Users.getToken, Document.getAllDocuments);
+    api.get('/role/document', Users.getToken, Document.getAllDocumentsByRole);
+    api.get('/document/date', Users.getToken, Document.getAllDocumentsByDate);
+    api.get('/document/category', Users.getToken, Document.getDocumenstByCategory);
+    api.get('/document/:_id', Users.getToken, Document.findOne);
+    api.put('/document/:_id', Users.getToken, Document.update);
+    api.put('/document/contributors/:_id', Users.getToken, Document.addContributors);
+    api.delete('/document/:_id', Users.getToken, Document.delete);
+    api.get('/users/documents/:userId', Users.getToken, Document.getAllById);
 
     app.use('/api', api);
   };

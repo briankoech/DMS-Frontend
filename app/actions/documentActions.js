@@ -7,13 +7,19 @@ class Actions {
   }
 
   updateDocuments(documents) {
-    console.log('triggred');
     return documents;
   }
 
-  fetchDocuments() {
+  fetchDocuments(id, token) {
+    let url;
+    if(token) {
+      url = '/api/role/document';
+    } else {
+      url = '/api/publicDocs';
+    }
     request
-      .get('/api/docs')
+      .get(url)
+      .set('x-access-token', token)
       .end((err, res) => {
         if(err) {
           this.documentsFailed({error: err});
@@ -23,6 +29,27 @@ class Actions {
           }, 3000);
         }
       });
+  }
+
+  getOneDocument(id, token) {
+      let url;
+      if(token) {
+        url = '/api/document/' + id;
+      } else {
+        url = '/api/publicDocs';
+      }
+      request
+        .get(url)
+        .set('x-access-token', token)
+        .end((err, res) => {
+          if(err) {
+            this.documentsFailed({error: err});
+          } else {
+            setTimeout(() => {
+              this.updateDocuments(res.body);
+            }, 3000);
+          }
+        });
   }
 
   documentsFailed(errorMessage) {

@@ -8,6 +8,7 @@
   module.exports = function(app, express) {
     var api = express.Router();
 
+    api.get('/categories', Category.getAllCategories);
     api.post('/category', Users.getToken, Category.create);
     api.get('/category', Users.getToken, Category.getAllCategories);
     api.put('/category/:id', Users.getToken, Roles.checkUserRole, Category.update);

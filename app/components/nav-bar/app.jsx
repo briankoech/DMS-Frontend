@@ -11,10 +11,15 @@ import Signup from '../signup-page/signup.jsx';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import CategoryList from '../side-bar/Category-list.jsx';
 import Snackbar from 'material-ui/lib/snackbar';
-import ToolBar from './tool-bar.jsx';
+import RaisedButton from 'material-ui/lib/raised-button';
+
+import SessionActions from '../../actions/SessionActions';
+import SessionStore from '../../stores/SessionStore';
+import connectToStores from 'alt-utils/lib/connectToStores';
+import LoginStore from '../../stores/LoginStore';
 injectTapEventPlugin();
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,10 +27,62 @@ export default class App extends React.Component {
       openlogin: false,
       opensignup: false,
       opensnackbar: false,
-      user: false,
+      isLoggedIn: false,
     };
+
+    this.onChange = this.onChange.bind(this);
+    this.isLoggedIn = this.isLoggedIn.bind(this);
+    this.userLoggedIn = this.userLoggedIn.bind(this);
+  }
+  componentWillMount() {
+    console.log('Will Mount');
+    this.userLoggedIn();
+  }
+  userLoggedIn() {
+    var token = localStorage.getItem('x-access-token');
+    var user = JSON.parse(localStorage.getItem('user')) || {};
+    if(token && (user.title === 'admin' || user.title === 'contributor')) {
+      // verify if user is logged in
+      this.setState({isLoggedIn: true});
+    }
+  }
+  static getStores(props) {
+    return [SessionStore, LoginStore];
   }
 
+  static getPropsFromStores(props) {
+    console.log('changes');
+    return {
+        Session: SessionStore.getState(),
+        Login: LoginStore.getState(),
+      };
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log('new props', nextProps);
+    this.userLoggedIn();
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+
+    return true;
+  }
+
+  componentDidMount() {
+    console.log('Mounted');
+    // listen for store changes
+    SessionStore.listen(this.onChange);
+    LoginStore.listen(this.isLoggedIn);
+  }
+
+  isLoggedIn(state) {
+    if(state.message) {
+      console.log('user logged in', state);
+    }
+  }
+
+  onChange(state) {
+    console.log('USER', this.state.user);
+    this.setState({user: state});
+  }
   handleToggle = () => {this.setState({open: !this.state.open}); console.log('Cliked');};
 
   handleClose = () => this.setState({open: false});
@@ -54,7 +111,7 @@ export default class App extends React.Component {
             </IconButton>
           }
           iconElementRight={
-            (this.state.user) ? <ToolBar />
+            (this.state.isLoggedIn) ? <RaisedButton label="Create Document" primary={true} style={{margin: 10}}/>
                 : <FlatButton label="Login" onTouchTap={this.handleLogin}/>
           }
         />
@@ -84,8 +141,11 @@ export default class App extends React.Component {
          open={this.state.opensnackbar}
          message="Welcome to DMS"
          autoHideDuration={4000}
+         onRequestClose={this.handleSnackBarClose}
        />
       </div>
     );
   }
 }
+
+export default connectToStores(App);

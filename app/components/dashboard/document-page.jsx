@@ -15,7 +15,7 @@ export default class DocumentPage extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
+  componentWillMount() {
 
   }
 

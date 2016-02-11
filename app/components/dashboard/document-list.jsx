@@ -40,31 +40,39 @@ class DocumentList extends React.Component {
   }
 
   static getPropsFromStores(props) {
-    return DocumentStore.getState();
+    return {
+      Document: DocumentStore.getState(),
+      Login: LoginStore.getState(),
+    };
+  }
+
+  componentWillMount() {
+    var token = localStorage.getItem('x-access-token');
+    var user = localStorage.getItem('user');
+    if(user && token) {
+      Actions.fetchDocuments(user.id, token);
+    } else {
+      Actions.fetchDocuments();
+    }
   }
 
   componentDidMount() {
-    console.log(this.props);
-    Actions.fetchDocuments();
     DocumentStore.listen(this.onChange);
     LoginStore.listen(this.userLoggedIn);
   }
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    //this.setState({role: this.props.state})
+
   }
   shouldComponentUpdate(nextProps, nextState) {
     return true;
   }
   userLoggedIn(state) {
-    // get the user role
-    // update the data on the dashboard
     if(state.message) {
-      console.log('someone just logged in', state.message.user);
       this.setState({user: state.message.user});
       console.log(this.state.user.role.title);
     }
   }
+
   onChange(state) {
     this.setState({documents: state.documents})
   }
@@ -77,7 +85,7 @@ class DocumentList extends React.Component {
       );
     }
     if(this.state.documents) {
-      documentNodes = this.props.documents.map((document) => {
+      documentNodes = this.props.Document.documents.map((document) => {
         return (
           <div key={document._id} className="col-xs-12
                 col-sm-8
