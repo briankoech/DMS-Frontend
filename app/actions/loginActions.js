@@ -4,13 +4,13 @@ import request from 'superagent';
 class LoginAction {
   loginUser(user) {
     request
-      .post('api/users/login')
+      .post('/api/users/login')
       .send(user)
       .set('Accept', 'application/json')
       .end((err, result) => {
         if(err) {
           this.loginError(err);
-        } else if(result && result.body.error){
+        } else if(result && result.body.error) {
           this.loginError(result.body);
         } else {
           this.loginSuccess(result.body);

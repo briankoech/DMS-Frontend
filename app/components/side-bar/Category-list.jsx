@@ -28,9 +28,17 @@ class CategoryList extends React.Component {
      CategoryStore.listen(this.onChange);
   }
 
+  componentWillReceiveProps(nextProps) {
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
+  }
+
   onChange(state) {
     this.setState({categories: state.categories});
   }
+
   render() {
     // nodes
     var categoryNodes = this.state.categories.map((category) => {

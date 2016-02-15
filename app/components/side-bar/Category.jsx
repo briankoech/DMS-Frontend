@@ -8,7 +8,10 @@ export default class Category extends React.Component {
 
   render() {
     return (
-      <MenuItem onTouchTap={this.handleClose}> <i className="fa fa-home"></i> {this.props.title}</MenuItem>
+      <MenuItem onTouchTap={this.handleClose}>
+        <i className="fa fa-home"></i>
+        <a href={'/category?category=' + this.props.title}>{this.props.title}</a>
+      </MenuItem>
     )
   }
 }

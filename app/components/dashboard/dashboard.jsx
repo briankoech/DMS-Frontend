@@ -49,16 +49,10 @@ class DocumentList extends React.Component {
   componentWillMount() {
     var token = localStorage.getItem('x-access-token');
     var user = localStorage.getItem('user');
-    console.log(this.props.location);
-    if(this.props.location.pathname === '/') {
-      if(user && token) {
-        Actions.fetchDocuments(user.id, token);
-      } else {
-        Actions.fetchDocuments();
-      }
-    } else if(this.props.location.pathname === '/category') {
-      var type = this.props.location.query.category;
-      Actions.fetchByCategory(type, token);
+    if(user && token) {
+      Actions.fetchDocuments(user.id, token);
+    } else {
+      Actions.fetchDocuments();
     }
   }
 
@@ -66,7 +60,6 @@ class DocumentList extends React.Component {
     DocumentStore.listen(this.onChange);
     LoginStore.listen(this.userLoggedIn);
   }
-
   componentWillReceiveProps(nextProps) {
 
   }

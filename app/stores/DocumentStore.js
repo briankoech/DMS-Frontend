@@ -3,7 +3,7 @@ import Actions from '../actions/documentActions';
 
 class DocumentStore {
   constructor() {
-    this.state = {documents: [], errorMessage: null};
+    this.state = {documents: [], errorMessage: null };
     this.bindListeners({
       handleDocumentsFetch: Actions.updateDocuments,
       handleFetchDocuments: Actions.fetchDocuments,
@@ -16,8 +16,8 @@ class DocumentStore {
   }
   handleFetchDocuments(docs) {
     // while its fetching
-    this.documents = [];
-    this.setState({documents});
+    //this.documents = [];
+    this.setState({documents: []});
   }
 
   handleFetchErrors(error) {

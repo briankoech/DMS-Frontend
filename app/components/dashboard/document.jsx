@@ -12,6 +12,14 @@ import Colors from 'material-ui/lib/styles/colors';
 import styles from 'material-ui/lib/styles';
 import Avatar from 'material-ui/lib/avatar';
 
+import IconMenu from 'material-ui/lib/menus/icon-menu';
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import IconButton from 'material-ui/lib/icon-button';
+import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+import Delete from 'material-ui/lib/svg-icons/action/delete';
+import Info from 'material-ui/lib/svg-icons/action/info';
+import Edit from 'material-ui/lib/svg-icons/editor/mode-edit';
+
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import Content from 'material-ui/lib/svg-icons/content/send';
 import DocActions from './document-actions.jsx';
@@ -32,7 +40,12 @@ export default class Document extends React.Component {
     let ActionNodes = () => {
       let user = JSON.parse(localStorage.getItem('user')) || {};
       if(user.id === this.props.document.ownerId) {
-        return (<DocActions />);
+        return (
+          <div>
+            <MenuItem primaryText="Edit" leftIcon={<Edit />}/>
+            <MenuItem primaryText="Remove" leftIcon={<Delete />}/>
+          </div>
+        );
       } else {
         return;
       }
@@ -44,11 +57,11 @@ export default class Document extends React.Component {
           <img src="http://lorempixel.com/600/337/nature/" />
         </CardMedia>
         <div className="row">
-          <div className="col-md-10" >
+          <div className="col-md-9" >
             <CardTitle title={this.props.document.title} />
           </div>
-          <div className="col-md-2">
-            <FloatingActionButton primary linkButton href={'/#/document/' + this.props.document._id}  >
+          <div className="col-md-3">
+            <FloatingActionButton primary mini style={{margin: 10}} linkButton href={'/document/' + this.props.document._id}  >
               <Content />
             </FloatingActionButton>
           </div>
@@ -70,15 +83,22 @@ export default class Document extends React.Component {
               <div className="col-md-4">
                 Brian Koech
               </div>
-              <div className="col-md-6">
+              <div className="col-md-5">
                 7th Feb in Programming
+              </div>
+              <div className="col-md-1">
+                <IconMenu
+                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                   anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                   targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                 >
+                   <MenuItem primaryText="More info" leftIcon={<Info />}/>
+                   {ActionNodes()}
+                 </IconMenu>
               </div>
               {/*{this.props.document.ownerId}*/}
               {/*{this.props.document.createdAt}*/}
               {/*{this.props.document.category}*/}
-            </div>
-            <div>
-              {ActionNodes()}
             </div>
           </CardText>
         </CardActions>

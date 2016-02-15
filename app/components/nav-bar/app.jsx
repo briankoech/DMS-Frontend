@@ -35,7 +35,6 @@ class App extends React.Component {
     this.userLoggedIn = this.userLoggedIn.bind(this);
   }
   componentWillMount() {
-    console.log('Will Mount');
     this.userLoggedIn();
   }
   userLoggedIn() {
@@ -58,7 +57,6 @@ class App extends React.Component {
       };
   }
   componentWillReceiveProps(nextProps) {
-    console.log('new props', nextProps);
     this.userLoggedIn();
   }
   shouldComponentUpdate(nextProps, nextState) {

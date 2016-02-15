@@ -77,7 +77,7 @@
           expect(err).toBeNull();
           expect(res.body).toBeDefined();
           expect(res.status).toEqual(401);
-          expect(res.body.message).toBe('jwt malformed');
+          expect(res.body.error.message).toBe('Failed to authenticate user');
           done();
         });
     });

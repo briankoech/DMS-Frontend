@@ -55,7 +55,7 @@ class Login extends React.Component {
       };
       localStorage.setItem('user', JSON.stringify(user));
     } else {
-      console.log('error');
+      console.log('error', state);
     }
   }
 
