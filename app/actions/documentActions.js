@@ -75,6 +75,24 @@ class Actions {
       });
   }
 
+  createDocument(data, token) {
+    let url = '/api/document';
+    request
+      .post(url)
+      .send(data)
+      .set('x-access-token', token)
+      .set('Accept', 'application/json')
+      .end((err, result) => {
+        if(err) {
+          this.documentsFailed({error: err})
+        } else if(result.body.error) {
+          this.documentsFailed(result.body);
+        } else {
+          this.updateDocuments(result.body);
+        }
+      });
+  }
+
   documentsFailed(errorMessage) {
     return errorMessage;
   }

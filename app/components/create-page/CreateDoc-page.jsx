@@ -5,13 +5,23 @@ import TextField from 'material-ui/lib/text-field';
 import SelectField from 'material-ui/lib/select-field';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import Select from 'react-select';
+import FlatButton from 'material-ui/lib/flat-button';
+import Snackbar from 'material-ui/lib/snackbar';
+
+import DocumentActions from '../../actions/documentActions';
+import DocumentStore from '../../stores/DocumentStore';
+
 require('../../styles/component.css');
 
 class CreateDoc extends React.Component {
   constructor() {
     super();
     this.state = {
-      value: 1,
+      title: '',
+      content: '',
+      accessLevel: 3,
+      category: '',
+      open: false
     }
   }
 
@@ -19,24 +29,53 @@ class CreateDoc extends React.Component {
 
   }
 
+  handleTouchTap = () => {
+    this.setState({
+      open: true,
+    });
+  };
+
+  handleRequestClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
+
   componentDidMount() {
-
+    DocumentStore.listen(this.onChange);
   }
 
-  componentWillReceiveProps() {
+  onChange = (state) => {
+      console.log(state);
+      if(!state.errorMessage && state.documents.message) {
+        this.handleTouchTap();
+      }
+  };
 
-  }
+  onSubmit = () => {
+    // get token
+    let token = localStorage.getItem('x-access-token');
+    DocumentActions.createDocument(this.state, token);
+    DocumentStore.listen(this.onChange);
+  };
 
-  shouldComponentUpdate() {
+  handleSelectField = (e, index, value) => {
+    this.setState({accessLevel: value});
+  };
 
-  }
-
-
-
-  handleChange = (event, index, value) => this.setState({value});
+  handleChange = (e) => {
+    let field = e.target.name;
+    let value = e.target.value;
+    if(field === 'title') {
+      this.setState({title: value});
+    } else if(field === 'content') {
+      this.setState({content: value});
+    } else if(field === 'category') {
+      this.setState({category: value});
+    }
+  };
 
   render() {
-
       var getOptions = function(input, callback) {
         setTimeout(function() {
             callback(null, {
@@ -54,44 +93,58 @@ class CreateDoc extends React.Component {
     };
 
     return (
-      <div>
-        <h1>Editor page</h1>
-        <p>Will act as create page && edit page</p>
+      <div className="container editor">
+        <h5>create && edit</h5>
         <div className="row">
           <TextField
-            className="col-md-5 left"
-            hintText="Hint Text"
+            className="col-md-10"
+            name="title"
+            hintText="Title"
+            style={{margin: 5, paddingLeft: 10}}
+            floatingLabelText="Document Title"
+            underlineStyle={{borderColor: '#2196F3'}}
+            onChange={this.handleChange}
           />
-        <SelectField className="col-md-5 right" value={this.state.value} onChange={this.handleChange}>
-            <MenuItem value={1} primaryText="Never"/>
-            <MenuItem value={2} primaryText="Every Night"/>
-            <MenuItem value={3} primaryText="Weeknights"/>
-            <MenuItem value={4} primaryText="Weekends"/>
-            <MenuItem value={5} primaryText="Weekly"/>
+      </div>
+      <div className="row">
+          <TextField
+            className="col-md-6"
+            hintText="Music"
+            floatingLabelText="Category"
+            name="category"
+            underlineStyle={{borderColor: '#2196F3'}}
+            onChange={this.handleChange}
+          />
+        <SelectField underlineStyle={{borderColor: '#2196F3'}} className="col-md-6" value={this.state.accessLevel} name="accessLevel" onChange={this.handleSelectField}>
+            <MenuItem value={3} primaryText="Public"/>
+            <MenuItem value={2} primaryText="contributors"/>
+            <MenuItem value={1} primaryText="Admins"/>
           </SelectField>
         </div>
         <div className="row">
           <TextField
-            className="col-md-12"
+            onChange={this.handleChange}
+            className="col-md-11"
+            name="content"
             hintText="Message Field"
             floatingLabelText="Content"
             multiLine={true}
             rows={4}
+            style={{border: 1}}
+            underlineStyle={{borderColor: '#2196F3'}}
           />
         </div>
         <div className="row">
-          <h5>Add contributors</h5>
+          <FlatButton label="Save" primary={true} onTouchTap={this.onSubmit} />
+          <FlatButton label="Cancel" secondary={true} />
         </div>
-        <div className="row">
-          <Select.Async
-            name="form-field"
-            className="col-md-6"
-            loadOptions={getOptions}
-          />
-        </div>
-        <div className="row">
-
-        </div>
+        <Snackbar
+          open={this.state.open}
+          message="Document Created successfully"
+          action="undo"
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+        />
       </div>
     )
   }

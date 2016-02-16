@@ -77,3 +77,17 @@ body {
   font-size: 100%;
   vertical-align: super;
 }
+
+.docTitleField {
+  margin: 10px 5px 0  0;
+  border: 0.3px solid #0f0;
+}
+.editor {
+  border-radius: 10px;
+  border: 2px solid #2196F3;
+  width: 70%;
+  margin: 0 auto;
+  padding: 10px;
+  margin-top: 20px;
+  text-align: center;
+}

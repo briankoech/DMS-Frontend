@@ -19,6 +19,7 @@
         });
 
         document.save(function(err, doc) {
+          console.log('here');
           if (err) {
             res.status(500).send({
               error: err
@@ -32,7 +33,7 @@
         });
       };
       // get userid from the token
-      Role.findById(req.decoded._doc.role, function(err, role) {
+      Role.findById(req.decoded._doc.role._id, function(err, role) {
         if (err) {
           res.status(500).send({
             error: err
