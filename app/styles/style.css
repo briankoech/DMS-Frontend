@@ -82,9 +82,11 @@ body {
   margin: 10px 5px 0  0;
   border: 0.3px solid #0f0;
 }
+.content {
+  background-color: #F5F5F5;
+}
 .editor {
-  border-radius: 10px;
-  border: 2px solid #2196F3;
+  background-color: #F5F5F5;
   width: 70%;
   margin: 0 auto;
   padding: 10px;

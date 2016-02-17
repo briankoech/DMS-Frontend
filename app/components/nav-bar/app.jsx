@@ -17,6 +17,8 @@ import SessionActions from '../../actions/SessionActions';
 import SessionStore from '../../stores/SessionStore';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import LoginStore from '../../stores/LoginStore';
+
+import Link from 'react-router';
 injectTapEventPlugin();
 
 class App extends React.Component {
@@ -97,19 +99,24 @@ class App extends React.Component {
 
   handleSnackBarClose = () => this.setState({opensnackbar: false});
 
+  handleTitleTouchTap = () => {
+    console.log('fjkbshfj');
+  };
+
 
   render() {
     return (
       <div>
         <AppBar
-          title="DMS"
+          title={<span style={{cursor: 'pointer'}}>DMS</span>}
+          onTitleTouchTap={this.handleTitleTouchTap}
           iconElementLeft={
             <IconButton onTouchTap={this.handleToggle}>
               <FontIcon className="muidocs-icon-action-home"><i className="fa fa-bars"></i></FontIcon>
             </IconButton>
           }
           iconElementRight={
-            (this.state.isLoggedIn) ? <RaisedButton label="Create Document" primary={true} style={{margin: 10}}/>
+            (this.state.isLoggedIn) ? <RaisedButton label="Create Document" linkButton href="/create" primary={true} style={{margin: 10}}/>
                 : <FlatButton label="Login" onTouchTap={this.handleLogin}/>
           }
         />

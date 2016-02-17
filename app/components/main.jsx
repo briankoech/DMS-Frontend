@@ -6,7 +6,7 @@ export default class Main extends React.Component {
   constructor() {
     super();
   }
-  
+
   render() {
     return (
       <div>
@@ -14,7 +14,7 @@ export default class Main extends React.Component {
         <div className="container titlehead">
           <TitleHead />
         </div>
-        <div className="container">
+        <div className="container content">
           {this.props.children}
         </div>
       </div>

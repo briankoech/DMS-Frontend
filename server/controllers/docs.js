@@ -89,6 +89,8 @@
         .sort({
           'createdAt': -1
         })
+        .populate('ownerId')
+        .populate('category')
         .exec(function(err, documents) {
           if (err) {
             res.status(500).send(err);
@@ -103,7 +105,10 @@
     },
 
     getAllDocumentsByRole: function(req, res) {
-      Role.findById(req.decoded._doc.role, function(err, role) {
+      Role.findById(req.decoded._doc.role)
+      .populate('ownerId')
+      .populate('category')
+      .exec(function(err, role) {
         if (err) {
           res.status(500).send({
             error: err
@@ -172,7 +177,10 @@
       console.log('Called');
       Document.find({accessLevel: {
         $gte: 3
-      }}, function(err, docs) {
+      }})
+      .populate('ownerId')
+      .populate('category')
+      .exec(function(err, docs) {
         res.status(200).send(docs);
       })
     },
@@ -181,7 +189,10 @@
       // find the categoryId
       Category.find({
         category: req.query.category.toLowerCase()
-      }, function(err, category) {
+      })
+      .populate('ownerId')
+      .populate('category')
+      .exec(function(err, category) {
         if (err) {
           res.status(500).send({
             error: err
@@ -270,11 +281,16 @@
     },
 
     findOne: function(req, res) {
-      Document.findById(req.params._id, function(err, document) {
+      Document.findById(req.params._id)
+      .populate('category')
+      .exec(function(err, document) {
         if (err) {
           res.status(500).send(err);
         } else if (document) {
-          res.status(200).send(document);
+          res.status(200).send({
+            data: document,
+            success: true
+          });
         } else {
           res.status(404).send({
             message: 'document isnt available'
@@ -321,7 +337,10 @@
       // get the user id
       Document.find({
         ownerId: req.decoded._doc._id
-      }, function(err, documents) {
+      })
+      .populate('ownerId')
+      .populate('category')
+      .exec(function(err, documents) {
         if (err) {
           return res.status(500).send(err);
         } else if (documents) {

@@ -26,9 +26,7 @@ class Actions {
         if(err) {
           this.documentsFailed({error: err});
         } else {
-          setTimeout(() => {
-            this.updateDocuments(res.body);
-          }, 3000);
+          this.updateDocuments(res.body);
         }
       });
   }
@@ -47,9 +45,7 @@ class Actions {
         if(err) {
           this.documentsFailed({error: err});
         } else {
-          setTimeout(() => {
-            this.updateDocuments(res.body);
-          }, 3000);
+          this.updateDocuments(res.body);
         }
       });
   }
@@ -68,9 +64,7 @@ class Actions {
         if(err) {
           this.documentsFailed({error: err});
         } else {
-          setTimeout(() => {
-            this.updateDocuments(res.body);
-          }, 3000);
+          this.updateDocuments(res.body);
         }
       });
   }
@@ -92,7 +86,23 @@ class Actions {
         }
       });
   }
-
+  updateDocument(data, token, id) {
+    let url = '/api/document/'+ id;
+    request
+      .put(url)
+      .send(data)
+      .set('x-access-token', token)
+      .set('Accept', 'application/json')
+      .end((err, result) => {
+        if(err) {
+          this.documentsFailed({error: err})
+        } else if(result.body.error) {
+          this.documentsFailed(result.body);
+        } else {
+          this.updateDocuments(result.body);
+        }
+      });
+  }
   documentsFailed(errorMessage) {
     return errorMessage;
   }

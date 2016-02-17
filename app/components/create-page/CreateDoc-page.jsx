@@ -7,6 +7,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import Select from 'react-select';
 import FlatButton from 'material-ui/lib/flat-button';
 import Snackbar from 'material-ui/lib/snackbar';
+import Checkbox from 'material-ui/lib/checkbox';
 
 import DocumentActions from '../../actions/documentActions';
 import DocumentStore from '../../stores/DocumentStore';
@@ -21,12 +22,9 @@ class CreateDoc extends React.Component {
       content: '',
       accessLevel: 3,
       category: '',
-      open: false
+      open: false,
+      snackbarmsg: '',
     }
-  }
-
-  componentWillMount() {
-
   }
 
   handleTouchTap = () => {
@@ -41,22 +39,69 @@ class CreateDoc extends React.Component {
     });
   };
 
+  componentWillMount() {
+    if(this.props.location.pathname === '/edit') {
+      // get the query
+      // get the document from db
+      // edit data
+      // save
+      console.log(this.props.location.query.document);
+      var id = this.props.location.query.document;
+      let token = localStorage.getItem('x-access-token');
+      DocumentActions.getDocument(id, token);
+
+    }
+  }
+
   componentDidMount() {
+    console.log(this.state.title);
     DocumentStore.listen(this.onChange);
   }
 
   onChange = (state) => {
-      console.log(state);
-      if(!state.errorMessage && state.documents.message) {
+    console.log('STATE', state);
+      if(!state.errorMessage && state.documents.doc) {
+        console.log('saved');
+        this.setState({snackbarmsg: 'created successfully'});
         this.handleTouchTap();
+      }
+      if(!state.errorMessage && state.documents.data) {
+        console.log('fetched data');
+        this.setState({
+          title: state.documents.data.title,
+          content: state.documents.data.content,
+          category: state.documents.data.category.category,
+        });
+      }
+      if(!state.errorMessage && state.documents.title) {
+        console.log('updated');
+        this.setState({
+          title: '',
+          content: '',
+          category: ''
+        });
+        this.setState({snackbarmsg: 'updated successfully'});
+        this.handleTouchTap();
+      }
+      if(state.errorMessage) {
+        // error report
       }
   };
 
   onSubmit = () => {
     // get token
+    // get the url
     let token = localStorage.getItem('x-access-token');
-    DocumentActions.createDocument(this.state, token);
-    DocumentStore.listen(this.onChange);
+    let url = this.props.location.pathname;
+    let id = this.props.location.query.document;
+    console.log(url);
+    if(url === '/create') {
+      DocumentActions.createDocument(this.state, token);
+      DocumentStore.listen(this.onChange);
+    } else if(url === '/edit') {
+      DocumentActions.updateDocument(this.state, token, id);
+      DocumentStore.listen(this.onChange);
+    }
   };
 
   handleSelectField = (e, index, value) => {
@@ -102,8 +147,8 @@ class CreateDoc extends React.Component {
             hintText="Title"
             style={{margin: 5, paddingLeft: 10}}
             floatingLabelText="Document Title"
-            underlineStyle={{borderColor: '#2196F3'}}
             onChange={this.handleChange}
+            value={this.state.title}
           />
       </div>
       <div className="row">
@@ -112,35 +157,47 @@ class CreateDoc extends React.Component {
             hintText="Music"
             floatingLabelText="Category"
             name="category"
-            underlineStyle={{borderColor: '#2196F3'}}
             onChange={this.handleChange}
+            value={this.state.category}
           />
-        <SelectField underlineStyle={{borderColor: '#2196F3'}} className="col-md-6" value={this.state.accessLevel} name="accessLevel" onChange={this.handleSelectField}>
-            <MenuItem value={3} primaryText="Public"/>
-            <MenuItem value={2} primaryText="contributors"/>
-            <MenuItem value={1} primaryText="Admins"/>
-          </SelectField>
+        </div>
+        <div className="row">
+          <div className="col-md-4">
+          <Checkbox
+            label="Public"
+            defaultChecked={true}
+          />
+          </div>
+          <div className="col-md-4">
+          <Checkbox
+            label="Contributors"
+          />
+          </div>
+          <div className="col-md-4">
+          <Checkbox
+            label="Admins"
+          />
+          </div>
         </div>
         <div className="row">
           <TextField
             onChange={this.handleChange}
             className="col-md-11"
             name="content"
-            hintText="Message Field"
-            floatingLabelText="Content"
+            hintText="Document content"
+            floatingLabelText="Document Content"
             multiLine={true}
+            value={this.state.content}
             rows={4}
-            style={{border: 1}}
-            underlineStyle={{borderColor: '#2196F3'}}
+            style={{border: 0}}
           />
         </div>
         <div className="row">
-          <FlatButton label="Save" primary={true} onTouchTap={this.onSubmit} />
-          <FlatButton label="Cancel" secondary={true} />
+          <FlatButton label="Save" style={{margin: '0 auto'}} primary={true} onTouchTap={this.onSubmit} />
         </div>
         <Snackbar
           open={this.state.open}
-          message="Document Created successfully"
+          message={this.state.snackbarmsg}
           action="undo"
           autoHideDuration={4000}
           onRequestClose={this.handleRequestClose}

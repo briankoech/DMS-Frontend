@@ -35,6 +35,9 @@ export default class Document extends React.Component {
   componentWillMount() {
 
   }
+  componentDidMount() {
+
+  }
 
   render () {
     let ActionNodes = () => {
@@ -42,7 +45,7 @@ export default class Document extends React.Component {
       if(user.id === this.props.document.ownerId) {
         return (
           <div>
-            <MenuItem primaryText="Edit" leftIcon={<Edit />}/>
+            <MenuItem primaryText="Edit" leftIcon={<Edit />} href={'/edit?document=' + this.props.document._id}/>
             <MenuItem primaryText="Remove" leftIcon={<Delete />}/>
           </div>
         );
@@ -81,10 +84,13 @@ export default class Document extends React.Component {
                 />
               </div>
               <div className="col-md-4">
-                Brian Koech
+                <a href={'/document/' + this.props.document.ownerId._id}>{this.props.document.ownerId.username}</a>
               </div>
               <div className="col-md-5">
-                7th Feb in Programming
+                7th Feb in &nbsp;
+                <a href={'/category?category='+ this.props.document.category.category}>
+                    {this.props.document.category.category}
+                  </a>
               </div>
               <div className="col-md-1">
                 <IconMenu
@@ -92,13 +98,10 @@ export default class Document extends React.Component {
                    anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
                  >
-                   <MenuItem primaryText="More info" leftIcon={<Info />}/>
+                   <MenuItem primaryText="More info" href={'/document/' + this.props.document._id} leftIcon={<Info />}/>
                    {ActionNodes()}
                  </IconMenu>
               </div>
-              {/*{this.props.document.ownerId}*/}
-              {/*{this.props.document.createdAt}*/}
-              {/*{this.props.document.category}*/}
             </div>
           </CardText>
         </CardActions>
