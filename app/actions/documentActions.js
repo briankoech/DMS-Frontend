@@ -12,7 +12,6 @@ class Actions {
 
   fetchDocuments(id, token) {
     //return super.get(url, token);
-    console.log('called againf');
     let url;
     if(token) {
       url = '/api/role/document';
@@ -31,6 +30,25 @@ class Actions {
       });
   }
 
+  fetchDocumentsByUser(id, token) {
+    //return super.get(url, token);
+    let url;
+    if(token) {
+      url = '/api/users/documents/'+ id;
+    } else {
+      url = '/api/publicDocsByUser/' + id;
+    }
+    request
+      .get(url)
+      .set('x-access-token', token)
+      .end((err, res) => {
+        if(err) {
+          this.documentsFailed({error: err});
+        } else {
+          this.updateDocuments(res.body);
+        }
+      });
+  }
   getDocument(id, token) {
     let url;
     if(token) {

@@ -8,6 +8,7 @@
 
     //api.use(Users.getToken);
     api.get('/publicDocs', Document.getAllPublicDocs);
+    api.get('/publicDocsByUser/:id', Document.getAllPublicDocsByUser);
     api.get('/docs/category', Document.getDocumenstByCategory);
     api.post('/document', Users.getToken, Document.create);
     api.get('/document', Users.getToken, Document.getAllDocuments);

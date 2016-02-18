@@ -14,6 +14,7 @@ render((
       <IndexRoute component={Dashboard} />
       <Route path="/document/:id" component={Document} />
       <Route path="/category" component={Dashboard} />
+      <Route path="/author" component={Dashboard} />
       <Route path="/create" component={Create} />
       <Route path="/edit" component={Create} />
     </Route>

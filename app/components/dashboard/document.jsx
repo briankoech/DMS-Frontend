@@ -42,7 +42,7 @@ export default class Document extends React.Component {
   render () {
     let ActionNodes = () => {
       let user = JSON.parse(localStorage.getItem('user')) || {};
-      if(user.id === this.props.document.ownerId) {
+      if(user.id === this.props.document.ownerId._id) {
         return (
           <div>
             <MenuItem primaryText="Edit" leftIcon={<Edit />} href={'/edit?document=' + this.props.document._id}/>
@@ -84,7 +84,7 @@ export default class Document extends React.Component {
                 />
               </div>
               <div className="col-md-4">
-                <a href={'/document/' + this.props.document.ownerId._id}>{this.props.document.ownerId.username}</a>
+                <a href={'/author?user=' + this.props.document.ownerId._id}>{this.props.document.ownerId.username}</a>
               </div>
               <div className="col-md-5">
                 7th Feb in &nbsp;

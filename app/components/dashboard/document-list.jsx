@@ -59,6 +59,16 @@ class DocumentList extends React.Component {
     } else if(this.props.location.pathname === '/category') {
       var type = this.props.location.query.category;
       Actions.fetchByCategory(type, token);
+    } else if(this.props.location.pathname === '/author') {
+      // check if user is logged in or not
+      // register an action
+      // get the docs based on userId
+      let userId = this.props.location.query.user;
+      if(user && token) {
+        Actions.fetchDocumentsByUser(userId, token);
+      } else {
+        Actions.fetchDocumentsByUser(userId);
+      }
     }
   }
 

@@ -106,8 +106,6 @@
 
     getAllDocumentsByRole: function(req, res) {
       Role.findById(req.decoded._doc.role)
-      .populate('ownerId')
-      .populate('category')
       .exec(function(err, role) {
         if (err) {
           res.status(500).send({
@@ -138,6 +136,8 @@
           .sort({
             'createdAt': -1
           })
+          .populate('ownerId')
+          .populate('category')
           .exec(function(err, documents) {
             if (err) {
               res.status(500).send(err);
@@ -174,10 +174,23 @@
     },
 
     getAllPublicDocs: function(req, res) {
-      console.log('Called');
       Document.find({accessLevel: {
         $gte: 3
       }})
+      .populate('ownerId')
+      .populate('category')
+      .exec(function(err, docs) {
+        res.status(200).send(docs);
+      })
+    },
+
+    getAllPublicDocsByUser: function(req, res) {
+      Document.find({
+        accessLevel: {
+          $gte: 3
+        },
+        ownerId: req.params.id
+      })
       .populate('ownerId')
       .populate('category')
       .exec(function(err, docs) {
