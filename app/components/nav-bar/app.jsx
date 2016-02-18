@@ -12,6 +12,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import CategoryList from '../side-bar/Category-list.jsx';
 import Snackbar from 'material-ui/lib/snackbar';
 import RaisedButton from 'material-ui/lib/raised-button';
+import Colors from 'material-ui/lib/styles/colors';
 
 import SessionActions from '../../actions/SessionActions';
 import SessionStore from '../../stores/SessionStore';
@@ -108,18 +109,20 @@ class App extends React.Component {
     return (
       <div>
         <AppBar
+          className="navbar"
+          id="navbar"
           title={<span style={{cursor: 'pointer'}}>DMS</span>}
           onTitleTouchTap={this.handleTitleTouchTap}
           iconElementLeft={
             <IconButton onTouchTap={this.handleToggle}>
-              <FontIcon className="muidocs-icon-action-home"><i className="fa fa-bars"></i></FontIcon>
+              <FontIcon className="muidocs-icon-action-home" color={Colors.red500}><i className="fa fa-bars"></i></FontIcon>
             </IconButton>
           }
           iconElementRight={
             (this.state.isLoggedIn) ? <RaisedButton label="Create Document" linkButton href="/create" primary={true} style={{margin: 10}}/>
                 : <FlatButton label="Login" onTouchTap={this.handleLogin}/>
           }
-          style={{backgroundColor: '#2196F3', position: 'fixed'}}
+          style={{backgroundColor: '#FFF', position: 'fixed', boxShadow: 'none'}}
         />
       <Login
         openlogin={this.state.openlogin}

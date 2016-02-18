@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -11,5 +12,20 @@
 <body>
     <div id="container"></div>
     <script src="/public/main.js"></script>
+    <script>
+      $(document).ready(function(){
+       var scroll_start = 0;
+       var startchange = $('#startchange');
+       var offset = startchange.offset();
+       $(document).scroll(function() {
+          scroll_start = $(this).scrollTop();
+          if(scroll_start > offset.top) {
+              $('#navbar').css('background-color', '#2196F3');
+           } else {
+              $('#navbar').css('background-color', 'transparent');
+           }
+       });
+      });
+    </script>
 </body>
 </html>

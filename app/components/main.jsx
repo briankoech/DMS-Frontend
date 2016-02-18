@@ -11,7 +11,8 @@ export default class Main extends React.Component {
     return (
       <div>
         <Nav />
-        <div className="container titlehead">
+        <div className="spacer"></div>
+        <div id="startchange" className="container titlehead">
           <TitleHead />
         </div>
         <div className="container content">
