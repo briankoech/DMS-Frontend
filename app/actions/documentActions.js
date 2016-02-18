@@ -34,7 +34,7 @@ class Actions {
     //return super.get(url, token);
     let url;
     if(token) {
-      url = '/api/users/documents/'+ id;
+      url = '/api/users/documents/' + id;
     } else {
       url = '/api/publicDocsByUser/' + id;
     }

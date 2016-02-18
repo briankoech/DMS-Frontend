@@ -119,6 +119,7 @@ class App extends React.Component {
             (this.state.isLoggedIn) ? <RaisedButton label="Create Document" linkButton href="/create" primary={true} style={{margin: 10}}/>
                 : <FlatButton label="Login" onTouchTap={this.handleLogin}/>
           }
+          style={{backgroundColor: '#2196F3', position: 'fixed'}}
         />
       <Login
         openlogin={this.state.openlogin}
