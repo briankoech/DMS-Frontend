@@ -203,8 +203,6 @@
       Category.find({
         category: req.query.category.toLowerCase()
       })
-      .populate('ownerId')
-      .populate('category')
       .exec(function(err, category) {
         if (err) {
           res.status(500).send({
@@ -214,7 +212,10 @@
           // get the categoryId
           Document.find({
             category: category[0]._id
-          }, function(err, documents) {
+          })
+          .populate('ownerId')
+          .populate('category')
+          .exec(function(err, documents) {
             if (err) {
               res.status(500).send({
                 error: err

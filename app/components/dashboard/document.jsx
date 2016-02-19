@@ -25,19 +25,30 @@ import Content from 'material-ui/lib/svg-icons/content/send';
 import DocActions from './document-actions.jsx';
 import {Router, Route, Link} from 'react-router';
 
+import DocumentActions from '../../actions/documentActions';
+import DocumentStores from '../../stores/DocumentStore';
 const colors = styles.Colors;
 
 export default class Document extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {docId: ''}
   }
 
   componentWillMount() {
 
   }
   componentDidMount() {
-
+    this.setState({docId: this.props.document._id});
   }
+
+
+  handleDelete = () => {
+    this.props.handleDelete(this.props.document._id);
+    // console.log('deleted');
+    // let token = localStorage.getItem('x-access-token');
+    // DocumentActions.deleteDocument(id, token);
+  };
 
   render () {
     let ActionNodes = () => {
@@ -46,7 +57,7 @@ export default class Document extends React.Component {
         return (
           <div>
             <MenuItem primaryText="Edit" leftIcon={<Edit />} href={'/edit?document=' + this.props.document._id}/>
-            <MenuItem primaryText="Remove" leftIcon={<Delete />}/>
+            <MenuItem primaryText="Remove" leftIcon={<Delete />} onTouchTap={this.props.open}/>
           </div>
         );
       } else {

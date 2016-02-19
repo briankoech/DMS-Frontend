@@ -121,6 +121,21 @@ class Actions {
         }
       });
   }
+  deleteDocument(id, token) {
+    request
+      .delete('/api/document/'+ id)
+      .set('x-access-token', token)
+      .end((err, res) => {
+        if(err) {
+          this.deleteResponse({error: err});
+        } else {
+          this.deleteResponse(res.body.message);
+        }
+      });
+  }
+  deleteResponse(message) {
+    return message;
+  }
   documentsFailed(errorMessage) {
     return errorMessage;
   }

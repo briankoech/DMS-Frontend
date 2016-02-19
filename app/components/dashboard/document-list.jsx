@@ -11,6 +11,10 @@ import GridList from 'material-ui/lib/grid-list/grid-list';
 import GridTile from 'material-ui/lib/grid-list/grid-tile';
 import StarBorder from 'material-ui/lib/svg-icons/toggle/star-border';
 import IconButton from 'material-ui/lib/icon-button';
+import Dialog from 'material-ui/lib/dialog';
+import FlatButton from 'material-ui/lib/flat-button';
+
+import ReactDOM from 'react-dom';
 
 const styles = {
   root: {
@@ -29,7 +33,7 @@ const styles = {
 class DocumentList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {user: '', documents: [], role: ''};
+    this.state = {user: '', documents: [], role: '', open: false, deleted: null};
 
     this.onChange = this.onChange.bind(this);
     this.userLoggedIn = this.userLoggedIn.bind(this);
@@ -47,9 +51,9 @@ class DocumentList extends React.Component {
   }
 
   componentWillMount() {
+    console.log('Mounting again');
     var token = localStorage.getItem('x-access-token');
     var user = localStorage.getItem('user');
-    console.log(this.props.location);
     if(this.props.location.pathname === '/') {
       if(user && token) {
         Actions.fetchDocuments(user.id, token);
@@ -60,9 +64,6 @@ class DocumentList extends React.Component {
       var type = this.props.location.query.category;
       Actions.fetchByCategory(type, token);
     } else if(this.props.location.pathname === '/author') {
-      // check if user is logged in or not
-      // register an action
-      // get the docs based on userId
       let userId = this.props.location.query.user;
       if(user && token) {
         Actions.fetchDocumentsByUser(userId, token);
@@ -75,12 +76,14 @@ class DocumentList extends React.Component {
   componentDidMount() {
     DocumentStore.listen(this.onChange);
     LoginStore.listen(this.userLoggedIn);
+    console.log(React.Children);
   }
 
   componentWillReceiveProps(nextProps) {
-
   }
+
   shouldComponentUpdate(nextProps, nextState) {
+    console.log('re-rendered');
     return true;
   }
   userLoggedIn(state) {
@@ -90,24 +93,70 @@ class DocumentList extends React.Component {
   }
 
   onChange(state) {
-    this.setState({documents: state.documents})
+    console.log('deleted object',this.state.deleted);
+    // filter the data
+    let docs = state.documents.filter((val) => {
+      console.log(val._id, this.state.deleted);
+      return val._id !== this.state.deleted;
+    });
+    console.log('docs', state.documents);
+
+    this.setState({documents: docs});
+    if(state.message) {
+      console.log('delete happened', state);
+      this.handleClose();
+
+    }
   }
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+  handleClose = () => {
+    this.setState({open: false});
+  };
+
+  handleDelete = (id) => {
+    console.log(this.refs.item.state.docId);
+    let token = localStorage.getItem('x-access-token');
+    //let id = this.refs.item.state.docId;
+    this.setState({deleted: id});
+    console.log('id to delete', id);
+    // Actions.deleteDocument(id, token);
+    //this.refs.item.handleDelete();
+  };
+
+
+  kevin = () => {
+    this.refs.item.handleDelete();
+  };
 
   render() {
     var documentNodes;
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        secondary={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Delete"
+        primary={true}
+        onTouchTap={this.kevin}
+      />,
+    ];
     if(!this.state.documents.length) {
       return (
         <Progress />
       );
     }
     if(this.state.documents) {
-      documentNodes = this.props.Document.documents.map((document) => {
+      documentNodes = this.state.documents.map((document) => {
         return (
           <div key={document._id} className="col-xs-12
                 col-sm-8
                 col-md-6
                 col-lg-4">
-            <Document user={this.state.user} document={document} className="box" />
+            <Document user={this.state.user} handleDelete={this.handleDelete} document={document} ref={'item'} open={this.handleOpen} className="box" />
           </div>
         );
       });
@@ -116,7 +165,20 @@ class DocumentList extends React.Component {
     }
 
     return (
-        <div className="row">{documentNodes}</div>
+      <div>
+        <div className="row">
+          {documentNodes}
+        </div>
+        <Dialog
+          title="Are you sure?"
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+          contentStyle={{width: '20%'}}
+          actions={actions}
+        >
+          These operation will delete the article permanently
+        </Dialog>
+      </div>
     );
   }
 }

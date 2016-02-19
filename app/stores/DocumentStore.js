@@ -3,11 +3,12 @@ import Actions from '../actions/documentActions';
 
 class DocumentStore {
   constructor() {
-    this.state = {documents: [], errorMessage: null };
+    this.state = {documents: [], errorMessage: null, message: null };
     this.bindListeners({
       handleDocumentsFetch: Actions.updateDocuments,
       handleFetchDocuments: Actions.fetchDocuments,
       handleFetchErrors: Actions.documentsFailed,
+      handleDeleteResponse: Actions.deleteResponse,
     });
   }
 
@@ -22,6 +23,11 @@ class DocumentStore {
 
   handleFetchErrors(error) {
     this.setState({errorMessage: error});
+  }
+
+  handleDeleteResponse(msg) {
+    console.log(msg);
+    this.setState({message: msg});
   }
 }
 
