@@ -120,12 +120,12 @@ class DocumentPage extends React.Component {
                 }}>
                   <i className="fa fa-twitter fa-1x"></i>
                 </FloatingActionButton>
-                <FloatingActionButton mini backgroundColor="#3B5998" href="http://facebook.com/brian.kirwa" linkButton target="_blank" style={{
+                <FloatingActionButton mini backgroundColor="#3B5998" href="https://www.facebook.com/sharer/sharer.php?u=http://CodingForEntrepreneurs.com/" linkButton target="_blank" style={{
                   marginLeft: 15
                 }}>
                   <i className="fa fa-facebook fa-1x"></i>
                 </FloatingActionButton>
-                <FloatingActionButton mini backgroundColor="#DD4B39" href="https://plus.google.com/+BrianKimutai" linkButton target="_blank" style={{
+                <FloatingActionButton mini backgroundColor="#DD4B39" href="https://plus.google.com/share?url=http://codingforentrepreneurs.com" linkButton target="_blank" style={{
                   marginLeft: 15
                 }}>
                   <i className="fa fa-google-plus fa-1x"></i>
