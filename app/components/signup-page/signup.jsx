@@ -8,6 +8,7 @@ import SignupAction from '../../actions/signupActions.js';
 import SignupStore from '../../stores/SignupStore';
 import connectToStores from 'alt-utils/lib/connectToStores';
 
+
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -94,13 +95,14 @@ class Signup extends React.Component {
           <h3 className="">Sign up</h3>
           <p className="">To save stories or get stories, edit or delete – all free.</p>
           <hr/>
-
+          <form>
           <TextField
             className=""
             hintText="johndoe"
             floatingLabelText="Username"
             fullWidth
             name="username"
+            required
             onChange={this.handleFieldChange}
           />
           <br />
@@ -152,9 +154,11 @@ class Signup extends React.Component {
           <RaisedButton
             className=""
             label="Create account"
+            type="submit"
             primary={true}
             onTouchTap={this.handleCreateUser}
           />
+          </form>
           <div className="row">
           <p className="">Already have an account?</p>
             <FlatButton

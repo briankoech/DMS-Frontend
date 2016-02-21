@@ -14,6 +14,7 @@ class Login extends React.Component {
     this.state = {
       username: '',
       password: '',
+      error: false,
     }
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -44,6 +45,7 @@ class Login extends React.Component {
 
   onChange(state) {
     if(state && state.message.success) {
+      this.setState({error: false});
       this.props.snackbar();
       this.props.onClick();
       localStorage.setItem('x-access-token', state.message.token);
@@ -54,8 +56,9 @@ class Login extends React.Component {
         title: state.message.user.role.title,
       };
       localStorage.setItem('user', JSON.stringify(user));
-    } else {
+    } else if(state && state.error.error){
       console.log('error', state);
+      this.setState({error: true});
     }
   }
 
@@ -106,6 +109,20 @@ class Login extends React.Component {
               label="Remember me"
               defaultChecked={true}
             />
+          </div>
+          <div className="row">
+            <p style={
+                this.state.error ?
+                   {
+                     display: 'block',
+                     color: '#FF0404',
+                     'text-align': 'center',
+                     'font-size': '1.2em',
+                     'font-family': 'monospace'
+                    }
+                 : {display: 'none'}
+              }
+              >Wrong username/password combination</p>
           </div>
           <div className="row">
             <RaisedButton
