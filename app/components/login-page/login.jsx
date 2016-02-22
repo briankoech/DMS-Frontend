@@ -8,17 +8,16 @@ import LoginActions from '../../actions/LoginActions';
 import LoginStore from '../../stores/LoginStore';
 import connectToStores from 'alt-utils/lib/connectToStores';
 
+const FMUI = require('formsy-material-ui');
+const {FormsyText} = FMUI;
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
       error: false,
+      canSubmit: false
     }
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.onChange = this.onChange.bind(this);
   }
   static getStores(props) {
     return [LoginStore];
@@ -29,21 +28,11 @@ class Login extends React.Component {
     return LoginStore.getState();
   }
 
-  handleFieldChange(e) {
-    let field = e.target.name;
-    let value = e.target.value;
-    if(field === 'username') {
-      this.setState({username: value})
-    } else if(field === 'password') {
-      this.setState({password: value});
-    }
-  }
-
   componentDidMount() {
     LoginStore.listen(this.onChange);
   }
 
-  onChange(state) {
+  onChange = (state) => {
     if(state && state.message.success) {
       this.setState({error: false});
       this.props.snackbar();
@@ -60,16 +49,19 @@ class Login extends React.Component {
       console.log('error', state);
       this.setState({error: true});
     }
-  }
+  };
 
-  handleLogin() {
-    let user = {
-      username: this.state.username,
-      password: this.state.password,
-    };
-    LoginActions.loginUser(user);
-  }
+  handleLogin = (model, resetForm) => {
+    LoginActions.loginUser(model);
+    resetForm();
+  };
+  enableButton = () => {
+    this.setState({canSubmit: true});
+  };
 
+  disableButton = () => {
+    this.setState({canSubmit: false});
+  };
   render() {
     return (
         <Dialog
@@ -84,25 +76,10 @@ class Login extends React.Component {
           <h3 className="">Log In</h3>
           <p className="">To save stories or get stories, edit or delete – all free.</p>
           <hr/>
-          <div className="row">
-            <TextField
-              hintText="johndoe"
-              floatingLabelText="Username"
-              onChange={this.handleFieldChange}
-              name="username"
-              fullWidth
-            />
-          </div>
-          <div className="row">
-            <TextField
-              hintText="johndoe"
-              floatingLabelText="password"
-              type="password"
-              onChange={this.handleFieldChange}
-              name="password"
-              fullWidth
-            />
-          </div>
+          <Formsy.Form onValid={this.enableButton} onInvalid={this.disableButton} onValidSubmit={this.handleLogin}>
+          <FormsyText className="" name='username' validations='isWords' validationError="Please use letters only" required fullWidth hintText="johndoe" floatingLabelText="Username"/>
+          <FormsyText className="" name='password' fullWidth validations="minLength:6" validationError="Length should be greater than 6" required hintText="Password" type="password" floatingLabelText="Password"/>
+
           <div className="row">
             <Checkbox
               className=""
@@ -128,11 +105,13 @@ class Login extends React.Component {
             <RaisedButton
               className="loginbtn"
               label="Log in"
+              type="submit"
               primary={true}
-              onTouchTap={this.handleLogin}
+              disabled={!this.state.canSubmit}
               fullWidth
             />
           </div>
+        </Formsy.Form>
           <div className="row">
             <RaisedButton
               style={{marginTop: 10}}
