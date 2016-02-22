@@ -45,10 +45,6 @@ class CreateDoc extends React.Component {
   componentWillMount() {
     CategoryActions.fetchCategory();
     if (this.props.location.pathname === '/edit') {
-      // get the query
-      // get the document from db
-      // edit data
-      // save
       console.log(this.props.location.query.document);
       var id = this.props.location.query.document;
       let token = localStorage.getItem('x-access-token');
@@ -58,7 +54,6 @@ class CreateDoc extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.state.title);
     CategoryStore.listen(this.onCategoryChange);
     DocumentStore.listen(this.onChange);
   }
@@ -77,7 +72,7 @@ class CreateDoc extends React.Component {
     }
     if (!state.errorMessage && state.documents.data) {
       console.log('fetched data');
-      this.setState({title: state.documents.data.title, content: state.documents.data.content, category: state.documents.data.category.category});
+      this.setState({title: state.documents.data.title, content: state.documents.data.content, accessLevel: state.documents.data.accessLevel, category: state.documents.data.category.category});
     }
     if (!state.errorMessage && state.documents.title) {
       console.log('updated');
@@ -135,49 +130,25 @@ class CreateDoc extends React.Component {
       return (<MenuItem key={index} value={category.category} primaryText={category.category}/>);
     });
 
-    var getOptions = function(input, callback) {
-      setTimeout(function() {
-        callback(null, {
-          options: [
-            {
-              value: 'one',
-              label: 'One'
-            }, {
-              value: 'two',
-              label: 'Two'
-            }, {
-              value: 'three',
-              label: 'Three'
-            }, {
-              value: 'four',
-              label: 'Four'
-            }
-          ],
-          // CAREFUL! Only set this to true when there are no more options,
-          // or more specific queries will not be sent to the server.
-          complete: true
-        });
-      }, 3000);
-    };
-
     return (
       <div className="container editor">
         <h5>create && edit</h5>
         <Formsy.Form onValid={this.enableButton} onInvalid={this.disableButton} onValidSubmit={this.onSubmit}>
 
-          <FormsyText className="" name='title' validationError="This field is required" required fullWidth hintText="Title" floatingLabelText="Title" style={{
+          <FormsyText className="" name='title' validationError="This field is required" value={this.state.title} required fullWidth hintText="Title" floatingLabelText="Title" style={{
             margin: 5,
             paddingLeft: 10
           }}/>
         <FormsySelect name='category' fullWidth required floatingLabelText="Document Category">
             {categoryNodes}
-          </FormsySelect>
-          <FormsyRadioGroup className="row" name="shipSpeed" fullWidth defaultSelected="not_light">
-            <FormsyRadio className="col-md-4" value="Public" label="Public"/>
-            <FormsyRadio className="col-md-4" value="Contributors" label="Contributors"/>
-            <FormsyRadio className="col-md-4" value="Admins" label="Admins"/>
+            <MenuItem value={this.state.category} primaryText={this.state.category}/>
+        </FormsySelect>
+          <FormsyRadioGroup className="row" name="accessLevel" fullWidth defaultSelected="3">
+            <FormsyRadio className="col-md-4" value="3" label="Public"/>
+            <FormsyRadio className="col-md-4" value="2" label="Contributors"/>
+            <FormsyRadio className="col-md-4" value="1" label="Admins"/>
           </FormsyRadioGroup>
-          <FormsyText className="" name='content' validations="minLength:10" validationError="Miminum of 10 chars required" required fullWidth hintText="Content" multiLine={true} rows={4} floatingLabelText="Document Content" style={{
+          <FormsyText className="" name='content' value={this.state.content} validations="minLength:10" validationError="Miminum of 10 chars required" required fullWidth hintText="Content" multiLine={true} rows={4} floatingLabelText="Document Content" style={{
             margin: 5,
             paddingLeft: 10
           }}/>

@@ -11,7 +11,7 @@
       var docsave = function(categoryId) {
         var document = new Document({
           ownerId: req.decoded._doc._id,
-          accessLevel: req.body.accessLevel,
+          accessLevel: req.body.accessLevel || 3,
           title: req.body.title,
           category: categoryId,
           content: req.body.content,
