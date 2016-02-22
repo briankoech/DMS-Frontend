@@ -33,7 +33,7 @@ class Login extends React.Component {
   }
 
   onChange = (state) => {
-    if(state && state.message.success) {
+    if (state && state.message.success) {
       this.setState({error: false});
       this.props.snackbar();
       this.props.onClick();
@@ -42,10 +42,10 @@ class Login extends React.Component {
         username: state.message.user.username,
         id: state.message.user._id,
         roleId: state.message.user.role._id,
-        title: state.message.user.role.title,
+        title: state.message.user.role.title
       };
       localStorage.setItem('user', JSON.stringify(user));
-    } else if(state && state.error.error){
+    } else if (state && state.error.error) {
       console.log('error', state);
       this.setState({error: true});
     }
@@ -64,63 +64,39 @@ class Login extends React.Component {
   };
   render() {
     return (
-        <Dialog
-          actionsContainerClassName="trial"
-          bodyClassName="loginDialog"
-          modal={false}
-          open={this.props.openlogin}
-          onRequestClose={this.props.onClick}
-          autoScrollBodyContent
-        >
+      <Dialog actionsContainerClassName="trial" bodyClassName="loginDialog" modal={false} open={this.props.openlogin} onRequestClose={this.props.onClick} autoScrollBodyContent>
         <div className="login">
           <h3 className="">Log In</h3>
           <p className="">To save stories or get stories, edit or delete – all free.</p>
           <hr/>
           <Formsy.Form onValid={this.enableButton} onInvalid={this.disableButton} onValidSubmit={this.handleLogin}>
-          <FormsyText className="" name='username' validations='isWords' validationError="Please use letters only" required fullWidth hintText="johndoe" floatingLabelText="Username"/>
-          <FormsyText className="" name='password' fullWidth validations="minLength:6" validationError="Length should be greater than 6" required hintText="Password" type="password" floatingLabelText="Password"/>
+            <FormsyText className="" name='username' validations='isWords' validationError="Please use letters only" required fullWidth hintText="johndoe" floatingLabelText="Username"/>
+            <FormsyText className="" name='password' fullWidth validations="minLength:6" validationError="Length should be greater than 6" required hintText="Password" type="password" floatingLabelText="Password"/>
 
+            <div className="row">
+              <Checkbox className="" label="Remember me" defaultChecked={true}/>
+            </div>
+            <div className="row">
+              <p style={this.state.error
+                ? {
+                  display: 'block',
+                  color: '#FF0404',
+                  'text-align': 'center',
+                  'font-size': '1.2em',
+                  'font-family': 'monospace'
+                }
+                : {
+                  display: 'none'
+                }}>Wrong username/password combination</p>
+            </div>
+            <div className="row">
+              <RaisedButton className="loginbtn" label="Log in" type="submit" primary={true} disabled={!this.state.canSubmit} fullWidth/>
+            </div>
+          </Formsy.Form>
           <div className="row">
-            <Checkbox
-              className=""
-              label="Remember me"
-              defaultChecked={true}
-            />
-          </div>
-          <div className="row">
-            <p style={
-                this.state.error ?
-                   {
-                     display: 'block',
-                     color: '#FF0404',
-                     'text-align': 'center',
-                     'font-size': '1.2em',
-                     'font-family': 'monospace'
-                    }
-                 : {display: 'none'}
-              }
-              >Wrong username/password combination</p>
-          </div>
-          <div className="row">
-            <RaisedButton
-              className="loginbtn"
-              label="Log in"
-              type="submit"
-              primary={true}
-              disabled={!this.state.canSubmit}
-              fullWidth
-            />
-          </div>
-        </Formsy.Form>
-          <div className="row">
-            <RaisedButton
-              style={{marginTop: 10}}
-              className="signupbtn"
-              label="Sign up"
-              secondary={true}
-              onTouchTap={this.props.signupAction}
-              fullWidth
-            />
+            <RaisedButton style={{
+              marginTop: 10
+            }} className="signupbtn" label="Sign up" secondary={true} onTouchTap={this.props.signupAction} fullWidth/>
           </div>
         </div>
       </Dialog>

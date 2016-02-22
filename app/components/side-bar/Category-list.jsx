@@ -10,7 +10,6 @@ class CategoryList extends React.Component {
     this.state = {
       categories: [],
     }
-   this.onChange = this.onChange.bind(this);
   }
 
   static getStores(props) {
@@ -35,9 +34,9 @@ class CategoryList extends React.Component {
     return true;
   }
 
-  onChange(state) {
+  onChange = (state) => {
     this.setState({categories: state.categories});
-  }
+  };
 
   render() {
     // nodes
