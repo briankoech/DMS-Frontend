@@ -30,7 +30,8 @@ class DocumentPage extends React.Component {
     this.state = {
       documents: [],
       open: false,
-      snackopen: false
+      snackopen: false,
+      isLoggedIn: false
     };
   }
 
@@ -109,6 +110,7 @@ class DocumentPage extends React.Component {
         onTouchTap={this.handleDelete}
       />,
     ];
+
     if (!this.state.documents.length) {
       console.log('still fetching.......');
       return (
@@ -139,15 +141,18 @@ class DocumentPage extends React.Component {
                 }}>
                   <h5 style={{color: '#894388'}}><a href={"/category?category="+ doc.category.category}>{doc.category.category}</a></h5>
                 </div>
-                <div className="actionButtons col-md-4">
-                  <IconButton tooltip="Edit" linkButton href={"/edit?document=" + doc._id}>
-                    <Edit color={Colors.lightBlue300}/>
-                  </IconButton>
+                {this.state.isLoggedIn ?
+                  <div className="actionButtons col-md-4">
+                    <IconButton tooltip="Edit" linkButton href={"/edit?document=" + doc._id}>
+                      <Edit color={Colors.lightBlue300}/>
+                    </IconButton>
 
-                  <IconButton tooltip="Delete" onTouchTap={this.handleOpen}>
-                    <Delete color={Colors.red500}/>
-                  </IconButton>
-                </div>
+                    <IconButton tooltip="Delete" onTouchTap={this.handleOpen}>
+                      <Delete color={Colors.red500}/>
+                    </IconButton>
+                  </div>
+                  : null
+                }
               </div>
               <Divider/>
               <div className="row">
