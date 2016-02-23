@@ -73,7 +73,9 @@ export default class Document extends React.Component {
         </CardMedia>
         <div className="row">
           <div className="col-md-9" >
-            <CardTitle title={this.props.document.title} />
+            <a href={`/document/${this.props.document._id}`}>
+              <CardTitle actAsExpander expandable showExpandableButton title={this.props.document.title} />
+            </a>
           </div>
           <div className="col-md-3">
             <FloatingActionButton primary mini style={{margin: 10}} linkButton href={'/document/' + this.props.document._id}  >

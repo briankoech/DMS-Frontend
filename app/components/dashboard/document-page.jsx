@@ -11,7 +11,10 @@ import Delete from 'material-ui/lib/svg-icons/action/delete';
 import Edit from 'material-ui/lib/svg-icons/editor/mode-edit';
 import Colors from 'material-ui/lib/styles/colors';
 import moment from 'moment';
-
+import Dialog from 'material-ui/lib/dialog';
+import FlatButton from 'material-ui/lib/flat-button';
+import { browserHistory } from 'react-router';
+import Snackbar from 'material-ui/lib/snackbar';
 
 const style = {
   height: 'auto',
@@ -25,9 +28,10 @@ class DocumentPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      documents: []
+      documents: [],
+      open: false,
+      snackopen: false
     };
-    this.onChange = this.onChange.bind(this);
   }
 
   static getStores(props) {
@@ -58,15 +62,51 @@ class DocumentPage extends React.Component {
     return true;
   }
 
-  onChange(state) {
+  onChange = (state) => {
+    console.log('state', state);
+    if(state && state.message === 'delete successfuly') {
+      // show a snackbar and
+      // redirect to homepage
+      browserHistory.push('/');
+    }
     console.log(state.documents.data);
     var doc = [];
     doc.push(state.documents.data);
     this.setState({documents: doc});
     console.log('doc', this.state);
-  }
+  };
+
+  handleDelete = () => {
+    let token = localStorage.getItem('x-access-token');
+    let id = this.props.Document.documents.data._id;
+    DocumentActions.deleteDocument(id, token);
+    this.setState({snackopen: true});
+    this.handleClose();
+  };
+
+  handleRequestClose = () => {
+    this.setState({snackopen: false});
+  };
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+  handleClose = () => {
+    this.setState({open: false});
+  };
 
   render() {
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        secondary={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Delete"
+        primary={true}
+        onTouchTap={this.handleDelete}
+      />,
+    ];
     if (!this.state.documents.length) {
       console.log('still fetching.......');
       return (
@@ -102,7 +142,7 @@ class DocumentPage extends React.Component {
                     <Edit color={Colors.lightBlue300}/>
                   </IconButton>
 
-                  <IconButton tooltip="Delete">
+                  <IconButton tooltip="Delete" onTouchTap={this.handleOpen}>
                     <Delete color={Colors.red500}/>
                   </IconButton>
                 </div>
@@ -135,13 +175,30 @@ class DocumentPage extends React.Component {
                   <i className="fa fa-google-plus fa-1x"></i>
                 </FloatingActionButton>
               </div>
+              <Dialog
+                title="Are you sure?"
+                open={this.state.open}
+                onRequestClose={this.handleClose}
+                contentStyle={{width: '20%'}}
+                actions={actions}
+              >
+                These operation will delete the article permanently
+              </Dialog>
             </Paper>
           </div>
         );
       });
 
       return (
-        <div>{data}{console.log(data)}</div>
+        <div>
+          {data}
+          <Snackbar
+            open={this.state.snackopen}
+            message="Deleted successfuly"
+            autoHideDuration={4000}
+            onRequestClose={this.handleRequestClose}
+          />
+        </div>
       )
     }
   }

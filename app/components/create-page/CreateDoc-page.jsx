@@ -13,6 +13,7 @@ import DocumentActions from '../../actions/documentActions';
 import DocumentStore from '../../stores/DocumentStore';
 import CategoryActions from '../../actions/categoryActions';
 import CategoryStore from '../../stores/categoryStore';
+import { browserHistory } from 'react-router';
 
 const FMUI = require('formsy-material-ui');
 const {FormsyText, FormsySelect, FormsyRadioGroup, FormsyRadio} = FMUI;
@@ -49,7 +50,6 @@ class CreateDoc extends React.Component {
       var id = this.props.location.query.document;
       let token = localStorage.getItem('x-access-token');
       DocumentActions.getDocument(id, token);
-
     }
   }
 
@@ -64,14 +64,12 @@ class CreateDoc extends React.Component {
   };
 
   onChange = (state) => {
-    console.log('STATE', state);
     if (!state.errorMessage && state.documents.doc) {
-      console.log('saved');
       this.setState({snackbarmsg: 'created successfully'});
       this.handleTouchTap();
+      browserHistory.push(`/document/${state.documents.doc._id}`);
     }
     if (!state.errorMessage && state.documents.data) {
-      console.log('fetched data');
       this.setState({title: state.documents.data.title, content: state.documents.data.content, accessLevel: state.documents.data.accessLevel, category: state.documents.data.category.category});
     }
     if (!state.errorMessage && state.documents.title) {
@@ -79,9 +77,12 @@ class CreateDoc extends React.Component {
       this.setState({title: '', content: '', category: ''});
       this.setState({snackbarmsg: 'updated successfully'});
       this.handleTouchTap();
+      browserHistory.push(`/document/${state.documents._id}`);
     }
     if (state.errorMessage) {
       // error report
+      this.setState({snackbarmsg: 'Error occured!!'});
+      this.handleTouchTap();
     }
   };
 
