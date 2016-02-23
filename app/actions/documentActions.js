@@ -50,12 +50,7 @@ class Actions {
       });
   }
   getDocument(id, token) {
-    let url;
-    if(token) {
-      url = '/api/document/' + id;
-    } else {
-      url = '/api/publicDocs';
-    }
+    let url = '/api/document/' + id;
     request
       .get(url)
       .set('x-access-token', token)

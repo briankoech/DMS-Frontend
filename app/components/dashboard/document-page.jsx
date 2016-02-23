@@ -48,6 +48,8 @@ class DocumentPage extends React.Component {
     let id = this.props.params.id;
     if (token && id) {
       DocumentActions.getDocument(id, token);
+    } else {
+      DocumentActions.getDocument(id);
     }
     // else fetch docs without token
   }
