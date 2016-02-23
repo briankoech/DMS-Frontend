@@ -15,7 +15,7 @@
     api.get('/role/document', Users.getToken, Document.getAllDocumentsByRole);
     api.get('/document/date', Users.getToken, Document.getAllDocumentsByDate);
     api.get('/document/category', Users.getToken, Document.getDocumenstByCategory);
-    api.get('/document/:_id', Users.getToken, Document.findOne);
+    api.get('/document/:_id', Document.findOne);
     api.put('/document/:_id', Users.getToken, Document.update);
     api.put('/document/contributors/:_id', Users.getToken, Document.addContributors);
     api.delete('/document/:_id', Users.getToken, Document.delete);

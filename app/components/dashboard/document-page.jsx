@@ -10,6 +10,7 @@ import IconButton from 'material-ui/lib/icon-button';
 import Delete from 'material-ui/lib/svg-icons/action/delete';
 import Edit from 'material-ui/lib/svg-icons/editor/mode-edit';
 import Colors from 'material-ui/lib/styles/colors';
+import moment from 'moment';
 
 
 const style = {
@@ -78,7 +79,7 @@ class DocumentPage extends React.Component {
           <div key={index}>
             <Paper style={style} zDepth={3}>
               <div className="row">
-                <h3 className="docTitle">ReactJS Tutorial – How to Add or Delete Table Row Dynamically</h3>
+                <h3 className="docTitle">{doc.title}</h3>
               </div>
               <Divider/>
               <div className="row">
@@ -86,16 +87,19 @@ class DocumentPage extends React.Component {
                   padding: 5,
                   marginLeft: 10
                 }}>
-                  <h5>By Brian Koech ON SEPTEMBER 10, 2004</h5>
+                  <h5>
+                    By <span style={{color: '#983898'}}><a href={"/author?user="+ doc.ownerId._id}>{doc.ownerId.name.first} {doc.ownerId.name.last}</a> </span> ON &nbsp;
+                    {moment(doc.createdAt).format('MMMM Do YYYY')}
+                  </h5>
                 </div>
                 <div className="col-md-3 category" style={{
                   padding: 5
                 }}>
-                  <h5>PROGRammING</h5>
+                  <h5 style={{color: '#894388'}}><a href={"/category?category="+ doc.category.category}>{doc.category.category}</a></h5>
                 </div>
                 <div className="actionButtons col-md-4">
-                  <IconButton tooltip="Edit">
-                    <Edit color={Colors.lightBlue100}/>
+                  <IconButton tooltip="Edit" linkButton href={"/edit?document=" + doc._id}>
+                    <Edit color={Colors.lightBlue300}/>
                   </IconButton>
 
                   <IconButton tooltip="Delete">
@@ -107,7 +111,7 @@ class DocumentPage extends React.Component {
               <div className="row">
                 <div className="doc-content">
                   <p className="">
-                    Render a ReactElement to its initial HTML. This should only be used on the server. React will return an HTML string. You can use this method to generate HTML on the server and send the markup down on the initial request for faster page loads and to allow search engines to crawl your pages for SEO purposes. If you call ReactDOM.render() on a node that already has this server-rendered markup, React will preserve it and only attach event handlers, allowing you to have a very performant first-load experience. Render a ReactElement to its initial HTML. This should only be used on the server. React will return an HTML string. You can use this method to generate HTML on the server and send the markup down on the initial request for faster page loads and to allow search engines to crawl your pages for SEO purposes. If you call ReactDOM.render() on a node that already has this server-rendered markup, React will preserve it and only attach event handlers, allowing you to have a very performant first-load experience. Render a ReactElement to its initial HTML. This should only be used on the server. React will return an HTML string. You can use this method to generate HTML on the server and send the markup down on the initial request for faster page loads and to allow search engines to crawl your pages for SEO purposes. If you call ReactDOM.render() on a node that already has this server-rendered markup, React will preserve it and only attach event handlers, allowing you to have a very performant first-load experience. Render a ReactElement to its initial HTML. This should only be used on the server. React will return an HTML string. You can use this method to generate HTML on the server and send the markup down on the initial request for faster page loads and to allow search engines to crawl your pages for SEO purposes. If you call ReactDOM.render() on a node that already has this server-rendered markup, React will preserve it and only attach event handlers, allowing you to have a very performant first-load experience.
+                    {doc.content}
                   </p>
                 </div>
               </div>
@@ -120,12 +124,12 @@ class DocumentPage extends React.Component {
                 }}>
                   <i className="fa fa-twitter fa-1x"></i>
                 </FloatingActionButton>
-                <FloatingActionButton mini backgroundColor="#3B5998" href="https://www.facebook.com/sharer/sharer.php?u=http://CodingForEntrepreneurs.com/" linkButton target="_blank" style={{
+                <FloatingActionButton mini backgroundColor="#3B5998" href={"https://www.facebook.com/sharer/sharer.php?u="+ window.location.href} linkButton target="_blank" style={{
                   marginLeft: 15
                 }}>
                   <i className="fa fa-facebook fa-1x"></i>
                 </FloatingActionButton>
-                <FloatingActionButton mini backgroundColor="#DD4B39" href="https://plus.google.com/share?url=http://codingforentrepreneurs.com" linkButton target="_blank" style={{
+                <FloatingActionButton mini backgroundColor="#DD4B39" href={"https://plus.google.com/share?url=" + window.location.href} linkButton target="_blank" style={{
                   marginLeft: 15
                 }}>
                   <i className="fa fa-google-plus fa-1x"></i>
@@ -137,7 +141,7 @@ class DocumentPage extends React.Component {
       });
 
       return (
-        <div>{data}</div>
+        <div>{data}{console.log(data)}</div>
       )
     }
   }

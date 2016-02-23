@@ -24,6 +24,7 @@ import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import Content from 'material-ui/lib/svg-icons/content/send';
 import DocActions from './document-actions.jsx';
 import {Router, Route, Link} from 'react-router';
+import moment from 'moment';
 
 import DocumentActions from '../../actions/documentActions';
 import DocumentStores from '../../stores/DocumentStore';
@@ -68,7 +69,7 @@ export default class Document extends React.Component {
       <Card style={{margin: 15}}>
         <CardMedia
         >
-          <img src="http://lorempixel.com/600/337/nature/" />
+          <img src="http://lorempixel.com/600/337/technics/" />
         </CardMedia>
         <div className="row">
           <div className="col-md-9" >
@@ -90,16 +91,16 @@ export default class Document extends React.Component {
                     col-lg-2"
               >
                 <Avatar
-                  icon={<FontIcon className="fa fa-user" />}
+                  src="http://lorempixel.com/600/337/people/"
                   color={Colors.blue500}
                 />
               </div>
-              <div className="col-md-4">
-                <a href={'/author?user=' + this.props.document.ownerId._id}>{this.props.document.ownerId.username}</a>
+              <div className="col-md-2">
+                <a href={'/author?user=' + this.props.document.ownerId._id} style={{color: '#982893'}}>{this.props.document.ownerId.username}</a>
               </div>
-              <div className="col-md-5">
-                7th Feb in &nbsp;
-                <a href={'/category?category='+ this.props.document.category.category}>
+              <div className="col-md-7">
+                {moment(this.props.document.createdAt).format('MMM Do')} in &nbsp;
+                <a href={'/category?category='+ this.props.document.category.category} style={{color: '#982893'}}>
                     {this.props.document.category.category}
                   </a>
               </div>

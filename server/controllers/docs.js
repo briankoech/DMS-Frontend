@@ -297,6 +297,7 @@
     findOne: function(req, res) {
       Document.findById(req.params._id)
       .populate('category')
+      .populate('ownerId')
       .exec(function(err, document) {
         if (err) {
           res.status(500).send(err);
