@@ -17,7 +17,6 @@ import Colors from 'material-ui/lib/styles/colors';
 import SessionActions from '../../actions/SessionActions';
 import SessionStore from '../../stores/SessionStore';
 import connectToStores from 'alt-utils/lib/connectToStores';
-import LoginStore from '../../stores/LoginStore';
 
 import Link from 'react-router';
 injectTapEventPlugin();
@@ -30,60 +29,42 @@ class App extends React.Component {
       openlogin: false,
       opensignup: false,
       opensnackbar: false,
-      isLoggedIn: false,
+      isLoggedIn: false
     };
+  }
 
-    this.onChange = this.onChange.bind(this);
-    this.isLoggedIn = this.isLoggedIn.bind(this);
-    this.userLoggedIn = this.userLoggedIn.bind(this);
-  }
-  componentWillMount() {
-    this.userLoggedIn();
-  }
-  userLoggedIn() {
-    var token = localStorage.getItem('x-access-token');
-    var user = JSON.parse(localStorage.getItem('user')) || {};
-    if(token && (user.title === 'admin' || user.title === 'contributor')) {
-      // verify if user is logged in
-      this.setState({isLoggedIn: true});
-    }
-  }
+
   static getStores(props) {
-    return [SessionStore, LoginStore];
+    return [SessionStore];
   }
 
   static getPropsFromStores(props) {
-    console.log('changes');
-    return {
-        Session: SessionStore.getState(),
-        Login: LoginStore.getState(),
-      };
+    return SessionStore.getState()
   }
+
+
   componentWillReceiveProps(nextProps) {
-    this.userLoggedIn();
+
   }
   shouldComponentUpdate(nextProps, nextState) {
-
     return true;
   }
 
   componentDidMount() {
     console.log('Mounted');
     // listen for store changes
-    SessionStore.listen(this.onChange);
-    LoginStore.listen(this.isLoggedIn);
+    SessionStore.listen(this.onSession);
   }
 
-  isLoggedIn(state) {
-    if(state.message) {
-      console.log('user logged in', state);
+  onSession = (state) => {
+    console.log('Nav state',state);
+    if(!state.error && state.user) {
+      this.setState({isLoggedIn: true});
+    } else {
+      this.setState({isLoggedIn: false});
     }
-  }
+  };
 
-  onChange(state) {
-    console.log('USER', this.state.user);
-    this.setState({user: state});
-  }
   handleToggle = () => {this.setState({open: !this.state.open}); console.log('Cliked');};
 
   handleClose = () => this.setState({open: false});

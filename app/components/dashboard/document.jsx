@@ -43,22 +43,13 @@ export default class Document extends React.Component {
     this.setState({docId: this.props.document._id});
   }
 
-
-  handleDelete = () => {
-    this.props.handleDelete(this.props.document._id);
-    // console.log('deleted');
-    // let token = localStorage.getItem('x-access-token');
-    // DocumentActions.deleteDocument(id, token);
-  };
-
   render () {
     let ActionNodes = () => {
-      let user = JSON.parse(localStorage.getItem('user')) || {};
-      if(user.id === this.props.document.ownerId._id) {
+      if(this.props.user._id === this.props.document.ownerId._id) {
         return (
           <div>
             <MenuItem primaryText="Edit" leftIcon={<Edit />} href={'/edit?document=' + this.props.document._id}/>
-            <MenuItem primaryText="Remove" leftIcon={<Delete />} onTouchTap={this.props.open}/>
+            <MenuItem primaryText="Remove" leftIcon={<Delete />} />
           </div>
         );
       } else {

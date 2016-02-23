@@ -15,6 +15,8 @@ import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
 import { browserHistory } from 'react-router';
 import Snackbar from 'material-ui/lib/snackbar';
+import SessionActions from '../../actions/SessionActions';
+import SessionStore from '../../stores/SessionStore';
 
 const style = {
   height: 'auto',
@@ -36,29 +38,43 @@ class DocumentPage extends React.Component {
   }
 
   static getStores(props) {
-    return [DocumentStore];
+    return [DocumentStore, SessionStore];
   }
 
   static getPropsFromStores(props) {
-    return {Document: DocumentStore.getState()};
+    return {
+      Document: DocumentStore.getState(),
+      Session: SessionStore.getState()
+    };
   }
 
   componentWillMount() {
     // get the document id from
+    //  get user session
     let token = localStorage.getItem('x-access-token');
     let id = this.props.params.id;
-    if (token && id) {
-      DocumentActions.getDocument(id, token);
+    if(token) {
+      SessionActions.getSession(token);
     } else {
       DocumentActions.getDocument(id);
     }
-    // else fetch docs without token
   }
 
   componentDidMount() {
     DocumentStore.listen(this.onChange);
+    SessionStore.listen(this.onSession);
   }
-
+  onSession = (state) => {
+    let id = this.props.params.id;
+    if(!state.error && state.user) {
+      this.setState({isLoggedIn: true});
+      let token = localStorage.getItem('x-access-token');
+      DocumentActions.getDocument(id, token);
+    } else {
+      this.setState({isLoggedIn: false});
+      DocumentActions.getDocument(id);
+    }
+  };
   componentWillReceiveProps(nextProps) {}
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -66,10 +82,7 @@ class DocumentPage extends React.Component {
   }
 
   onChange = (state) => {
-    console.log('state', state);
     if(state && state.message === 'delete successfuly') {
-      // show a snackbar and
-      // redirect to homepage
       browserHistory.push('/');
     }
     console.log(state.documents.data);

@@ -5,6 +5,8 @@ import connectToStores from 'alt-utils/lib/connectToStores';
 import DocumentStore from '../../stores/DocumentStore';
 import Actions from '../../actions/documentActions';
 import LoginStore from '../../stores/LoginStore';
+import SessionActions from '../../actions/SessionActions';
+import SessionStore from '../../stores/SessionStore';
 
 // grid start
 import GridList from 'material-ui/lib/grid-list/grid-list';
@@ -20,43 +22,38 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: '100%',
     height: 900,
     overflowY: 'auto',
-    marginBottom: 24,
-  },
+    marginBottom: 24
+  }
 };
 // @connectToStores(DocumentStore);
 class DocumentList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {user: '', documents: [], role: '', open: false, deleted: null};
-
-    this.onChange = this.onChange.bind(this);
-    this.userLoggedIn = this.userLoggedIn.bind(this);
+    this.state = {user: '', documents: [], role: '', open: false, deleted: null, isLoggedIn: false};
   }
 
   static getStores(props) {
-    return [DocumentStore, LoginStore];
+    return [DocumentStore, SessionStore];
   }
 
   static getPropsFromStores(props) {
     return {
       Document: DocumentStore.getState(),
-      Login: LoginStore.getState(),
+      Session: SessionStore.getState()
     };
   }
 
   componentWillMount() {
-    console.log('Mounting again');
     var token = localStorage.getItem('x-access-token');
-    var user = localStorage.getItem('user');
     if(this.props.location.pathname === '/') {
-      if(user && token) {
-        Actions.fetchDocuments(user.id, token);
+      if(token) {
+        SessionActions.getSession(token);
       } else {
         Actions.fetchDocuments();
       }
@@ -65,7 +62,7 @@ class DocumentList extends React.Component {
       Actions.fetchByCategory(type, token);
     } else if(this.props.location.pathname === '/author') {
       let userId = this.props.location.query.user;
-      if(user && token) {
+      if(token) {
         Actions.fetchDocumentsByUser(userId, token);
       } else {
         Actions.fetchDocumentsByUser(userId);
@@ -75,39 +72,30 @@ class DocumentList extends React.Component {
 
   componentDidMount() {
     DocumentStore.listen(this.onChange);
-    LoginStore.listen(this.userLoggedIn);
-    console.log(React.Children);
+    SessionStore.listen(this.onSession);
   }
 
   componentWillReceiveProps(nextProps) {
   }
 
+  onSession = (state) => {
+    if(!state.error && state.user) {
+      let token = localStorage.getItem('x-access-token');
+      Actions.fetchDocuments(state.user._id, token);
+      this.setState({isLoggedIn: true, user: state.user});
+    } else {
+      this.setState({isLoggedIn: false});
+      Actions.fetchDocuments();
+    }
+  };
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('re-rendered');
     return true;
   }
-  userLoggedIn(state) {
-    if(state.message) {
-      this.setState({user: state.message.user});
-    }
-  }
 
-  onChange(state) {
-    console.log('deleted object',this.state.deleted);
-    // filter the data
-    let docs = state.documents.filter((val) => {
-      console.log(val._id, this.state.deleted);
-      return val._id !== this.state.deleted;
-    });
-    console.log('docs', state.documents);
+  onChange = (state) => {
+    this.setState({documents: state.documents});
+  };
 
-    this.setState({documents: docs});
-    if(state.message) {
-      console.log('delete happened', state);
-      this.handleClose();
-
-    }
-  }
   handleOpen = () => {
     this.setState({open: true});
   };
@@ -115,35 +103,8 @@ class DocumentList extends React.Component {
     this.setState({open: false});
   };
 
-  handleDelete = (id) => {
-    console.log(this.refs.item.state.docId);
-    let token = localStorage.getItem('x-access-token');
-    //let id = this.refs.item.state.docId;
-    this.setState({deleted: id});
-    console.log('id to delete', id);
-    // Actions.deleteDocument(id, token);
-    //this.refs.item.handleDelete();
-  };
-
-
-  kevin = () => {
-    this.refs.item.handleDelete();
-  };
-
   render() {
     var documentNodes;
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        secondary={true}
-        onTouchTap={this.handleClose}
-      />,
-      <FlatButton
-        label="Delete"
-        primary={true}
-        onTouchTap={this.kevin}
-      />,
-    ];
     if(!this.state.documents.length) {
       return (
         <Progress />
@@ -165,19 +126,8 @@ class DocumentList extends React.Component {
     }
 
     return (
-      <div>
-        <div className="row">
-          {documentNodes}
-        </div>
-        <Dialog
-          title="Are you sure?"
-          open={this.state.open}
-          onRequestClose={this.handleClose}
-          contentStyle={{width: '20%'}}
-          actions={actions}
-        >
-          These operation will delete the article permanently
-        </Dialog>
+      <div className="row">
+        {documentNodes}
       </div>
     );
   }

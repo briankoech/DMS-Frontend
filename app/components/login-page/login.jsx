@@ -7,6 +7,7 @@ import Checkbox from 'material-ui/lib/checkbox';
 import LoginActions from '../../actions/LoginActions';
 import LoginStore from '../../stores/LoginStore';
 import connectToStores from 'alt-utils/lib/connectToStores';
+import SessionActions from '../../actions/SessionActions';
 
 const FMUI = require('formsy-material-ui');
 const {FormsyText} = FMUI;
@@ -38,15 +39,8 @@ class Login extends React.Component {
       this.props.snackbar();
       this.props.onClick();
       localStorage.setItem('x-access-token', state.message.token);
-      var user = {
-        username: state.message.user.username,
-        id: state.message.user._id,
-        roleId: state.message.user.role._id,
-        title: state.message.user.role.title
-      };
-      localStorage.setItem('user', JSON.stringify(user));
+      SessionActions.getSession(state.message.token);
     } else if (state && state.error.error) {
-      console.log('error', state);
       this.setState({error: true});
     }
   };

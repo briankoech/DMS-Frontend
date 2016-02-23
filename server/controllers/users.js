@@ -131,7 +131,7 @@
     session: function(req, res) {
       var errormsg = {
         success: false,
-        message: 'Failed to authenticate user',
+        message: 'Failed to authenticate user'
       };
       User.findById(req.decoded._doc._id)
       .populate('role')

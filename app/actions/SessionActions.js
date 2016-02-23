@@ -4,15 +4,15 @@ import request from 'superagent';
 class SessionAction {
   getSession(token) {
     request
-      .get('api/users/session')
+      .get('/api/users/session')
       .set('x-access-token', token)
       .end((err, res) => {
         if(err) {
-          return {error: err};
+          this.invalidSession(err);
         } else if(res.body.error){
           this.invalidSession(res.body);
         } else {
-          this.sessionSuccess(result.body);
+          this.sessionSuccess(res.body);
         }
       });
   }
