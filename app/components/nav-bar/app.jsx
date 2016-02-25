@@ -1,5 +1,5 @@
 import React from 'react';
-import SideBar from '../side-bar/side-card.jsx';
+import SideCard from '../side-bar/side-card.jsx';
 import AppBar from 'material-ui/lib/app-bar';
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
@@ -15,6 +15,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Colors from 'material-ui/lib/styles/colors';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+import Divider from 'material-ui/lib/divider';
 
 import SessionActions from '../../actions/SessionActions';
 import SessionStore from '../../stores/SessionStore';
@@ -34,7 +35,9 @@ class App extends React.Component {
       openlogin: false,
       opensignup: false,
       opensnackbar: false,
-      isLoggedIn: false
+      isLoggedIn: false,
+      username: null,
+      email: null
     };
   }
 
@@ -65,7 +68,7 @@ class App extends React.Component {
   onSession = (state) => {
     console.log('Nav state',state);
     if(!state.error && state.user) {
-      this.setState({isLoggedIn: true});
+      this.setState({isLoggedIn: true, username: state.user.username, email: state.user.email});
     } else {
       this.setState({isLoggedIn: false});
     }
@@ -105,6 +108,10 @@ class App extends React.Component {
     }
   };
 
+  refresh = () => {
+    window.location.reload();
+  };
+
   render() {
     return (
       <div>
@@ -127,7 +134,7 @@ class App extends React.Component {
                   anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                   targetOrigin={{horizontal: 'left', vertical: 'top'}}
                 >
-                  <MenuItem primaryText="Refresh" />
+                  <MenuItem primaryText="Refresh" onTouchTap={this.refresh}/>
                   <MenuItem primaryText="Send feedback" />
                   <MenuItem primaryText="Settings" />
                   <MenuItem primaryText="Help" />
@@ -156,9 +163,22 @@ class App extends React.Component {
           open={this.state.open}
           onRequestChange={open => this.setState({open})}
         >
-          <SideBar />
-          <MenuItem onTouchTap={this.handleClose}> <i className="fa fa-home"></i> Home</MenuItem>
-          <CategoryList />
+          {
+            this.state.isLoggedIn ?
+              <SideCard username={this.state.username} email={this.state.email}/>
+            : <SideCard />
+          }
+          <a href="/">
+            <MenuItem
+              onTouchTap={ () => {
+                this.handleClose();
+              }}
+            >
+              <i style={{color: '#2196F3'}} className="fa fa-home"></i> Home
+            </MenuItem>
+          </a>
+          <Divider />
+          <CategoryList closeNav={this.handleClose}/>
         </LeftNav>
         <Snackbar
          open={this.state.opensnackbar}

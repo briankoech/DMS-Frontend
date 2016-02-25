@@ -8,7 +8,7 @@ class CategoryList extends React.Component {
   constructor() {
    super();
     this.state = {
-      categories: [],
+      categories: []
     }
   }
 
@@ -42,7 +42,7 @@ class CategoryList extends React.Component {
     // nodes
     var categoryNodes = this.state.categories.map((category) => {
       return (
-        <Category key={category._id} title={category.category} />
+        <Category closeNav={this.props.closeNav} key={category._id} title={category.category} />
       );
     });
 

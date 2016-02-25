@@ -49,7 +49,6 @@ export default class Document extends React.Component {
         return (
           <div>
             <MenuItem primaryText="Edit" leftIcon={<Edit />} href={'/edit?document=' + this.props.document._id}/>
-            <MenuItem primaryText="Remove" leftIcon={<Delete />} />
           </div>
         );
       } else {
