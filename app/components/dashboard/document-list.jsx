@@ -51,20 +51,16 @@ class DocumentList extends React.Component {
 
   componentWillMount() {
     var token = localStorage.getItem('x-access-token');
-    if(this.props.location.pathname === '/') {
-      if(token) {
-        SessionActions.getSession(token);
-      } else {
-        Actions.fetchDocuments();
-      }
-    } else if(this.props.location.pathname === '/category') {
-      var type = this.props.location.query.category;
-      Actions.fetchByCategory(type, token);
-    } else if(this.props.location.pathname === '/author') {
-      let userId = this.props.location.query.user;
-      if(token) {
-        Actions.fetchDocumentsByUser(userId, token);
-      } else {
+    if(token) {
+      SessionActions.getSession(token);
+    } else {
+      if(this.props.location.pathname === '/') {
+          Actions.fetchDocuments();
+      } else if(this.props.location.pathname === '/category') {
+        let type = this.props.location.query.category;
+        Actions.fetchByCategory(type, token);
+      } else if(this.props.location.pathname === '/author') {
+        let userId = this.props.location.query.user;
         Actions.fetchDocumentsByUser(userId);
       }
     }
@@ -81,8 +77,16 @@ class DocumentList extends React.Component {
   onSession = (state) => {
     if(!state.error && state.user) {
       let token = localStorage.getItem('x-access-token');
-      Actions.fetchDocuments(state.user._id, token);
       this.setState({isLoggedIn: true, user: state.user});
+      if(this.props.location.pathname === '/') {
+        Actions.fetchDocuments(state.user._id, token);
+      } else if(this.props.location.pathname === '/category') {
+        let type = this.props.location.query.category;
+        Actions.fetchByCategory(type, token);
+      } else if(this.props.location.pathname === '/author') {
+        let userId = this.props.location.query.user;
+        Actions.fetchDocumentsByUser(userId, token);
+      }
     } else {
       this.setState({isLoggedIn: false});
       Actions.fetchDocuments();

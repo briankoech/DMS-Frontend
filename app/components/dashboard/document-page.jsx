@@ -61,8 +61,8 @@ class DocumentPage extends React.Component {
   }
 
   componentDidMount() {
-    DocumentStore.listen(this.onChange);
     SessionStore.listen(this.onSession);
+    DocumentStore.listen(this.onChange);
   }
   onSession = (state) => {
     let id = this.props.params.id;
@@ -85,11 +85,9 @@ class DocumentPage extends React.Component {
     if(state && state.message === 'delete successfuly') {
       browserHistory.push('/');
     }
-    console.log(state.documents.data);
-    var doc = [];
+    let doc = [];
     doc.push(state.documents.data);
     this.setState({documents: doc});
-    console.log('doc', this.state);
   };
 
   handleDelete = () => {
@@ -121,11 +119,10 @@ class DocumentPage extends React.Component {
         label="Delete"
         primary={true}
         onTouchTap={this.handleDelete}
-      />,
+      />
     ];
 
     if (!this.state.documents.length) {
-      console.log('still fetching.......');
       return (
         <h5>Loading....</h5>
       )

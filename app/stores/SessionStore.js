@@ -16,7 +16,7 @@ class SessionStore {
   }
 
   handleSessionSuccess(user) {
-    this.setState({user: user});
+    this.setState({user: user, error: null});
   }
 
   handleSessionError(error) {
