@@ -4,6 +4,7 @@ import Progress from './progress.jsx'
 import connectToStores from 'alt-utils/lib/connectToStores';
 import DocumentStore from '../../stores/DocumentStore';
 import Actions from '../../actions/documentActions';
+import LoginStore from '../../stores/LoginStore';
 
 // grid start
 import GridList from 'material-ui/lib/grid-list/grid-list';
@@ -26,24 +27,49 @@ const styles = {
 };
 // @connectToStores(DocumentStore);
 class DocumentList extends React.Component {
-  constructor() {
-    super();
-    this.state = {user: '', documents: []};
+  constructor(props) {
+    super(props);
+    this.state = {user: '', documents: [], role: ''};
 
     this.onChange = this.onChange.bind(this);
+    this.userLoggedIn = this.userLoggedIn.bind(this);
   }
 
   static getStores(props) {
-    return [DocumentStore];
+    return [DocumentStore, LoginStore];
   }
 
   static getPropsFromStores(props) {
-    return DocumentStore.getState();
+    return {
+      Document: DocumentStore.getState(),
+      Login: LoginStore.getState(),
+    };
+  }
+
+  componentWillMount() {
+    var token = localStorage.getItem('x-access-token');
+    var user = localStorage.getItem('user');
+    if(user && token) {
+      Actions.fetchDocuments(user.id, token);
+    } else {
+      Actions.fetchDocuments();
+    }
   }
 
   componentDidMount() {
-    Actions.fetchDocuments();
     DocumentStore.listen(this.onChange);
+    LoginStore.listen(this.userLoggedIn);
+  }
+  componentWillReceiveProps(nextProps) {
+
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
+  }
+  userLoggedIn(state) {
+    if(state.message) {
+      this.setState({user: state.message.user});
+    }
   }
 
   onChange(state) {
@@ -58,13 +84,13 @@ class DocumentList extends React.Component {
       );
     }
     if(this.state.documents) {
-      documentNodes = this.props.documents.map((document) => {
+      documentNodes = this.props.Document.documents.map((document) => {
         return (
           <div key={document._id} className="col-xs-12
                 col-sm-8
                 col-md-6
                 col-lg-4">
-            <Document document={document} className="box" />
+            <Document user={this.state.user} document={document} className="box" />
           </div>
         );
       });
@@ -73,13 +99,7 @@ class DocumentList extends React.Component {
     }
 
     return (
-      <div>
-          <div className="row titleHead">
-            <h1 className="col-md-12 dmshead">Document Management System</h1><br />
-            <p>Create, edit, save documents for free</p>
-          </div>
-          <div className="row">{documentNodes}</div>
-      </div>
+        <div className="row">{documentNodes}</div>
     );
   }
 }

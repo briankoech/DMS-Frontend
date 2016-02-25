@@ -4,7 +4,7 @@ import request from 'superagent';
 class CategoryAction {
   fetchCategory() {
     request
-      .get('api/categories')
+      .get('/api/categories')
       .set('Accept', 'application/json')
       .end((err, result) => {
         if(err) {

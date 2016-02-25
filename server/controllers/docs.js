@@ -11,7 +11,7 @@
       var docsave = function(categoryId) {
         var document = new Document({
           ownerId: req.decoded._doc._id,
-          accessLevel: req.body.accessLevel,
+          accessLevel: req.body.accessLevel || 3,
           title: req.body.title,
           category: categoryId,
           content: req.body.content,
@@ -19,6 +19,7 @@
         });
 
         document.save(function(err, doc) {
+          console.log('here');
           if (err) {
             res.status(500).send({
               error: err
@@ -32,7 +33,7 @@
         });
       };
       // get userid from the token
-      Role.findById(req.decoded._doc.role, function(err, role) {
+      Role.findById(req.decoded._doc.role._id, function(err, role) {
         if (err) {
           res.status(500).send({
             error: err
@@ -88,6 +89,8 @@
         .sort({
           'createdAt': -1
         })
+        .populate('ownerId')
+        .populate('category')
         .exec(function(err, documents) {
           if (err) {
             res.status(500).send(err);
@@ -102,7 +105,8 @@
     },
 
     getAllDocumentsByRole: function(req, res) {
-      Role.findById(req.decoded._doc.role, function(err, role) {
+      Role.findById(req.decoded._doc.role)
+      .exec(function(err, role) {
         if (err) {
           res.status(500).send({
             error: err
@@ -132,6 +136,8 @@
           .sort({
             'createdAt': -1
           })
+          .populate('ownerId')
+          .populate('category')
           .exec(function(err, documents) {
             if (err) {
               res.status(500).send(err);
@@ -168,8 +174,26 @@
     },
 
     getAllPublicDocs: function(req, res) {
-      console.log('Called');
-      Document.find({}, function(err, docs) {
+      Document.find({accessLevel: {
+        $gte: 3
+      }})
+      .populate('ownerId')
+      .populate('category')
+      .exec(function(err, docs) {
+        res.status(200).send(docs);
+      })
+    },
+
+    getAllPublicDocsByUser: function(req, res) {
+      Document.find({
+        accessLevel: {
+          $gte: 3
+        },
+        ownerId: req.params.id
+      })
+      .populate('ownerId')
+      .populate('category')
+      .exec(function(err, docs) {
         res.status(200).send(docs);
       })
     },
@@ -178,7 +202,8 @@
       // find the categoryId
       Category.find({
         category: req.query.category.toLowerCase()
-      }, function(err, category) {
+      })
+      .exec(function(err, category) {
         if (err) {
           res.status(500).send({
             error: err
@@ -187,7 +212,10 @@
           // get the categoryId
           Document.find({
             category: category[0]._id
-          }, function(err, documents) {
+          })
+          .populate('ownerId')
+          .populate('category')
+          .exec(function(err, documents) {
             if (err) {
               res.status(500).send({
                 error: err
@@ -267,11 +295,17 @@
     },
 
     findOne: function(req, res) {
-      Document.findById(req.params._id, function(err, document) {
+      Document.findById(req.params._id)
+      .populate('category')
+      .populate('ownerId')
+      .exec(function(err, document) {
         if (err) {
           res.status(500).send(err);
         } else if (document) {
-          res.status(200).send(document);
+          res.status(200).send({
+            data: document,
+            success: true
+          });
         } else {
           res.status(404).send({
             message: 'document isnt available'
@@ -318,7 +352,10 @@
       // get the user id
       Document.find({
         ownerId: req.decoded._doc._id
-      }, function(err, documents) {
+      })
+      .populate('ownerId')
+      .populate('category')
+      .exec(function(err, documents) {
         if (err) {
           return res.status(500).send(err);
         } else if (documents) {

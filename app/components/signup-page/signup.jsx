@@ -6,23 +6,21 @@ import TextField from 'material-ui/lib/text-field';
 import Checkbox from 'material-ui/lib/checkbox';
 import SignupAction from '../../actions/signupActions.js';
 import SignupStore from '../../stores/SignupStore';
+import LoginActions from '../../actions/LoginActions';
+import LoginStore from '../../stores/LoginStore';
 import connectToStores from 'alt-utils/lib/connectToStores';
+
+const FMUI = require('formsy-material-ui');
+const {FormsyText} = FMUI;
 
 class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      email: '',
-      firstname: '',
-      lastname: '',
-      password: '',
-      confirmpassword: '',
+      canSubmit: false,
+      model: null,
+      success: false,
     }
-
-    this.handleCreateUser = this.handleCreateUser.bind(this);
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.onChange = this.onChange.bind(this);
   }
 
   static getStores(props) {
@@ -36,132 +34,73 @@ class Signup extends React.Component {
   }
 
   componentDidMount() {
-   SignupStore.listen(this.onChange);
+    SignupStore.listen(this.onChange);
   }
 
-  onChange(state) {
+  onChange = (state) => {
     console.log(state);
-    if(state && state.message) {
+    if (state && state.message) {
       // redirect
+      // login the user
+      // close the dialog
+      this.setState({success: true});
       console.log('success');
     } else {
       console.log('error');
     }
-  }
-  handleFieldChange (e) {
-  //  console.log(this);
-     let field = e.target.name;
-     let value = e.target.value;
-     if(field === 'username') {
-       this.setState({username: value});
-     } else if(field === 'email') {
-       this.setState({email: value});
-     } else if(field === 'firstname') {
-       this.setState({firstname: value});
-     } else if(field === 'lastname') {
-       this.setState({lastname: value});
-     } else if(field === 'password') {
-       this.setState({password: value});
-     } else {
-       this.setState({confirmpassword: value});
-     }
-     //console.log(this.state.username);
-  }
+  };
 
-  handleCreateUser() {
-    let user = {
-      username: this.state.username,
-      email: this.state.email,
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
-      password: this.state.password,
-    };
-    console.log(user);
-   SignupAction.createUser(user);
+  handleCreateUser = (model, resetForm) => {
+    this.setState({model: model});
+    SignupAction.createUser(model);
+    resetForm();
+  };
+  componentWillUnmount() {
+    this.setState({success: false});
   }
+  enableButton = () => {
+    this.setState({canSubmit: true});
+  };
+
+  disableButton = () => {
+    this.setState({canSubmit: false});
+  };
 
   render() {
     return (
-        <Dialog
-          actionsContainerClassName=""
-          bodyClassName=""
-          modal={false}
-          open={this.props.opensignup}
-          onRequestClose={this.props.onClick}
-          autoScrollBodyContent
-        >
+      <Dialog actionsContainerClassName="" bodyClassName="" modal={false} open={this.props.opensignup} onRequestClose={this.props.onClick} autoScrollBodyContent>
         <div className="signup">
           <h3 className="">Sign up</h3>
           <p className="">To save stories or get stories, edit or delete – all free.</p>
           <hr/>
-
-          <TextField
-            className=""
-            hintText="johndoe"
-            floatingLabelText="Username"
-            fullWidth
-            name="username"
-            onChange={this.handleFieldChange}
-          />
-          <br />
-          <TextField
-            className=""
-            hintText="johndoe@example.com"
-            floatingLabelText="Email"
-            fullWidth
-            name="email"
-            type="email"
-            required
-            onChange={this.handleFieldChange}
-          />
-          <TextField
-            className=""
-            hintText="John"
-            floatingLabelText="firstname"
-            fullWidth
-            name="firstname"
-            onChange={this.handleFieldChange}
-          />
-          <TextField
-            className=""
-            hintText="Doe"
-            floatingLabelText="lasname"
-            fullWidth
-            name="lastname"
-            onChange={this.handleFieldChange}
-          />
-          <br />
-          <TextField
-            className=""
-            floatingLabelText="password"
-            type="password"
-            fullWidth
-            name="password"
-            onChange={this.handleFieldChange}
-          />
-          <br />
-          <TextField
-            className=""
-            floatingLabelText="confirm password"
-            type="password"
-            fullWidth
-            name="confirmpassword"
-            onChange={this.handleFieldChange}
-          />
-          <br />
-          <RaisedButton
-            className=""
-            label="Create account"
-            primary={true}
-            onTouchTap={this.handleCreateUser}
-          />
           <div className="row">
-          <p className="">Already have an account?</p>
-            <FlatButton
-              label="Log In"
-              secondary={true}
-              onTouchTap={this.props.loginAction}
-            />
+            <p style={
+                this.state.success ?
+                   {
+                     display: 'block',
+                     color: '#0ACA36',
+                     'text-align': 'center',
+                     'font-size': '1.2em',
+                     'font-family': 'monospace'
+                    }
+                 : {display: 'none'}
+              }
+              >Signup success. Proceed to login.</p>
+          </div>
+          <Formsy.Form onValid={this.enableButton} onInvalid={this.disableButton} onValidSubmit={this.handleCreateUser}>
+            <FormsyText className="" name='username' validations='isWords' validationError="Please use letters only" required fullWidth hintText="johndoe?" floatingLabelText="Username"/>
+            <br/>
+            <FormsyText className="" name='email' validations='isEmail' fullWidth validationError="Please enter a valid email" required hintText="johndoe@example.com" floatingLabelText="email"/>
+            <FormsyText className="" name='firstname' fullWidth validations='isWords' validationError="Please use letters only" required hintText="John" floatingLabelText="Firstname"/>
+            <FormsyText className="" name='lastname' validations='isWords' fullWidth validationError="Please use letters only" required hintText="Doe" floatingLabelText="Lastname"/>
+            <FormsyText className="" name='password' fullWidth validations="minLength:6" validationError="Length should be greater than 6" required hintText="Password" type="password" floatingLabelText="Password"/>
+            <FormsyText className="" name='repeated_password' fullWidth validations="equalsField:password" validationError="Passwords don't match" required hintText="Repeat Password" type="password" floatingLabelText="Repeat Password"/>
+            <br/>
+            <RaisedButton className="" label="Create account" type="submit" primary={true} disabled={!this.state.canSubmit}/>
+          </Formsy.Form>
+          <div className="row">
+            <p className="">Already have an account?</p>
+            <FlatButton label="Log In" secondary={true} onTouchTap={this.props.loginAction}/>
           </div>
         </div>
       </Dialog>

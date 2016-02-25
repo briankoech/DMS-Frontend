@@ -7,17 +7,18 @@ import Checkbox from 'material-ui/lib/checkbox';
 import LoginActions from '../../actions/LoginActions';
 import LoginStore from '../../stores/LoginStore';
 import connectToStores from 'alt-utils/lib/connectToStores';
+import SessionActions from '../../actions/SessionActions';
+
+const FMUI = require('formsy-material-ui');
+const {FormsyText} = FMUI;
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      error: false,
+      canSubmit: false
     }
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.onChange = this.onChange.bind(this);
   }
   static getStores(props) {
     return [LoginStore];
@@ -25,101 +26,71 @@ class Login extends React.Component {
 
   static getPropsFromStores(props) {
     // called when stores experience change in state
-    console.log('change occured');
     return LoginStore.getState();
-  }
-
-  handleFieldChange(e) {
-    let field = e.target.name;
-    let value = e.target.value;
-    if(field === 'username') {
-      this.setState({username: value})
-    } else if(field === 'password') {
-      this.setState({password: value});
-    }
   }
 
   componentDidMount() {
     LoginStore.listen(this.onChange);
   }
 
-  onChange(state) {
-    console.log('state', state.message.success);
-    if(state && state.message.success) {
-      // redirect
-      console.log('redirect to login');
-    } else {
-      console.log('error');
+  onChange = (state) => {
+    if (state && state.message.success) {
+      this.setState({error: false});
+      this.props.snackbar();
+      this.props.onClick();
+      localStorage.setItem('x-access-token', state.message.token);
+      SessionActions.getSession(state.message.token);
+    } else if (state && state.error.error) {
+      this.setState({error: true});
     }
-  }
+  };
 
-  handleLogin() {
-    let user = {
-      username: this.state.username,
-      password: this.state.password,
-    };
-    console.log(user);
-    LoginActions.loginUser(user);
-  }
+  handleLogin = (model, resetForm) => {
+    LoginActions.loginUser(model);
+    resetForm();
+  };
+  enableButton = () => {
+    this.setState({canSubmit: true});
+  };
 
+  disableButton = () => {
+    this.setState({canSubmit: false});
+  };
   render() {
     return (
-        <Dialog
-          actionsContainerClassName="trial"
-          bodyClassName="loginDialog"
-          modal={false}
-          open={this.props.openlogin}
-          onRequestClose={this.props.onClick}
-          autoScrollBodyContent
-        >
+      <Dialog actionsContainerClassName="trial" bodyClassName="loginDialog" modal={false} open={this.props.openlogin} onRequestClose={this.props.onClick} autoScrollBodyContent>
         <div className="login">
           <h3 className="">Log In</h3>
           <p className="">To save stories or get stories, edit or delete – all free.</p>
           <hr/>
+          <Formsy.Form onValid={this.enableButton} onInvalid={this.disableButton} onValidSubmit={this.handleLogin}>
+            <FormsyText className="" name='username' validations='isWords' validationError="Please use letters only" required fullWidth hintText="johndoe" floatingLabelText="Username"/>
+            <FormsyText className="" name='password' fullWidth validations="minLength:6" validationError="Length should be greater than 6" required hintText="Password" type="password" floatingLabelText="Password"/>
+
+            <div className="row">
+              <Checkbox className="" label="Remember me" defaultChecked={true}/>
+            </div>
+            <div className="row">
+              <p style={this.state.error
+                ? {
+                  display: 'block',
+                  color: '#FF0404',
+                  'text-align': 'center',
+                  'font-size': '1.2em',
+                  'font-family': 'monospace'
+                }
+                : {
+                  display: 'none'
+                }}>Wrong username/password combination</p>
+            </div>
+            <div className="row">
+              <RaisedButton className="loginbtn" label="Log in" type="submit" primary={true} disabled={!this.state.canSubmit} fullWidth/>
+            </div>
+          </Formsy.Form>
           <div className="row">
-            <TextField
-              hintText="johndoe"
-              floatingLabelText="Username"
-              onChange={this.handleFieldChange}
-              name="username"
-              fullWidth
-            />
-          </div>
-          <div className="row">
-            <TextField
-              hintText="johndoe"
-              floatingLabelText="password"
-              type="password"
-              onChange={this.handleFieldChange}
-              name="password"
-              fullWidth
-            />
-          </div>
-          <div className="row">
-            <Checkbox
-              className=""
-              label="Remember me"
-              defaultChecked={true}
-            />
-          </div>
-          <div className="row">
-            <RaisedButton
-              className="loginbtn"
-              label="Log in"
-              primary={true}
-              onTouchTap={this.handleLogin}
-              fullWidth
-            />
-          </div>
-          <div className="row">
-            <RaisedButton
-              style={{marginTop: 10}}
-              className="signupbtn"
-              label="Sign up"
-              secondary={true}
-              onTouchTap={this.props.signupAction}
-              fullWidth
-            />
+            <RaisedButton style={{
+              marginTop: 10
+            }} className="signupbtn" label="Sign up" secondary={true} onTouchTap={this.props.signupAction} fullWidth/>
           </div>
         </div>
       </Dialog>

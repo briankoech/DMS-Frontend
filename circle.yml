@@ -1,4 +1,11 @@
-test:
-  override:
-    - nvm install stable && nvm alias default stable
-    - npm test
+machine:
+  node:
+    version: 5.0.0
+dependencies:
+ post:
+  - npm install module-deps
+deployment:
+  production:
+    branch: master
+    heroku:
+      appname: dms

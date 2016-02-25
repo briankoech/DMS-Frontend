@@ -1,43 +1,129 @@
 body {
   margin: 0;
 }
-
+* {
+ font-family: 'Inconsolata';
+}
+p h1 h2 h3 h4 h5 {
+  font-family: 'Inconsolata', inherit;;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
 .container {
   margin: 0 auto;
+  text-align: center;
 }
-
 .box {
   margin-top: 10px;
 }
-
 .loginDialog {
   margin: 0 auto;
 }
-
 .loginDialog h3 {
   font-style: Trebuchet Ms;
 }
-
 .loginDialog p {
   font-size: 1em;
   font-family: sans-serif;
 }
-
 .trial {
   border: 2px solid blue;
 }
-
 .loginbtn {
   width: 100%;
   margin: 5px 0 10px 0;
 }
-
 .signupbtn {
   width: 100%;
   margin-top: 10px;
   margin: 5px 0 10px 0;
 }
-
 .forgotpswd {
   color: #732983;
+}
+.mastheadtitle {
+  color: #2196F3;
+  text-shadow: 0.08em 0.06em 0.0em #C5CDDE;
+  text-transform: uppercase;
+  text-justify: inter-word;
+  font-size: 10em;
+  font-family: sans-serif;
+  ;
+  margin: 0;
+}
+.masthead {
+  color: #2196F3;
+  text-shadow: 1px 2px #C5CDDE;
+  font-size: 4em;
+  font-family: inherit;
+  ;
+  text-justify: inter-word;
+  font-weight: lighter;
+  margin: 0;
+}
+.docTitle {
+  text-align: center;
+  margin: 0 auto;
+  padding: 10px 10px;
+  font-weight: lighter;
+  font-size: 3em;
+}
+.content {
+  text-align: center;
+  justify: center;
+  text-justify: inter-word;
+  font-weight: lighter;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 100%;
+  vertical-align: super;
+}
+.docTitleField {
+  margin: 10px 5px 0 0;
+  border: 0.3px solid #0f0;
+}
+.content {
+  background-color: #F5F5F5;
+  width: 90%;
+}
+.editor {
+  background-color: #F5F5F5;
+  width: 70%;
+  margin: 0 auto;
+  padding: 10px;
+  margin-top: 20px;
+  text-align: center;
+}
+.spacer {
+  height: 40px;
+}
+.navbar {}
+.doc-content p {
+  text-align: justify;
+  font-size: 1.2em;
+  font-family: inherit;
+  line-height: 1.8em;
+  padding: 10px 50px
+}
+.shareMsg {
+  text-align: center;
+  font-size: 1.6em;
+  font-family: inherit;
+  padding: 30px 10px 10px 10px;
+  color: #2196F3;
+}
+
+.socialButtons {
+  margin: 0 auto;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.actionButtons {
+ float: right;
+}
+
+div.category h5 {
+  text-transform: uppercase;;
 }

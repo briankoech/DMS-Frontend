@@ -8,9 +8,8 @@ class CategoryList extends React.Component {
   constructor() {
    super();
     this.state = {
-      categories: [],
+      categories: []
     }
-   this.onChange = this.onChange.bind(this);
   }
 
   static getStores(props) {
@@ -28,14 +27,22 @@ class CategoryList extends React.Component {
      CategoryStore.listen(this.onChange);
   }
 
-  onChange(state) {
-    this.setState({categories: state.categories});
+  componentWillReceiveProps(nextProps) {
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
+  }
+
+  onChange = (state) => {
+    this.setState({categories: state.categories});
+  };
+
   render() {
     // nodes
     var categoryNodes = this.state.categories.map((category) => {
       return (
-        <Category key={category._id} title={category.category} />
+        <Category closeNav={this.props.closeNav} key={category._id} title={category.category} />
       );
     });
 
