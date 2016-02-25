@@ -13,10 +13,15 @@ import CategoryList from '../side-bar/Category-list.jsx';
 import Snackbar from 'material-ui/lib/snackbar';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Colors from 'material-ui/lib/styles/colors';
+import IconMenu from 'material-ui/lib/menus/icon-menu';
+import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 
 import SessionActions from '../../actions/SessionActions';
 import SessionStore from '../../stores/SessionStore';
 import connectToStores from 'alt-utils/lib/connectToStores';
+import LogoutActions from '../../actions/LogoutActions';
+import LogoutStore from '../../stores/LogoutStore';
+import { browserHistory } from 'react-router';
 
 import Link from 'react-router';
 injectTapEventPlugin();
@@ -54,6 +59,7 @@ class App extends React.Component {
     console.log('Mounted');
     // listen for store changes
     SessionStore.listen(this.onSession);
+    LogoutStore.listen(this.onLogout);
   }
 
   onSession = (state) => {
@@ -85,6 +91,19 @@ class App extends React.Component {
     console.log('fjkbshfj');
   };
 
+  handleLogout = () => {
+    let token = localStorage.getItem('x-access-token');
+    LogoutActions.logoutUser(token);
+  };
+
+  onLogout = (state) => {
+    console.log('logout',state);
+    if(state.success && !state.error) {
+      localStorage.removeItem('x-access-token');
+      SessionActions.getSession(null);
+      browserHistory.push('/');
+    }
+  };
 
   render() {
     return (
@@ -100,7 +119,21 @@ class App extends React.Component {
             </IconButton>
           }
           iconElementRight={
-            (this.state.isLoggedIn) ? <RaisedButton label="Create Document" linkButton href="/create" primary={true} style={{margin: 10}}/>
+            (this.state.isLoggedIn) ?
+            <div>
+              <RaisedButton label="Create Document" linkButton href="/create" primary={true} style={{margin: 10}}/>
+                <IconMenu
+                  iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                  anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                  targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                >
+                  <MenuItem primaryText="Refresh" />
+                  <MenuItem primaryText="Send feedback" />
+                  <MenuItem primaryText="Settings" />
+                  <MenuItem primaryText="Help" />
+                  <MenuItem primaryText="Sign out" onTouchTap={this.handleLogout}/>
+                </IconMenu>
+            </div>
           : <FlatButton label="Login" style={{color: 'red'}} onTouchTap={this.handleLogin}/>
           }
           style={{backgroundColor: '#FFF', position: 'fixed', boxShadow: 'none'}}

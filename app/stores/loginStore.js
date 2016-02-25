@@ -7,7 +7,7 @@ class LoginStore {
     this.bindListeners({
       handleLogin: LoginActions.loginUser,
       loginSuccess: LoginActions.loginSuccess,
-      loginError: LoginActions.loginError,
+      loginError: LoginActions.loginError
     });
   }
 

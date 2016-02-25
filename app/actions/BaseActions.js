@@ -1,6 +1,6 @@
 import request from 'superagent';
 
-export get = (url, token) => {
+export const get = (url, token) => {
   request
     .get(url)
     .set('x-access-token', token)
@@ -9,7 +9,7 @@ export get = (url, token) => {
     });
 };
 
-export post = (url, data) => {
+export const post = (url, data) => {
   request
     .post(url)
     .send(data)
@@ -18,7 +18,7 @@ export post = (url, data) => {
     });
 };
 
-export delete = (url, data) => {
+export const delete = (url, data) => {
   request
     .delete(url)
     .send(data || {})
@@ -27,7 +27,7 @@ export delete = (url, data) => {
     });
 };
 
-export put = (url, data) => {
+export const put = (url, data) => {
   request
     .get(url)
     .send(data)
