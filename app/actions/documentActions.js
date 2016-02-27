@@ -1,5 +1,5 @@
 import alt from '../alt';
-//import BaseActions from './BaseActions.js';
+//import {get, post, remove, put} from './BaseActions.js';
 import request from 'superagent';
 
 class Actions {
@@ -18,6 +18,7 @@ class Actions {
     } else {
       url = '/api/publicDocs';
     }
+
     request
       .get(url)
       .set('x-access-token', token)

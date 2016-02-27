@@ -58,6 +58,7 @@ class Login extends React.Component {
   };
   render() {
     return (
+      <div>
       <Dialog actionsContainerClassName="trial" bodyClassName="loginDialog" modal={false} open={this.props.openlogin} onRequestClose={this.props.onClick} autoScrollBodyContent>
         <div className="login">
           <h3 className="">Log In</h3>
@@ -94,6 +95,7 @@ class Login extends React.Component {
           </div>
         </div>
       </Dialog>
+    </div>
     );
   }
 }

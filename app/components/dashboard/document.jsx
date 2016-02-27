@@ -22,7 +22,6 @@ import Edit from 'material-ui/lib/svg-icons/editor/mode-edit';
 
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import Content from 'material-ui/lib/svg-icons/content/send';
-import DocActions from './document-actions.jsx';
 import {Router, Route, Link} from 'react-router';
 import moment from 'moment';
 
