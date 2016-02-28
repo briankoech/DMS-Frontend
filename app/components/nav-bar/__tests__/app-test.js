@@ -8,9 +8,8 @@ import Login from '../../login-page/login.jsx';
 describe('<App />', () => {
   describe('renders the component', () => {
     it('renders app', () => {
-      const wrapper = render(<App />);
-      console.log('WRAPPER', wrapper);
-      //expect(wrapper.find('div').length).toEqual(1);
+      const wrapper = shallow(<App />);
+      expect(wrapper).toExist();
     });
     it('calls componentDidMount', () => {
       sinon.spy(App.prototype, 'componentDidMount');
@@ -18,14 +17,21 @@ describe('<App />', () => {
       expect(App.prototype.componentDidMount.calledOnce).toEqual(true);
     });
 
+    it('calls componentWillReceiveProps', () => {
+      sinon.spy(App.prototype, 'componentWillReceiveProps');
+      const wrapper = mount(<App />);
+      wrapper.setProps({name: 'Neinei'});
+      expect(App.prototype.componentWillReceiveProps.calledOnce).toEqual(true);
+    });
+
     it('renders a div', () => {
-      const wrapper = shallow(<App className="app"/>);
-      expect(wrapper.is('.app')).toEqual(true);
+      const wrapper = mount(<App />);
+      expect(wrapper.find('div').length).toBeGreaterThan(1);
     });
 
   });
 
   describe('test functions', () => {
-
+    console.log(App.prototype);
   });
 });

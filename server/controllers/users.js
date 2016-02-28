@@ -40,7 +40,6 @@
 
           //save the user
           user.save(function(err, user) {
-            console.log(err);
             if (err && err.errmsg.indexOf('duplicate key') > -1) {
               return res.status(409).send({
                 error: err

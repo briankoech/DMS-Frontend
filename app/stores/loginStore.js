@@ -3,7 +3,7 @@ import LoginActions from '../actions/LoginActions';
 
 class LoginStore {
   constructor() {
-    this.state = {message: '', error: '', session: ''};
+    this.state = {message: '', error: ''};
     this.bindListeners({
       handleLogin: LoginActions.loginUser,
       loginSuccess: LoginActions.loginSuccess,
@@ -19,9 +19,6 @@ class LoginStore {
   }
   loginError(err) {
     this.setState({error: err});
-  }
-  handleSession(user) {
-    this.setState({session: user});
   }
 }
 

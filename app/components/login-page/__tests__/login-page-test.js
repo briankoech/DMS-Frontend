@@ -21,6 +21,7 @@ describe('<Login />', () => {
       mount(<Login />);
       expect(Login.prototype.componentDidMount.called).toBe(true);
     });
+    
     it('sets initial state', () => {
       const wrapper = mount(<Login />);
       wrapper.setState({error: false, canSubmit: false});
@@ -44,7 +45,7 @@ describe('<Login />', () => {
     });
 
     it('children have nodes', () => {
-      const wrapper = render(<Login />);
+      const wrapper = mount(<Login />);
       expect(wrapper.find('.login').length).toEqual(0);
       expect(wrapper.text()).toContain('save stories');
     });
@@ -61,10 +62,6 @@ describe('<Login />', () => {
       login.unmount();
       expect(Login.prototype.componentWillUnmount.calledOnce).toBe(true);
     });
-
-    it('works ', () => {
-
-    });
   });
 
   describe('Suite to test functions', () => {
@@ -75,23 +72,22 @@ describe('<Login />', () => {
       expect(Login.prototype.componentWillMount.calledOnce).toBe(true);
     });
 
-    it('simulate login form submission', () => {
-      const onSubmit = sinon.spy();
-      const wrapper = mount(<Login />)
-      sinon.spy(instance, 'handleLogin');
-      login.find('form').simulate('submit')
-    });
-    it('simulates login', () => {
-      sinon.stub(loginActions, 'loginSuccess').return({success: true});
-      let wrapper = mount(<Login />);
+    it('tests handlelogin', () => {
+      let data = {username: 'mark', password: 'abc123'};
+      const wrapper = mount(<Login />);
+      console.log(wrapper.debug());
       const inst = wrapper.instance();
+      // spy on login functions
       sinon.spy(inst, 'handleLogin');
-      login.find('form').simulate('submit', handleLogin);
-      expect(inst instanceof Login).toBe(true);
-      expect(inst.handleLogin.calledOnce).toBe(true);
+      // set login state of canSubmit
+      inst.setState({canSubmit: true});
+      //expect(inst.find('form')).toBe(true);
+      // form submission
+      expect(inst.find('div').length).toBe(4);
+      inst.handleLogin(data);
+      //expect(inst.handleLogin.called).toBe(true);
       inst.handleLogin.restore();
-      loginActions.loginSuccess.restore();
-    })
+    });
 
   });
 

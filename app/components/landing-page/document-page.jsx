@@ -6,7 +6,7 @@ const style = {
   width: 100,
   margin: 20,
   textAlign: 'center',
-  display: 'inline-block',
+  display: 'inline-block'
 };
 
 export default class DocumentPage extends React.Component {

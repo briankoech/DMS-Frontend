@@ -20,14 +20,14 @@ class Login extends React.Component {
       canSubmit: false
     }
   }
-  static getStores(props) {
-    return [LoginStore];
-  }
-
-  static getPropsFromStores(props) {
-    // called when stores experience change in state
-    return LoginStore.getState();
-  }
+  // static getStores(props) {
+  //   return [LoginStore];
+  // }
+  //
+  // static getPropsFromStores(props) {
+  //   // called when stores experience change in state
+  //   return LoginStore.getState();
+  // }
 
   componentDidMount() {
     LoginStore.listen(this.onChange);
@@ -58,7 +58,6 @@ class Login extends React.Component {
   };
   render() {
     return (
-      <div>
       <Dialog actionsContainerClassName="trial" bodyClassName="loginDialog" modal={false} open={this.props.openlogin} onRequestClose={this.props.onClick} autoScrollBodyContent>
         <div className="login">
           <h3 className="">Log In</h3>
@@ -95,9 +94,8 @@ class Login extends React.Component {
           </div>
         </div>
       </Dialog>
-    </div>
     );
   }
 }
 
-export default connectToStores(Login);
+export default Login;

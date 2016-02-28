@@ -8,7 +8,7 @@ class CategoryStore {
     this.bindListeners({
       fetchCategory: CategoryActions.fetchCategory,
       updateCategory: CategoryActions.updateCategory,
-      handleError: CategoryActions.handleError,
+      handleError: CategoryActions.handleError
     });
   }
 

@@ -4,7 +4,9 @@
   "description": "Document Management System API",
   "main": "server.js",
   "scripts": {
-    "test": "./node_modules/.bin/karma start",
+    "test:frontend": "./node_modules/.bin/karma start",
+    "test:backend": "jasmine",
+    "test":"npm run test:backend",
     "start": "node server.js"
   },
   "repository": {

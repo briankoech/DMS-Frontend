@@ -35,12 +35,11 @@ export default class Document extends React.Component {
     this.state = {docId: ''}
   }
 
-  componentWillMount() {
-
-  }
   componentDidMount() {
     this.setState({docId: this.props.document._id});
   }
+
+  componentWillUnmount() {}
 
   render () {
     let ActionNodes = () => {
