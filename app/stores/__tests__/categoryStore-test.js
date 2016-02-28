@@ -23,7 +23,7 @@ describe('Category Store tests', () => {
   it('listens for Category Actions', () => {
     sinon.stub(CategoryActions, 'updateCategory').returns(true);
     sinon.stub(CategoryActions, 'updateCategory').returns(true);
-    let action = CategoryActions.updateCategory;
+    let action = CategoryActions.updateCategory();
     let data = ['Music', 'Education', 'Film', 'Programming'];
     alt.dispatcher.dispatch({action, data});
     expect(CategoryStore.getState().categories).toEqual(3);

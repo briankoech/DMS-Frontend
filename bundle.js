@@ -33,11 +33,11 @@ module.exports = function() {
     quiet: false,
     noInfo: true,
     stats: {
-      colors: true,
+      colors: true
     },
     proxy: {
-      '*': 'http://localhost:3000',
-    },
+      '*': 'http://localhost:3000'
+    }
  });
 
  // We fire up the development server and give notice in the terminal

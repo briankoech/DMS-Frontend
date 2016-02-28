@@ -6,8 +6,12 @@
   "scripts": {
     "test:frontend": "./node_modules/.bin/karma start",
     "test:backend": "jasmine",
-    "test": "npm run test:backend",
+    "test": "npm run test:frontend",
+    "codecov": "cat coverage/lcov/lcov.info | codecov",
     "start": "node server.js"
+  },
+  "bin": {
+    "coveralls": "./bin/coveralls.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +36,7 @@
     "babel-preset-stage-1": "^6.5.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.14.1",
+    "codecov": "^1.0.1",
     "css-loader": "^0.23.1",
     "eslint": "^1.10.3",
     "expect": "^1.14.0",
@@ -87,6 +92,7 @@
     "eslint-plugin-react": "^3.16.1",
     "isparta": "^4.0.0",
     "isparta-loader": "^2.0.0",
+    "karma-coverage": "^0.5.3",
     "karma-mocha": "^0.2.2",
     "karma-phantomjs-launcher": "^1.0.0",
     "mocha-lcov-reporter": "^1.2.0",
