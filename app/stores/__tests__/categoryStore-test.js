@@ -15,4 +15,5 @@ describe('Category Store tests', () => {
     expect(CategoryStore.getState().categories.length).toEqual(4);
   });
 
+  
 });

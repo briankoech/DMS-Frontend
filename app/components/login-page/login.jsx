@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
 import Checkbox from 'material-ui/lib/checkbox';
-import LoginActions from '../../actions/LoginActions';
+import LoginActions from '../../actions/loginActions';
 import LoginStore from '../../stores/LoginStore';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import SessionActions from '../../actions/SessionActions';
