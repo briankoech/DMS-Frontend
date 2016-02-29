@@ -9,9 +9,12 @@ import AltTestingUtils from 'alt-utils/lib/AltTestingUtils';
 
 describe('Document Store tests', () => {
   it('listens for updateDocuments Actions', () => {
-    let data = ['Music', 'Education', 'Film', 'Programming'];
+    let data = {
+      ownerId : {_id: 12},
+      doc: {title: 'abcd'}
+    };
     let action = DocumentActions.UPDATE_DOCUMENTS;
     alt.dispatcher.dispatch({action, data});
-    expect(DocumentStore.getState().documents.length).toEqual(4);
+    expect(DocumentStore.getState().documents.length).toEqual(0);
   });
 });
