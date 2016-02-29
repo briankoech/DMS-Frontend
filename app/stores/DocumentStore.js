@@ -8,7 +8,7 @@ class DocumentStore {
       handleDocumentsFetch: Actions.updateDocuments,
       handleFetchDocuments: Actions.fetchDocuments,
       handleFetchErrors: Actions.documentsFailed,
-      handleDeleteResponse: Actions.deleteResponse,
+      handleDeleteResponse: Actions.deleteResponse
     });
   }
 

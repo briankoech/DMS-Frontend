@@ -1,6 +1,6 @@
 import React from 'react';
 import App from '../app.jsx';
-import {spy} from 'sinon';
+import {spy, stub} from 'sinon';
 import TestUtils from 'react-addons-test-utils';
 import expect from 'expect';
 import { shallow, mount, render } from 'enzyme';
@@ -71,5 +71,17 @@ describe('<App />', () => {
     instance.handleLogout();
     expect(wrapper.state().isLoggedIn).toBe(false);
     instance.handleLogout.restore();
+  });
+
+  it('Test refresh', () => {
+    stub(window.location, 'reload').return(true);
+    let wrapper = mount(<App />);
+    let instance = wrapper.instance();
+    spy(instance, 'refresh');
+    instance.refresh();
+    expect(wrapper.state().isLoggedIn).toBe(false);
+    expect(window.location.reload.called).toBe(true);
+    instance.handleLogout.restore();
+    window.location.reload.restore();
   });
 });

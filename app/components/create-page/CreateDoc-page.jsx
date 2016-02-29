@@ -91,19 +91,18 @@ class CreateDoc extends React.Component {
     }
   };
 
-  onSubmit = (model, resetForm) => {
+  onSubmit = (model) => {
     console.log(model);
-    resetForm();
+    //resetForm();
     // get token
     // get the url
     let token = localStorage.getItem('x-access-token');
     let url = this.props.location.pathname;
-    let id = this.props.location.query.document;
-    console.log(url);
     if (url === '/create') {
       DocumentActions.createDocument(model, token);
       DocumentStore.listen(this.onChange);
     } else if (url === '/edit') {
+      let id = this.props.location.query.document;
       DocumentActions.updateDocument(model, token, id);
       DocumentStore.listen(this.onChange);
     }
@@ -113,17 +112,7 @@ class CreateDoc extends React.Component {
     this.setState({accessLevel: value});
   };
 
-  handleChange = (e) => {
-    let field = e.target.name;
-    let value = e.target.value;
-    if (field === 'title') {
-      this.setState({title: value});
-    } else if (field === 'content') {
-      this.setState({content: value});
-    } else if (field === 'category') {
-      this.setState({category: value});
-    }
-  };
+
   enableButton = () => {
     this.setState({canSubmit: true});
   };

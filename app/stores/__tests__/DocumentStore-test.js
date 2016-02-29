@@ -8,10 +8,10 @@ import DocumentStore from '../documentStore.js';
 import AltTestingUtils from 'alt-utils/lib/AltTestingUtils';
 
 describe('Document Store tests', () => {
-  it('listens for updateCategory Actions', () => {
+  it('listens for updateDocuments Actions', () => {
     let data = ['Music', 'Education', 'Film', 'Programming'];
-    let action = CategoryActions.UPDATE_CATEGORY;
+    let action = DocumentActions.UPDATE_DOCUMENTS;
     alt.dispatcher.dispatch({action, data});
-    expect(CategoryStore.getState().categories.length).toEqual(4);
+    expect(DocumentStore.getState().documents.length).toEqual(4);
   });
 });
