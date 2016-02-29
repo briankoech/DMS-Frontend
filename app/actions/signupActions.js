@@ -9,7 +9,6 @@ class SignupActions {
       .set('Accept', 'application/json')
       .end((err, result) => {
         if(err) {
-          console.log(err);
           this.signupError({error: err});
         } else if(result && result.body.error) {
           this.signupError(result.body)
@@ -24,7 +23,6 @@ class SignupActions {
   }
 
   signupError(err) {
-    //console.log(err);
     return err;
   }
 }

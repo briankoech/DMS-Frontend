@@ -6,7 +6,7 @@
   "scripts": {
     "test:frontend": "./node_modules/.bin/karma start",
     "test:backend": "jasmine",
-    "test": "npm run test:frontend",
+    "test": "npm run test:frontend && npm run test:backend",
     "codecov": "cat coverage/lcov/lcov.info | codecov",
     "start": "node server.js"
   },

@@ -3,6 +3,7 @@ import expect from 'expect';
 import request from 'superagent';
 import sinon from 'sinon';
 import CategoryActions from '../categoryActions';
+import alt from '../../alt';
 
 describe('Category Actions tests', () =>  {
   describe('Simulate category fetch success', () => {
@@ -30,6 +31,21 @@ describe('Category Actions tests', () =>  {
       CategoryActions.fetchCategory();
       expect(CategoryActions.fetchCategory.called).toBe(true);
       expect(CategoryActions.updateCategory.called).toBe(true);
+    });
+
+    it('dispatches categories to stores', () => {
+      CategoryActions.updateCategory.restore();
+      let dispatcherSpy = sinon.spy(alt.dispatcher, 'dispatch');
+      let updateCategorySpy = sinon.spy(CategoryActions, 'updateCategory');
+      let categories = ['music', 'film', 'education'];
+      let action = CategoryActions.UPDATE_CATEGORY;
+      CategoryActions.updateCategory(categories);
+
+      let dispatcherArgs = dispatcherSpy.args[0];
+      let firstArg = dispatcherArgs[0];
+      expect(firstArg.action).toBe(action);
+      expect(firstArg.data).toBe(categories);
+      alt.dispatcher.dispatch.restore();
     });
   });
 

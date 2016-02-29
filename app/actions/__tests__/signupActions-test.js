@@ -3,8 +3,42 @@ import expect from 'expect';
 import request from 'superagent';
 import sinon from 'sinon';
 import SignupActions from '../signupActions';
+import alt from '../../alt';
 
 describe('Signup Actions tests', () =>  {
+  describe('Signup dispatches the data', () => {
+    let dispatcherSpy;
+    let signupSuccessSpy;
+    let signupErrorSpy
+    beforeEach(() => {
+      // here we use sinon to create a spy on the alt.dispatcher.dispatch function
+      dispatcherSpy = sinon.spy(alt.dispatcher, 'dispatch');
+      signupSuccessSpy = sinon.spy(SignupActions, 'signupSuccess');
+      signupErrorSpy = sinon.spy(SignupActions, 'signupError');
+    });
+
+    afterEach(() => {
+      // clean up our sinon spy so we do not affect other tests
+      alt.dispatcher.dispatch.restore();
+      SignupActions.signupSuccess.restore();
+      SignupActions.signupError.restore();
+    });
+
+    it('dispatches correct data', () => {
+      let user = 'Brian',
+        action = SignupActions.SIGNUP_SUCCESS;
+
+      // fire the action
+      SignupActions.signupSuccess(user);
+      // use our spy to see what payload the dispatcher was called with
+      // this lets us ensure that the expected payload was fired
+      var dispatcherArgs = dispatcherSpy.args[0];
+      var firstArg = dispatcherArgs[0];
+      expect(firstArg.action).toBe(action);
+      expect(firstArg.data).toBe(user);
+    });
+
+  });
   describe('Simulate signup success', () => {
     let response = {
       body: 'response',
@@ -68,6 +102,18 @@ describe('Signup Actions tests', () =>  {
       SignupActions.createUser();
       expect(SignupActions.createUser.called).toBe(true);
       expect(SignupActions.signupSuccess.called).toBe(false);
+    });
+
+    it('dispatches an error on request err', () => {
+      let err = 'error';
+      let user = {name: 'koech'};
+      request.Request.prototype.end.restore();
+      sinon.stub(request.Request.prototype, 'end', function(cb) {
+        cb(err, null);
+      });
+      SignupActions.createUser(user);
+      expect(SignupActions.createUser.called).toBe(true);
+      expect(SignupActions.signupError.called).toBe(true);
     });
   });
 });

@@ -90,9 +90,7 @@ class App extends React.Component {
 
   handleSnackBarClose = () => this.setState({opensnackbar: false});
 
-  handleTitleTouchTap = () => {
-    console.log('fjkbshfj');
-  };
+  handleTitleTouchTap = () => {};
 
   handleLogout = () => {
     let token = localStorage.getItem('x-access-token');
@@ -100,7 +98,6 @@ class App extends React.Component {
   };
 
   onLogout = (state) => {
-    console.log('logout',state);
     if(state.success && !state.error) {
       localStorage.removeItem('x-access-token');
       SessionActions.getSession(null);

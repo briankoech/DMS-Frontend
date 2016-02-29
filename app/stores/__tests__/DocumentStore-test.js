@@ -3,11 +3,11 @@ import expect from 'expect';
 import request from 'superagent';
 import sinon from 'sinon';
 import alt from '../../alt';
-import CategoryActions from '../../actions/categoryActions.js';
-import CategoryStore from '../categoryStore';
+import DocumentActions from '../../actions/documentActions';
+import DocumentStore from '../documentStore.js';
 import AltTestingUtils from 'alt-utils/lib/AltTestingUtils';
 
-describe('Category Store tests', () => {
+describe('Document Store tests', () => {
   it('listens for updateCategory Actions', () => {
     let data = ['Music', 'Education', 'Film', 'Programming'];
     let action = CategoryActions.UPDATE_CATEGORY;
@@ -15,4 +15,15 @@ describe('Category Store tests', () => {
     expect(CategoryStore.getState().categories.length).toEqual(4);
   });
 
+  describe('Tests listening to documents fetch', () => {
+
+  });
+
+  describe('Tests listening to documents fetch', () => {
+
+  });
+
+  describe('Tests listening to documents fetch', () => {
+
+  });
 });

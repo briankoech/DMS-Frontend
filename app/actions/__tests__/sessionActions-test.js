@@ -3,8 +3,56 @@ import expect from 'expect';
 import request from 'superagent';
 import sinon from 'sinon';
 import SessionActions from '../SessionActions';
+import alt from '../../alt';
 
-describe('Session Actions tests', () =>  {
+describe('Session Actions tests', () => {
+  describe('Dispatches user object or error on session', () => {
+    let dispatcherSpy;
+    let sessionSuccessSpy;
+    let invalidSessionSpy
+    beforeEach(() => {
+      // here we use sinon to create a spy on the alt.dispatcher.dispatch function
+      dispatcherSpy = sinon.spy(alt.dispatcher, 'dispatch');
+      sessionSuccessSpy = sinon.spy(SessionActions, 'sessionSuccess');
+      invalidSessionSpy = sinon.spy(SessionActions, 'invalidSession');
+    });
+
+    afterEach(() => {
+      // clean up our sinon spy so we do not affect other tests
+      alt.dispatcher.dispatch.restore();
+      SessionActions.sessionSuccess.restore();
+      SessionActions.invalidSession.restore();
+    });
+
+    it('dispatches user on session success data', () => {
+      let data = 'user',
+        action = SessionActions.SESSION_SUCCESS;
+
+      // fire the action
+      SessionActions.sessionSuccess(data);
+      // use our spy to see what payload the dispatcher was called with
+      // this lets us ensure that the expected payload was fired
+      var dispatcherArgs = dispatcherSpy.args[0];
+      var firstArg = dispatcherArgs[0];
+      expect(firstArg.action).toBe(action);
+      expect(firstArg.data).toBe(data);
+    });
+
+    it('dispatches an error', () => {
+      let error = 'error',
+        action = SessionActions.INVALID_SESSION;
+
+      // fire the action
+      SessionActions.invalidSession(error);
+      // use our spy to see what payload the dispatcher was called with
+      // this lets us ensure that the expected payload was fired
+      var dispatcherArgs = dispatcherSpy.args[0];
+      var firstArg = dispatcherArgs[0];
+      expect(firstArg.action).toBe(action);
+      expect(firstArg.data).toBe(error);
+    });
+  });
+
   describe('Simulate session success', () => {
     let response = {
       body: 'response',
@@ -68,6 +116,18 @@ describe('Session Actions tests', () =>  {
       SessionActions.getSession();
       expect(SessionActions.getSession.called).toBe(true);
       expect(SessionActions.sessionSuccess.called).toBe(false);
+    });
+
+    it('returns an error on request err', () => {
+      let err = 'error';
+      let token = 'abc';
+      request.Request.prototype.end.restore();
+      sinon.stub(request.Request.prototype, 'end', function(cb) {
+        cb(err, null);
+      });
+      SessionActions.getSession(token);
+      expect(SessionActions.getSession.called).toBe(true);
+      expect(SessionActions.invalidSession.called).toBe(true);
     });
   });
 });

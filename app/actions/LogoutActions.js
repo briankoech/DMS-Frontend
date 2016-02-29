@@ -8,9 +8,9 @@ class LogoutActions {
       .set('x-access-token', token)
       .end((err, result) => {
         if(err) {
-          this.userError(err);
+          this.logoutError(err);
         } else if(result && result.body.error) {
-          this.userError(result.body);
+          this.logoutError(result.body);
         } else {
           this.logoutSuccess(result.body);
         }

@@ -21,7 +21,7 @@ describe('<Login />', () => {
       mount(<Login />);
       expect(Login.prototype.componentDidMount.called).toBe(true);
     });
-    
+
     it('sets initial state', () => {
       const wrapper = mount(<Login />);
       wrapper.setState({error: false, canSubmit: false});
@@ -75,18 +75,22 @@ describe('<Login />', () => {
     it('tests handlelogin', () => {
       let data = {username: 'mark', password: 'abc123'};
       const wrapper = mount(<Login />);
-      console.log(wrapper.debug());
       const inst = wrapper.instance();
       // spy on login functions
       sinon.spy(inst, 'handleLogin');
       // set login state of canSubmit
       inst.setState({canSubmit: true});
+      wrapper.find('form').simulate('submit');
       //expect(inst.find('form')).toBe(true);
       // form submission
       expect(inst.find('div').length).toBe(4);
       inst.handleLogin(data);
-      //expect(inst.handleLogin.called).toBe(true);
+      expect(inst.handleLogin.called).toBe(true);
       inst.handleLogin.restore();
+    });
+
+    it('renders on Testutils', () => {
+      let wrapper = TestUtils.renderIntoDocument(<Login />);
     });
 
   });
