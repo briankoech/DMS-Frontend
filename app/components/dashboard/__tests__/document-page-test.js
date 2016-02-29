@@ -13,19 +13,26 @@ describe('<DocumentPage />', () => {
         _id: 23
       }
     };
-    let wrapper = mount(<DocumentPage params={{id:21}} />);
+    let wrapper = render(<DocumentPage params={{id:21}} />);
     expect(wrapper).toExist();
     console.log(wrapper.debug());
     wrapper.unmount();
   });
 
+  it('calls componentDidMount', () => {
+      spy(DocumentPage.prototype, 'componentDidMount');
+      let wrapper = mount(<DocumentPage params={{_id:32}} />);
+      expect(DocumentPage.prototype.componentDidMount.called).toBe(true);
+  });
+
   it('Test handleRequestClose', () => {
     let wrapper = mount(<DocumentPage params={{_id: 21}} />);
     const instance = wrapper.instance();
-    console.log('NavBar',wrapper.debug());
+    console.log('KOECH',instance);
     spy(instance, 'handleRequestClose');
     instance.handleRequestClose();
     expect(wrapper.state().snackopen).toBe(false);
+    expect(wrapper.handleRequestClose.called).toBe(true);
     instance.handleRequestClose.restore();
     wrapper.unmount();
   });
