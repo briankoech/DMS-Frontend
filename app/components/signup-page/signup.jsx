@@ -23,15 +23,14 @@ class Signup extends React.Component {
     }
   }
 
-  static getStores(props) {
-    return [SignupStore];
-  }
-
-  static getPropsFromStores(props) {
-    // called when stores experience change in state
-    console.log('signup change occured');
-    return SignupStore.getState();
-  }
+  // static getStores(props) {
+  //   return [SignupStore];
+  // }
+  //
+  // static getPropsFromStores(props) {
+  //   // called when stores experience change in state
+  //   return SignupStore.getState();
+  // }
 
   componentDidMount() {
     SignupStore.listen(this.onChange);
@@ -45,15 +44,13 @@ class Signup extends React.Component {
       // close the dialog
       this.setState({success: true});
       console.log('success');
-    } else {
-      console.log('error');
     }
   };
 
-  handleCreateUser = (model, resetForm) => {
+  handleCreateUser = (model) => {
     this.setState({model: model});
     SignupAction.createUser(model);
-    resetForm();
+    //resetForm();
   };
   componentWillUnmount() {
     this.setState({success: false});

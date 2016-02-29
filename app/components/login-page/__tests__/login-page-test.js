@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react/lib/ReactTestUtils';
 import expect from 'expect';
-import sinon from 'sinon';
+import {spy, stub} from 'sinon';
 import { shallow, mount, render } from 'enzyme';
 import Login from '../login.jsx';
 import loginActions from '../../../actions/loginActions';
@@ -17,7 +17,7 @@ describe('<Login />', () => {
     });
 
     it('calls componentDidMount once', () => {
-      sinon.spy(Login.prototype, 'componentDidMount');
+      spy(Login.prototype, 'componentDidMount');
       mount(<Login />);
       expect(Login.prototype.componentDidMount.called).toBe(true);
     });
@@ -34,65 +34,57 @@ describe('<Login />', () => {
       wrapper.setState({error: false, canSubmit: false});
       expect(wrapper.state().error).toEqual(false);
       expect(wrapper.state().canSubmit).toEqual(false);
-    });
-
-    it('simulate componentWillReceiveProps', () => {
-      const spy = sinon.spy(Login.prototype, 'componentWillReceiveProps');
-      const wrapper = mount(<Login />);
-      expect(spy.calledOnce).toEqual(false);
-      wrapper.setProps({openLogin: true});
-      expect(spy.calledOnce).toEqual(true);
-    });
-
-    it('children have nodes', () => {
-      const wrapper = mount(<Login />);
-      expect(wrapper.find('.login').length).toEqual(0);
-      expect(wrapper.text()).toContain('save stories');
-    });
-
-    it('receives the correct props', () => {
-      const openLogin = sinon.spy();
-      const login = shallow(<Login openLogin={openLogin} />);
-      expect(typeof login.props.openLogin).toBe('function');
-    });
-
-    it('calls componentWillUnmount', () => {
-      sinon.spy(Login.prototype, 'componentWillUnmount');
-      let login = mount(<Login />);
-      login.unmount();
-      expect(Login.prototype.componentWillUnmount.calledOnce).toBe(true);
+      wrapper.unmount();
     });
   });
 
   describe('Suite to test functions', () => {
 
-    it('calls onChange when stores receive data', () => {
-      sinon.spy(Login.prototype, 'componentWillMount');
-      mount(<Login />);
-      expect(Login.prototype.componentWillMount.calledOnce).toBe(true);
-    });
-
     it('tests handlelogin', () => {
+      spy(loginActions, 'loginUser');
       let data = {username: 'mark', password: 'abc123'};
-      const wrapper = mount(<Login />);
+      const wrapper = mount(<Login open={true}/>);
       const inst = wrapper.instance();
       // spy on login functions
-      sinon.spy(inst, 'handleLogin');
-      // set login state of canSubmit
-      inst.setState({canSubmit: true});
-      wrapper.find('form').simulate('submit');
-      //expect(inst.find('form')).toBe(true);
+      spy(inst, 'handleLogin');
       // form submission
-      expect(inst.find('div').length).toBe(4);
       inst.handleLogin(data);
-      expect(inst.handleLogin.called).toBe(true);
+      expect(loginActions.loginUser.called).toBe(false);
       inst.handleLogin.restore();
+      wrapper.unmount();
     });
 
-    it('renders on Testutils', () => {
-      let wrapper = TestUtils.renderIntoDocument(<Login />);
+    it('Test onChange - valid state', () => {
+      let snackbar = spy();
+      let onClick = spy();
+      let wrapper = mount(<Login open={true} snackbar={snackbar} onClick={onClick}/>);
+      const instance = wrapper.instance();
+      spy(instance, 'onChange');
+      let state = {
+        message: {success: true}
+      };
+      instance.onChange(state);
+      expect(wrapper.state().error).toBe(false);
+      instance.onChange.restore();
     });
 
+    it('Test enableButton()', () => {
+      let wrapper = mount(<Login open={true}/>);
+      const instance = wrapper.instance();
+      spy(instance, 'enableButton');
+      instance.enableButton();
+      expect(wrapper.state().canSubmit).toBe(true);
+      instance.enableButton.restore();
+    });
+
+    it('Test disableButton()', () => {
+      let wrapper = mount(<Login open={true}/>);
+      const instance = wrapper.instance();
+      spy(instance, 'disableButton');
+      instance.disableButton();
+      expect(wrapper.state().canSubmit).toBe(false);
+      instance.disableButton.restore();
+    });
   });
 
 });

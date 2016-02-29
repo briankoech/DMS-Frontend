@@ -5,13 +5,13 @@ class SignupStore {
   constructor() {
     this.state = {
       message: {},
-      error: '',
+      error: ''
     }
 
     this.bindListeners({
       handleSignup: SignupAction.createUser,
       handleSignupSuccess: SignupAction.signupSuccess,
-      handleError: SignupAction.signupError,
+      handleError: SignupAction.signupError
     });
   }
 

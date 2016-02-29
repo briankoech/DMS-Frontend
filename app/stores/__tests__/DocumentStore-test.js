@@ -14,16 +14,4 @@ describe('Document Store tests', () => {
     alt.dispatcher.dispatch({action, data});
     expect(CategoryStore.getState().categories.length).toEqual(4);
   });
-
-  describe('Tests listening to documents fetch', () => {
-
-  });
-
-  describe('Tests listening to documents fetch', () => {
-
-  });
-
-  describe('Tests listening to documents fetch', () => {
-
-  });
 });
