@@ -5,8 +5,8 @@ import expect from 'expect';
 import {spy, stub} from 'sinon';
 import { shallow, mount, render } from 'enzyme';
 import Login from '../login.jsx';
-import loginActions from '../../../actions/loginActions';
-import LoginStore from '../../../stores/LoginStore';
+import loginActions from '../../../actions/LoginActions';
+import LoginStore from '../../../stores/loginStore';
 
 describe('<Login />', () => {
   describe('Login rendering', () => {
@@ -49,7 +49,7 @@ describe('<Login />', () => {
       spy(inst, 'handleLogin');
       // form submission
       inst.handleLogin(data);
-      expect(loginActions.loginUser.called).toBe(false);
+      expect(loginActions.loginUser.called).toBe(true);
       inst.handleLogin.restore();
       wrapper.unmount();
     });

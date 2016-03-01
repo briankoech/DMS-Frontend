@@ -6,8 +6,6 @@ import TextField from 'material-ui/lib/text-field';
 import Checkbox from 'material-ui/lib/checkbox';
 import SignupAction from '../../actions/signupActions.js';
 import SignupStore from '../../stores/SignupStore';
-import LoginActions from '../../actions/LoginActions';
-import LoginStore from '../../stores/LoginStore';
 import connectToStores from 'alt-utils/lib/connectToStores';
 
 const FMUI = require('formsy-material-ui');
@@ -23,15 +21,6 @@ class Signup extends React.Component {
     }
   }
 
-  // static getStores(props) {
-  //   return [SignupStore];
-  // }
-  //
-  // static getPropsFromStores(props) {
-  //   // called when stores experience change in state
-  //   return SignupStore.getState();
-  // }
-
   componentDidMount() {
     SignupStore.listen(this.onChange);
   }
@@ -39,9 +28,6 @@ class Signup extends React.Component {
   onChange = (state) => {
     console.log(state);
     if (state && state.message) {
-      // redirect
-      // login the user
-      // close the dialog
       this.setState({success: true});
       console.log('success');
     }

@@ -4,7 +4,7 @@ import Progress from './progress.jsx'
 import connectToStores from 'alt-utils/lib/connectToStores';
 import DocumentStore from '../../stores/DocumentStore';
 import Actions from '../../actions/documentActions';
-import LoginStore from '../../stores/LoginStore';
+import LoginStore from '../../stores/loginStore';
 import SessionActions from '../../actions/SessionActions';
 import SessionStore from '../../stores/SessionStore';
 

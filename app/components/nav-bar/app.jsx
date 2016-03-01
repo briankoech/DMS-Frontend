@@ -50,15 +50,6 @@ class App extends React.Component {
       params: React.PropTypes.object
   };
 
-  // static getStores(props) {
-  //   return [SessionStore];
-  // }
-  //
-  // static getPropsFromStores(props) {
-  //   return SessionStore.getState()
-  // }
-
-
   componentWillReceiveProps(nextProps) {
 
   }

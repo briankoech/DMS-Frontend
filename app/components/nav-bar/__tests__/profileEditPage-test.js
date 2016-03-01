@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileEdit from '../ProfileEdit-page.jsx';
+import ProfileEdit from '../profileEdit-page.jsx';
 import {spy, stub} from 'sinon';
 import TestUtils from 'react-addons-test-utils';
 import expect from 'expect';
@@ -9,9 +9,9 @@ describe('<ProfileEdit />', () => {
   let wrapper;
   let instance;
   beforeEach(() => {
-    let snackbar = spy();
     let onClick = spy();
-    wrapper = mount(<ProfileEdit onClick={{onClick}} snackbar={{snackbar}}/>);
+    let openprofile = spy();
+    wrapper = mount(<ProfileEdit onClick={{onClick}} openprofile={{}}/>);
     instance = wrapper.instance();
   });
 
