@@ -2,7 +2,7 @@ import React from 'react';
 import expect from 'expect';
 import request from 'superagent';
 import sinon from 'sinon';
-import CategoryActions from '../categoryActions';
+import CategoryActions from '../CategoryActions';
 import alt from '../../alt';
 
 describe('Category Actions tests', () =>  {

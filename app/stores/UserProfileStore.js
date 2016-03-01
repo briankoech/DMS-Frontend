@@ -15,7 +15,7 @@ class UserProfileStore {
     this.setState({message: '', error: ''})
   }
   updateSuccess(user) {
-    this.setState({user: user})
+    this.setState({user: user});
   }
   updateError(err) {
     this.setState({error: err});

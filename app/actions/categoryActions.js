@@ -1,7 +1,7 @@
 import alt from '../alt';
 import request from 'superagent';
 
-class CategoryAction {
+class CategoryActions {
   fetchCategory() {
     request
       .get('/api/categories')
@@ -24,4 +24,4 @@ class CategoryAction {
   }
 }
 
-export default alt.createActions(CategoryAction);
+export default alt.createActions(CategoryActions);

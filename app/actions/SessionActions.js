@@ -1,7 +1,7 @@
 import alt from '../alt';
 import request from 'superagent';
 
-class SessionAction {
+class SessionActions {
   getSession(token) {
     request
       .get('/api/users/session')
@@ -26,4 +26,4 @@ class SessionAction {
   }
 }
 
-export default alt.createActions(SessionAction);
+export default alt.createActions(SessionActions);

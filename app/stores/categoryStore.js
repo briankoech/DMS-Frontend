@@ -1,5 +1,5 @@
 import alt from '../alt';
-import CategoryActions from '../actions/categoryActions.js';
+import CategoryActions from '../actions/CategoryActions.js';
 
 class CategoryStore {
   constructor() {

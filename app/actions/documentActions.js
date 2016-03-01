@@ -2,7 +2,7 @@ import alt from '../alt';
 //import {get, post, remove, put} from './BaseActions.js';
 import request from 'superagent';
 
-class Actions {
+class DocumentActions {
   constructor() {
   }
 
@@ -138,4 +138,4 @@ class Actions {
 
 }
 
-export default alt.createActions(Actions);
+export default alt.createActions(DocumentActions);

@@ -2,7 +2,7 @@ import React from 'react';
 import expect from 'expect';
 import request from 'superagent';
 import sinon from 'sinon';
-import DocumentActions from '../documentActions';
+import DocumentActions from '../DocumentActions';
 import alt from '../../alt';
 
 describe('Document Actions tests', () => {

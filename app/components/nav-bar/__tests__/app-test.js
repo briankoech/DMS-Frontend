@@ -1,5 +1,5 @@
 import React from 'react';
-import App from '../app.jsx';
+import App from '../App.jsx';
 import {spy, stub} from 'sinon';
 import TestUtils from 'react-addons-test-utils';
 import expect from 'expect';

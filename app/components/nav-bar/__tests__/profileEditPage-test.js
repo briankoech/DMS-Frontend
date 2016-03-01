@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileEdit from '../profileEdit-page.jsx';
+import ProfileEdit from '../ProfileEditPage.jsx';
 import {spy, stub} from 'sinon';
 import TestUtils from 'react-addons-test-utils';
 import expect from 'expect';

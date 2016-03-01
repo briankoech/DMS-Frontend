@@ -4,8 +4,8 @@ import TestUtils from 'react/lib/ReactTestUtils';
 import expect from 'expect';
 import {spy, stub} from 'sinon';
 import { shallow, mount, render } from 'enzyme';
-import DocumentPage from '../document-page.jsx';
-import DocumentActions from '../../../actions/documentActions';
+import DocumentPage from '../DocumentPage.jsx';
+import DocumentActions from '../../../actions/DocumentActions';
 
 describe('<DocumentPage />', () => {
   let wrapper;

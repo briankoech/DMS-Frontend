@@ -3,7 +3,7 @@ import expect from 'expect';
 import request from 'superagent';
 import sinon from 'sinon';
 import alt from '../../alt';
-import SignupActions from '../../actions/signupActions';
+import SignupActions from '../../actions/SignupActions';
 import SignupStore from '../SignupStore';
 import AltTestingUtils from 'alt-utils/lib/AltTestingUtils';
 

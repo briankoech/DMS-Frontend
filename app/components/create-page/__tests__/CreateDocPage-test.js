@@ -4,8 +4,8 @@ import TestUtils from 'react/lib/ReactTestUtils';
 import expect from 'expect';
 import sinon from 'sinon';
 import { shallow, mount, render } from 'enzyme';
-import DocumentActions from '../../../actions/documentActions';
-import CreateDocPage from '../CreateDoc-page.jsx';
+import DocumentActions from '../../../actions/DocumentActions';
+import CreateDocPage from '../CreateDocPage.jsx';
 
 describe('<CreateDoc />', () => {
   describe('test suite for rendering on \'/create\' url ', () => {

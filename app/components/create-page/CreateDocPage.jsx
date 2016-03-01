@@ -9,10 +9,10 @@ import FlatButton from 'material-ui/lib/flat-button';
 import Snackbar from 'material-ui/lib/snackbar';
 import Checkbox from 'material-ui/lib/checkbox';
 
-import DocumentActions from '../../actions/documentActions';
+import DocumentActions from '../../actions/DocumentActions';
 import DocumentStore from '../../stores/DocumentStore';
-import CategoryActions from '../../actions/categoryActions';
-import CategoryStore from '../../stores/categoryStore';
+import CategoryActions from '../../actions/CategoryActions';
+import CategoryStore from '../../stores/CategoryStore';
 import { browserHistory } from 'react-router';
 import SessionActions from '../../actions/SessionActions';
 import SessionStore from '../../stores/SessionStore';
