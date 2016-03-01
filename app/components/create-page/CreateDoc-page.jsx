@@ -15,6 +15,7 @@ import CategoryActions from '../../actions/categoryActions';
 import CategoryStore from '../../stores/categoryStore';
 import { browserHistory } from 'react-router';
 import SessionActions from '../../actions/SessionActions';
+import SessionStore from '../../stores/SessionStore';
 
 const FMUI = require('formsy-material-ui');
 const {FormsyText, FormsySelect, FormsyRadioGroup, FormsyRadio} = FMUI;
@@ -46,11 +47,14 @@ class CreateDoc extends React.Component {
 
   componentWillMount() {
     let token = localStorage.getItem('x-access-token');
-    if(token) {
-      SessionActions.getSession(token);
-    }
+    SessionActions.getSession(token);
+    SessionStore.listen(this.onSession);
   }
-
+  onSession = (state) => {
+    if(state && state.error) {
+      browserHistory.push(`/`);
+    }
+  };
   componentDidMount() {
     CategoryActions.fetchCategory();
     if (this.props.location.pathname === '/edit') {

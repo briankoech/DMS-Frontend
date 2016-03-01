@@ -8,6 +8,7 @@ import FontIcon from 'material-ui/lib/font-icon';
 import FlatButton from 'material-ui/lib/flat-button';
 import Login from '../login-page/login.jsx';
 import Signup from '../signup-page/signup.jsx';
+import ProfileEdit from './profileEdit-page.jsx';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import CategoryList from '../side-bar/Category-list.jsx';
 import Snackbar from 'material-ui/lib/snackbar';
@@ -35,12 +36,19 @@ class App extends React.Component {
       openlogin: false,
       opensignup: false,
       opensnackbar: false,
+      snackbarmsg: '',
       isLoggedIn: false,
       username: null,
-      email: null
+      email: null,
+      openprofile: false
     };
+
+    this.onSession = this.onSession.bind(this);
   }
 
+  static propTypes = {
+      params: React.PropTypes.object
+  };
 
   static getStores(props) {
     return [SessionStore];
@@ -66,7 +74,6 @@ class App extends React.Component {
   }
 
   onSession = (state) => {
-    console.log('Nav state',state);
     if(!state.error && state.user) {
       this.setState({isLoggedIn: true, username: state.user.username, email: state.user.email});
     } else {
@@ -86,11 +93,17 @@ class App extends React.Component {
 
   handlesignupclose = () => this.setState({opensignup: false});
 
-  handleSnackBar = () => this.setState({opensnackbar: true});
+  handleSnackBar = (msg) => {
+    this.setState({opensnackbar: true, snackbarmsg: msg});
+  };
 
   handleSnackBarClose = () => this.setState({opensnackbar: false});
 
   handleTitleTouchTap = () => {};
+
+  handleprofile = () => this.setState({openprofile: true});
+
+  handleprofileclose = () => this.setState({openprofile: false});
 
   handleLogout = () => {
     let token = localStorage.getItem('x-access-token');
@@ -133,7 +146,7 @@ class App extends React.Component {
                 >
                   <MenuItem primaryText="Refresh" onTouchTap={this.refresh}/>
                   <MenuItem primaryText="Send feedback" />
-                  <MenuItem primaryText="Settings" />
+                  <MenuItem primaryText="My profile" onTouchTap={this.handleprofile}/>
                   <MenuItem primaryText="Help" />
                   <MenuItem primaryText="Sign out" onTouchTap={this.handleLogout}/>
                 </IconMenu>
@@ -152,6 +165,11 @@ class App extends React.Component {
         opensignup={this.state.opensignup}
         onClick={this.handlesignupclose.bind(this)}
         loginAction={this.handleLogin.bind(this)}
+        snackbar={this.handleSnackBar.bind(this)}
+      />
+      <ProfileEdit
+        openprofile={this.state.openprofile}
+        onClick={this.handleprofileclose.bind(this)}
         snackbar={this.handleSnackBar.bind(this)}
       />
         <LeftNav
@@ -179,7 +197,7 @@ class App extends React.Component {
         </LeftNav>
         <Snackbar
          open={this.state.opensnackbar}
-         message="Welcome to DMS"
+         message={this.state.snackbarmsg}
          autoHideDuration={4000}
          onRequestClose={this.handleSnackBarClose}
        />

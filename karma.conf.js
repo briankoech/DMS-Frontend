@@ -3,7 +3,7 @@ var path = require('path');
 
 module.exports = function(config) {
   config.set({
-    browsers: ['Chrome'], //run in PhantomJs
+    browsers: ['PhantomJS'], //run in PhantomJs
     singleRun: true, //just run once by default
     frameworks: ['mocha'], //use the mocha test framework
     files: [

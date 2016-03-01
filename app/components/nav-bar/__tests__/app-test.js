@@ -38,17 +38,20 @@ describe('<App />', () => {
   });
 
   it('Test onSession - valid state', () => {
-    let wrapper = mount(<App open={true}/>);
+    let wrapper = shallow(<App />);
     let instance = wrapper.instance();
-    console.log('APPPPP',instance);
-    spy(instance, 'onSession');
-    let state = {
-      user: 'store changed',
-      error: null
-    };
-    instance.onSession(state);
-    expect(wrapper.state().isLoggedIn).toBe(true);
-    instance.onSession.restore();
+    expect(instance instanceof App).toBe(true);
+    expect(Object.getOwnPropertyNames(instance)).toBe(false);
+    console.log('XYZ',Object.getOwnPropertyNames(App));
+    // console.log('APPPPP',instance);
+    // spy(instance, 'onSession');
+    // let state = {
+    //   user: 'store changed',
+    //   error: null
+    // };
+    //instance.onSession(state);
+    //expect(wrapper.state().isLoggedIn).toBe(true);
+    //instance.onSession.restore();
   });
 
   it('Test onSession - invalid state', () => {
@@ -74,14 +77,14 @@ describe('<App />', () => {
   });
 
   it('Test refresh', () => {
-    stub(window.location, 'reload').return(true);
+    stub(location, 'reload').return(true);
     let wrapper = mount(<App />);
     let instance = wrapper.instance();
     spy(instance, 'refresh');
     instance.refresh();
     expect(wrapper.state().isLoggedIn).toBe(false);
-    expect(window.location.reload.called).toBe(true);
+    expect(location.reload.called).toBe(true);
     instance.handleLogout.restore();
-    window.location.reload.restore();
+    location.reload.restore();
   });
 });

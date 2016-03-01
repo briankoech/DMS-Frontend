@@ -36,12 +36,13 @@ class Login extends React.Component {
   onChange = (state) => {
     if (state && state.message.success) {
       this.setState({error: false});
-      this.props.snackbar();
+      this.props.snackbar('Welcome to DMS');
       this.props.onClick();
       localStorage.setItem('x-access-token', state.message.token);
       SessionActions.getSession(state.message.token);
     } else if (state && state.error.error) {
       this.setState({error: true});
+      this.props.snackbar('Error in login');
     }
   };
 

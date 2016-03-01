@@ -4,7 +4,7 @@ import request from 'superagent';
 import sinon from 'sinon';
 import alt from '../../alt';
 import DocumentActions from '../../actions/documentActions';
-import DocumentStore from '../documentStore.js';
+import DocStore, {DocumentStore} from '../documentStore.js';
 import AltTestingUtils from 'alt-utils/lib/AltTestingUtils';
 
 describe('Document Store tests', () => {
@@ -15,6 +15,22 @@ describe('Document Store tests', () => {
     };
     let action = DocumentActions.UPDATE_DOCUMENTS;
     alt.dispatcher.dispatch({action, data});
-    expect(DocumentStore.getState().documents.length).toEqual(0);
+    expect(DocStore.getState().documents.length).toEqual(0);
+  });
+
+  it('listens for fetchDocuments Actions', () => {
+    sinon.spy(DocumentStore, 'handleFetchDocuments');
+    let docstore = AltTestingUtils.makeStoreTestable(alt, DocumentStore);
+    docstore.handleFetchDocuments();
+    expect(DocStore.getState().documents.length).toEqual(0);
+  });
+
+  it('test fetch errors', () => {
+    sinon.spy(DocumentStore, 'handleFetchErrors');
+    let err = 'error';
+    let docstore = AltTestingUtils.makeStoreTestable(alt, DocumentStore);
+    console.log('DOCSTORE', docstore);
+    docstore.handleFetchErrors(err);
+    expect(DocStore.getState().errorMessage).toBe(err);
   });
 });
