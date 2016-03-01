@@ -34,19 +34,9 @@ class DocumentPage extends React.Component {
       open: false,
       snackopen: false,
       isLoggedIn: false,
-      docId: null,
+      docId: null
     };
   }
-
-  // static getStores(props) {
-  //   return [DocumentStore, SessionStore];
-  // }
-  //
-  // static getPropsFromStores(props) {
-  //   return {
-  //     Document: DocumentStore.getState()
-  //   };
-  // }
 
   componentWillMount() {
     // get the document id from
