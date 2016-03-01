@@ -11,7 +11,6 @@ describe('<Main />', () => {
   it('renders <Main />', () => {
     const wrapper = shallow(<Main />);
     expect(wrapper).toExist();
-    expect(wrapper.text()).toMatch(/<StatefulApp \/><TitleHead \/>/);
   });
 
   it('returns divs with classes', () => {

@@ -15,7 +15,7 @@ import connectToStores from 'alt-utils/lib/connectToStores';
 const FMUI = require('formsy-material-ui');
 const {FormsyText} = FMUI;
 
-class Signup extends React.Component {
+class ProfileEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,15 +28,6 @@ class Signup extends React.Component {
       userId: null
     }
   }
-
-  // static getStores(props) {
-  //   return [SignupStore];
-  // }
-  //
-  // static getPropsFromStores(props) {
-  //   // called when stores experience change in state
-  //   return SignupStore.getState();
-  // }
 
   componentDidMount() {
     let token = localStorage.getItem('x-access-token');
@@ -106,6 +97,8 @@ class Signup extends React.Component {
             <FormsyText className="" name='email' value={this.state.email} validations='isEmail' fullWidth validationError="Please enter a valid email" required hintText="johndoe@example.com" floatingLabelText="email"/>
             <FormsyText className="" name='firstname' value={this.state.firstname} fullWidth validations='isWords' validationError="Please use letters only" required hintText="John" floatingLabelText="Firstname"/>
             <FormsyText className="" name='lastname' value={this.state.lastname} validations='isWords' fullWidth validationError="Please use letters only" required hintText="Doe" floatingLabelText="Lastname"/>
+              <FormsyText className="" name='password' fullWidth validations="minLength:6" validationError="Length should be greater than 6" required hintText="Password" type="password" floatingLabelText="Password"/>
+              <FormsyText className="" name='repeated_password' fullWidth validations="equalsField:password" validationError="Passwords don't match" required hintText="Repeat Password" type="password" floatingLabelText="Repeat Password"/>
             <RaisedButton className="" label="Update Profile" type="submit" primary={true} disabled={!this.state.canSubmit}/>
           </Formsy.Form>
         </div>
@@ -114,5 +107,4 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
-// export default connectToStores(Signup);
+export default ProfileEdit;

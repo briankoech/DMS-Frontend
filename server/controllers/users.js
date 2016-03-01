@@ -18,7 +18,7 @@
     create: function(req, res) {
       // get the roleid from
       Role.findOne({
-        'title': req.body.role || 'viewer'
+        'title': req.body.role || 'contributor'
       }, function(err, role) {
         if (err) {
           res.status(500).send({

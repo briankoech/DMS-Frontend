@@ -33,20 +33,20 @@ class DocumentPage extends React.Component {
       documents: [],
       open: false,
       snackopen: false,
-      isLoggedIn: false
+      isLoggedIn: false,
+      docId: null,
     };
   }
 
-  static getStores(props) {
-    return [DocumentStore, SessionStore];
-  }
-
-  static getPropsFromStores(props) {
-    return {
-      Document: DocumentStore.getState(),
-      Session: SessionStore.getState()
-    };
-  }
+  // static getStores(props) {
+  //   return [DocumentStore, SessionStore];
+  // }
+  //
+  // static getPropsFromStores(props) {
+  //   return {
+  //     Document: DocumentStore.getState()
+  //   };
+  // }
 
   componentWillMount() {
     // get the document id from
@@ -86,13 +86,14 @@ class DocumentPage extends React.Component {
       browserHistory.push('/');
     }
     let doc = [];
+    this.setState({docId: state.documents.data._id});
     doc.push(state.documents.data);
     this.setState({documents: doc});
   };
 
   handleDelete = () => {
     let token = localStorage.getItem('x-access-token');
-    let id = this.props.Document.documents.data._id;
+    let id = this.state.docId;
     DocumentActions.deleteDocument(id, token);
     this.setState({snackopen: true});
     this.handleClose();
@@ -221,4 +222,4 @@ class DocumentPage extends React.Component {
   }
 }
 
-export default connectToStores(DocumentPage);
+export default DocumentPage;

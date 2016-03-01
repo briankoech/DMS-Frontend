@@ -38,17 +38,6 @@ class DocumentList extends React.Component {
     this.state = {user: '', documents: [], role: '', open: false, deleted: null, isLoggedIn: false};
   }
 
-  static getStores(props) {
-    return [DocumentStore, SessionStore];
-  }
-
-  static getPropsFromStores(props) {
-    return {
-      Document: DocumentStore.getState(),
-      Session: SessionStore.getState()
-    };
-  }
-
   componentWillMount() {
     var token = localStorage.getItem('x-access-token');
     if(token) {
@@ -137,4 +126,4 @@ class DocumentList extends React.Component {
   }
 }
 
-export default connectToStores(DocumentList);
+export default DocumentList;

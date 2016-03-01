@@ -50,13 +50,13 @@ class App extends React.Component {
       params: React.PropTypes.object
   };
 
-  static getStores(props) {
-    return [SessionStore];
-  }
-
-  static getPropsFromStores(props) {
-    return SessionStore.getState()
-  }
+  // static getStores(props) {
+  //   return [SessionStore];
+  // }
+  //
+  // static getPropsFromStores(props) {
+  //   return SessionStore.getState()
+  // }
 
 
   componentWillReceiveProps(nextProps) {
@@ -165,7 +165,6 @@ class App extends React.Component {
         opensignup={this.state.opensignup}
         onClick={this.handlesignupclose.bind(this)}
         loginAction={this.handleLogin.bind(this)}
-        snackbar={this.handleSnackBar.bind(this)}
       />
       <ProfileEdit
         openprofile={this.state.openprofile}
@@ -206,4 +205,4 @@ class App extends React.Component {
   }
 }
 
-export default connectToStores(App);
+export default App;

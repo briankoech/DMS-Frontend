@@ -5,40 +5,36 @@ import expect from 'expect';
 import {spy, stub} from 'sinon';
 import { shallow, mount, render } from 'enzyme';
 import DocumentPage from '../document-page.jsx';
+import DocumentActions from '../../../actions/documentActions';
 
 describe('<DocumentPage />', () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = mount(<DocumentPage params={{id:21}} />);
+  });
+
+  afterEach(() => {
+    wrapper.unmount();
+  });
   it('expects component to render', ()  => {
     let doc = {
       ownerId: {
         _id: 23
       }
     };
-    let wrapper = render(<DocumentPage params={{id:21}} />);
     expect(wrapper).toExist();
-    console.log(wrapper.debug());
-    wrapper.unmount();
-  });
-
-  it('calls componentDidMount', () => {
-      spy(DocumentPage.prototype, 'componentDidMount');
-      let wrapper = mount(<DocumentPage params={{_id:32}} />);
-      expect(DocumentPage.prototype.componentDidMount.called).toBe(true);
   });
 
   it('Test handleRequestClose', () => {
-    let wrapper = mount(<DocumentPage params={{_id: 21}} />);
     const instance = wrapper.instance();
-    console.log('KOECH',instance);
     spy(instance, 'handleRequestClose');
     instance.handleRequestClose();
     expect(wrapper.state().snackopen).toBe(false);
-    expect(wrapper.handleRequestClose.called).toBe(true);
     instance.handleRequestClose.restore();
     wrapper.unmount();
   });
 
   it('Test handleOpen', () => {
-    let wrapper = shallow(<DocumentPage params={{_id: 21}} />);
     const instance = wrapper.instance();
     spy(instance, 'handleOpen');
     instance.handleOpen();
@@ -47,12 +43,57 @@ describe('<DocumentPage />', () => {
   });
 
   it('Test handleClose', () => {
-    let wrapper = shallow(<DocumentPage params={{_id: 21}} />);
     const instance = wrapper.instance();
     spy(instance, 'handleClose');
     instance.handleClose();
     expect(wrapper.state().open).toBe(false);
     instance.handleClose.restore();
+  });
+
+  it('Test onSession - valid', () => {
+    stub(DocumentActions, 'getDocument').returns(true);
+    const instance = wrapper.instance();
+    spy(instance, 'onSession');
+    let state = {
+      user: {},
+      error: null
+    }
+    instance.onSession(state);
+    expect(wrapper.state().open).toBe(false);
+    expect(DocumentActions.getDocument.called).toBe(true);
+    instance.onSession.restore();
+    DocumentActions.getDocument.restore();
+  });
+
+  it('Test onSession - invalid', () => {
+    stub(DocumentActions, 'getDocument').returns(true);
+    const instance = wrapper.instance();
+    spy(instance, 'onSession');
+    let state = {
+      user: null,
+      error: 'error'
+    }
+    instance.onSession(state);
+    expect(wrapper.state().open).toBe(false);
+    instance.onSession.restore();
+    expect(DocumentActions.getDocument.called).toBe(true);
+    DocumentActions.getDocument.restore();
+  });
+
+  it('Test handleDelete', () => {
+    stub(DocumentActions, 'deleteDocument').returns(true);
+    const instance = wrapper.instance();
+    spy(instance, 'handleDelete');
+    let state = {
+      user: null,
+      error: 'error'
+    }
+    instance.handleDelete(state);
+    expect(wrapper.state().open).toBe(false);
+    instance.handleDelete.restore();
+    expect(DocumentActions.deleteDocument.called).toBe(true);
+    expect(wrapper.state('snackopen')).toBe(true);
+    DocumentActions.deleteDocument.restore();
   });
 
 });

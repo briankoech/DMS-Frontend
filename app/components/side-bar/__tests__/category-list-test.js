@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import { shallow, mount, render } from 'enzyme';
 import CategoryList from '../Category-list.jsx';
 
-describe('renders Categorylist', () => {
+describe('<Categorylist />', () => {
   it('renders component', () => {
     let wrapper = mount(<CategoryList />);
     console.log(wrapper.debug());

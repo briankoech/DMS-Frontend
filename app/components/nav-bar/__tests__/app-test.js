@@ -3,6 +3,7 @@ import App from '../app.jsx';
 import {spy, stub} from 'sinon';
 import TestUtils from 'react-addons-test-utils';
 import expect from 'expect';
+import { browserHistory } from 'react-router';
 import { shallow, mount, render } from 'enzyme';
 
 describe('<App />', () => {
@@ -41,17 +42,14 @@ describe('<App />', () => {
     let wrapper = shallow(<App />);
     let instance = wrapper.instance();
     expect(instance instanceof App).toBe(true);
-    expect(Object.getOwnPropertyNames(instance)).toBe(false);
-    console.log('XYZ',Object.getOwnPropertyNames(App));
-    // console.log('APPPPP',instance);
-    // spy(instance, 'onSession');
-    // let state = {
-    //   user: 'store changed',
-    //   error: null
-    // };
-    //instance.onSession(state);
-    //expect(wrapper.state().isLoggedIn).toBe(true);
-    //instance.onSession.restore();
+    spy(instance, 'onSession');
+    let state = {
+      user: 'store changed',
+      error: null
+    };
+    instance.onSession(state);
+    expect(wrapper.state().isLoggedIn).toBe(true);
+    instance.onSession.restore();
   });
 
   it('Test onSession - invalid state', () => {
@@ -76,15 +74,32 @@ describe('<App />', () => {
     instance.handleLogout.restore();
   });
 
+  it('Test onLogout', () => {
+    let wrapper = mount(<App />);
+    let instance = wrapper.instance();
+    spy(instance, 'onLogout');
+    spy(browserHistory, 'push');
+    let state = {
+      success: true,
+      error: null
+    };
+    instance.onLogout(state);
+    expect(wrapper.state().isLoggedIn).toBe(false);
+    expect(browserHistory.push.called).toBe(true);
+    instance.onLogout.restore();
+    browserHistory.push.restore();
+  });
+
   it('Test refresh', () => {
-    stub(location, 'reload').return(true);
+    //expect(Object.getOwnPropertyNames(instance)).toBe(false);
+    stub(window.location, 'reload').returns(true);
     let wrapper = mount(<App />);
     let instance = wrapper.instance();
     spy(instance, 'refresh');
     instance.refresh();
     expect(wrapper.state().isLoggedIn).toBe(false);
-    expect(location.reload.called).toBe(true);
-    instance.handleLogout.restore();
-    location.reload.restore();
+    expect(window.location.reload.called).toBe(true);
+    instance.refresh.restore();
+    window.location.reload.restore();
   });
 });
