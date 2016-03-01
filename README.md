@@ -1,5 +1,5 @@
 # DMS Frontend
-[![codecov.io](https://codecov.io/github/bryomckim/DMS-Frontend/coverage.svg?branch=master)](https://codecov.io/github/bryomckim/DMS-Frontend?branch=feature/tests)
+[![codecov.io](https://codecov.io/github/bryomckim/DMS-Frontend/coverage.svg?branch=master)](https://codecov.io/github/bryomckim/DMS-Frontend?branch=featuretests)
 
 ## create, edit and view documents.
 The DMS helps you create Documents and view them based on priviledges the user has been given. There are 3 roles allowed: Admin, contributor and viewer.
