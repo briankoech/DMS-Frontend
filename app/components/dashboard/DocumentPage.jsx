@@ -73,7 +73,8 @@ class DocumentPage extends React.Component {
 
   onChange = (state) => {
     if(state && state.message === 'delete successfuly') {
-      browserHistory.push('/');
+      //browserHistory.push('/');
+       window.location = '/';
     }
     let doc = [];
     this.setState({docId: state.documents.data._id});
