@@ -71,22 +71,4 @@ describe('<ProfileEdit />', () => {
     expect(wrapper.state().userId).toEqual(1);
     instance.onChange.restore();
   });
-
-  it('Test onUpdate', () => {
-    let snackbar = spy();
-    let onClick = spy();
-    spy(instance, 'onUpdate');
-    let state = {
-      user: {
-        _id: 1,
-        name: {first: 'kim', last: 'andela'},
-        email: 'abc@yahoo.col-md-12'
-      },
-      error: null
-    };
-    instance.onUpdate(state);
-    expect(instance.onUpdate.called).toBe(true);
-    expect(wrapper.props('snackbar').called).toBe(true);
-    instance.onUpdate.restore();
-  });
 });
