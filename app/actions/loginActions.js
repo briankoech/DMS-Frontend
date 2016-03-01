@@ -1,7 +1,7 @@
 import alt from '../alt';
 import request from 'superagent';
 
-class LoginAction {
+class LoginActions {
   loginUser(user) {
     request
       .post('/api/users/login')
@@ -27,4 +27,4 @@ class LoginAction {
   }
 }
 
-export default alt.createActions(LoginAction);
+export default alt.createActions(LoginActions);
