@@ -20,14 +20,6 @@ class Login extends React.Component {
       canSubmit: false
     }
   }
-  // static getStores(props) {
-  //   return [LoginStore];
-  // }
-  //
-  // static getPropsFromStores(props) {
-  //   // called when stores experience change in state
-  //   return LoginStore.getState();
-  // }
 
   componentDidMount() {
     LoginStore.listen(this.onChange);

@@ -2,7 +2,7 @@ import React from 'react';
 import expect from 'expect';
 import request from 'superagent';
 import sinon from 'sinon';
-import LoginActions from '../loginActions';
+import LoginActions from '../LoginActions';
 import alt from '../../alt';
 
 describe('Login Actions tests', () => {

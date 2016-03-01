@@ -12,7 +12,7 @@ describe('Login Store tests', () => {
     let message = 'success';
     let action = LoginActions.LOGIN_SUCCESS;
     alt.dispatcher.dispatch({action, message});
-    expect(LoginStore.getState().message).toBe('');
+    expect(typeof LoginStore.getState().message).toBe('string');
   });
 
 });

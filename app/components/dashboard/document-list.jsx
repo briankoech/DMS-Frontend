@@ -40,6 +40,7 @@ class DocumentList extends React.Component {
 
   componentWillMount() {
     var token = localStorage.getItem('x-access-token');
+    console.log('TOKEN', token);
     if(token) {
       SessionActions.getSession(token);
     } else {
