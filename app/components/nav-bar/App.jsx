@@ -169,7 +169,6 @@ class App extends React.Component {
       <ProfileEdit
         openprofile={this.state.openprofile}
         onClick={this.handleprofileclose.bind(this)}
-        snackbar={this.handleSnackBar.bind(this)}
       />
         <LeftNav
           docked={false}

@@ -25,7 +25,8 @@ class ProfileEdit extends React.Component {
       firstname: '',
       lastname: '',
       email: '',
-      userId: null
+      userId: null,
+      success: null
     }
   }
 
@@ -48,11 +49,9 @@ class ProfileEdit extends React.Component {
 
   onUpdate = (state) => {
     if(!state.error && state.user) {
-      this.props.snackbar('update was successful');
-      this.props.onClick();
+      this.setState({success: true, msg: 'update was successful' });
     } else {
-      this.props.snackbar('Error occured');
-      this.props.onClick();
+      this.setState({success: false, msg: 'error occured' });
     }
   };
 
@@ -73,6 +72,10 @@ class ProfileEdit extends React.Component {
     this.setState({canSubmit: false});
   };
 
+  closeDialog = () => {
+    this.props.onClick();
+  }
+
   render() {
     return (
       <Dialog actionsContainerClassName="" bodyClassName="" modal={false} open={this.props.openprofile} onRequestClose={this.props.onClick} autoScrollBodyContent contentStyle={{width: '30%'}}>
@@ -91,7 +94,7 @@ class ProfileEdit extends React.Component {
                     }
                  : {display: 'none'}
               }
-              >Signup success. Proceed to login.</p>
+              >{this.state.msg}</p>
           </div>
           <Formsy.Form onValid={this.enableButton} onInvalid={this.disableButton} onValidSubmit={this.handleUpdateUser}>
             <FormsyText className="" name='email' value={this.state.email} validations='isEmail' fullWidth validationError="Please enter a valid email" required hintText="johndoe@example.com" floatingLabelText="email"/>
@@ -99,7 +102,8 @@ class ProfileEdit extends React.Component {
             <FormsyText className="" name='lastname' value={this.state.lastname} validations='isWords' fullWidth validationError="Please use letters only" required hintText="Doe" floatingLabelText="Lastname"/>
               <FormsyText className="" name='password' fullWidth validations="minLength:6" validationError="Length should be greater than 6" required hintText="Password" type="password" floatingLabelText="Password"/>
               <FormsyText className="" name='repeated_password' fullWidth validations="equalsField:password" validationError="Passwords don't match" required hintText="Repeat Password" type="password" floatingLabelText="Repeat Password"/>
-            <RaisedButton className="" label="Update Profile" type="submit" primary={true} disabled={!this.state.canSubmit}/>
+            <RaisedButton className="" label="Update Profile" type="submit" primary={true} disabled={!this.state.canSubmit}/>&nbsp;
+            <RaisedButton className="right" label="close" type="cancel" secondary={true} onTouchTap={this.closeDialog}/>
           </Formsy.Form>
         </div>
       </Dialog>

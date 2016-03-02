@@ -16,5 +16,4 @@ describe('Signup Store tests', () => {
     expect(alt.dispatcher.dispatch.called).toBe(true);
     alt.dispatcher.dispatch.restore();
   });
-
 });
