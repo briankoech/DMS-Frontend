@@ -9,6 +9,7 @@ import CategoryList from '../Category-list.jsx';
 describe('<Categorylist />', () => {
   it('renders component', () => {
     let wrapper = mount(<CategoryList />);
-    console.log(wrapper.debug());
+    expect(wrapper).toExist();
+    wrapper.unmount();
   });
 });

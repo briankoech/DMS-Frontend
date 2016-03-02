@@ -5,7 +5,7 @@ class SignupStore {
   constructor() {
     this.state = {
       message: {},
-      error: ''
+      error: null
     }
 
     this.bindListeners({
@@ -25,7 +25,7 @@ class SignupStore {
   }
 
   handleError(error) {
-    this.setState({error: error})
+    this.setState({error: error, message: null})
   }
 }
 

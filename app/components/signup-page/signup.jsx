@@ -37,11 +37,7 @@ class Signup extends React.Component {
   }
 
   onChange = (state) => {
-    console.log(state);
     if (state && state.message) {
-      // redirect
-      // login the user
-      // close the dialog
       this.setState({success: true});
       console.log('success');
     }
