@@ -9,7 +9,7 @@
     "test": "npm run test:frontend",
     "codecov": "cat coverage/lcov/lcov.info | codecov",
     "start": "node server.js",
-    "postinstall": "webpack -p --config webpack.config.js --progress --colors"
+    "postinstall": "webpack -p --config webpack.production.config.js --progress --colors"
   },
   "bin": {
     "coveralls": "./bin/coveralls.js"
