@@ -49,7 +49,7 @@ describe('<Login />', () => {
       spy(inst, 'handleLogin');
       // form submission
       inst.handleLogin(data);
-      expect(loginActions.loginUser.called).toBe(false);
+      expect(loginActions.loginUser.called).toBe(true);
       inst.handleLogin.restore();
       wrapper.unmount();
     });
