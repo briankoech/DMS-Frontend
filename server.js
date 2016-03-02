@@ -41,7 +41,7 @@
       proxy.web(req, res, {
         target: 'http://localhost:8080'
       });
-    })
+    });
   }
 
   proxy.on('error', function(e) {
