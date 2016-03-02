@@ -1,4 +1,4 @@
-### Document Management System [![codecov.io](https://codecov.io/github/bryomckim/DMS-Frontend/coverage.svg?branch=master)](https://codecov.io/github/bryomckim/DMS-Frontend?branch=master)
+### Document Management System [![codecov.io](https://codecov.io/github/bryomckim/DMS-Frontend/coverage.svg?branch=master)](https://codecov.io/github/bryomckim/DMS-Frontend?branch=master) [![Build Status](https://travis-ci.org/bryomckim/DMS-Frontend.svg?branch=master)](https://travis-ci.org/bryomckim/DMS-Frontend)
 
 Create, edit and view documents.
 
