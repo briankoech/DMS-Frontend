@@ -1,6 +1,6 @@
 import React from 'react';
 import Paper from 'material-ui/lib/paper';
-import DocumentActions from '../../actions/documentActions';
+import DocumentActions from '../../actions/DocumentActions';
 import DocumentStore from '../../stores/DocumentStore';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import Divider from 'material-ui/lib/divider';

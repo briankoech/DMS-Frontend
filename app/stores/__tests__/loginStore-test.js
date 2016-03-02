@@ -3,8 +3,8 @@ import expect from 'expect';
 import request from 'superagent';
 import sinon from 'sinon';
 import alt from '../../alt';
-import LoginActions from '../../actions/loginActions';
-import LoginStore from '../loginStore';
+import LoginActions from '../../actions/LoginActions';
+import LoginStore from '../LoginStore';
 import AltTestingUtils from 'alt-utils/lib/AltTestingUtils';
 
 describe('Login Store tests', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Category from './Category.jsx';
-import CategoryStore from '../../stores/categoryStore';
-import CategoryAction from '../../actions/categoryActions';
+import CategoryStore from '../../stores/CategoryStore';
+import CategoryAction from '../../actions/CategoryActions';
 import connectToStores from 'alt-utils/lib/connectToStores';
 
 class CategoryList extends React.Component {

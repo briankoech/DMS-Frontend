@@ -1,6 +1,6 @@
 import React from 'react';
-import Nav from './nav-bar/app.jsx';
-import TitleHead from './nav-bar/title-head.jsx';
+import Nav from './nav-bar/App.jsx';
+import TitleHead from './nav-bar/TitleHead.jsx';
 
 export default class Main extends React.Component {
   constructor() {

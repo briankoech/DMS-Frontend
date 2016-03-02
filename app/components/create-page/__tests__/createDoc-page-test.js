@@ -4,7 +4,7 @@ import TestUtils from 'react/lib/ReactTestUtils';
 import expect from 'expect';
 import sinon from 'sinon';
 import { shallow, mount, render } from 'enzyme';
-import DocumentActions from '../../../actions/documentActions';
+import DocumentActions from '../../../actions/DocumentActions';
 import CreateDocPage from '../CreateDoc-page.jsx';
 
 describe('<CreateDoc />', () => {

@@ -4,7 +4,7 @@ import TestUtils from 'react/lib/ReactTestUtils';
 import expect from 'expect';
 import sinon from 'sinon';
 import { shallow, mount, render } from 'enzyme';
-import Document from '../document.jsx';
+import Document from '../Document.jsx';
 
 describe('<Document />', () => {
   let doc, user;

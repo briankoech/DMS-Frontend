@@ -4,8 +4,8 @@ import TestUtils from 'react/lib/ReactTestUtils';
 import expect from 'expect';
 import {spy, stub} from 'sinon';
 import { shallow, mount, render } from 'enzyme';
-import Login from '../login.jsx';
-import loginActions from '../../../actions/loginActions';
+import Login from '../Login.jsx';
+import loginActions from '../../../actions/LoginActions';
 import LoginStore from '../../../stores/LoginStore';
 
 describe('<Login />', () => {

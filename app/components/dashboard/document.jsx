@@ -25,7 +25,7 @@ import Content from 'material-ui/lib/svg-icons/content/send';
 import {Router, Route, Link} from 'react-router';
 import moment from 'moment';
 
-import DocumentActions from '../../actions/documentActions';
+import DocumentActions from '../../actions/DocumentActions';
 import DocumentStores from '../../stores/DocumentStore';
 const colors = styles.Colors;
 

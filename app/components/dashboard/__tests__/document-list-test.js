@@ -4,8 +4,8 @@ import TestUtils from 'react/lib/ReactTestUtils';
 import expect from 'expect';
 import {spy, stub} from 'sinon';
 import { shallow, mount, render } from 'enzyme';
-import DocumentList from '../document-list.jsx';
-import Actions from '../../../actions/documentActions';
+import DocumentList from '../Document-list.jsx';
+import Actions from '../../../actions/DocumentActions';
 import SessionActions from '../../../actions/SessionActions';
 
 describe('<DocumentList />', () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import SignupDialog from '../signup.jsx';
+import SignupDialog from '../Signup.jsx';
 import {spy, stub} from 'sinon';
 import TestUtils from 'react-addons-test-utils';
 import expect from 'expect';
