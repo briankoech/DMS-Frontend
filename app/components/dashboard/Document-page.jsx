@@ -128,22 +128,31 @@ class DocumentPage extends React.Component {
               </div>
               <Divider/>
               <div className="row">
-                <div className="col-md-4" style={{
-                  padding: 5,
-                  marginLeft: 10
+                <div className="col-xs-4
+                      col-sm-4
+                      col-md-4
+                      col-lg-4" style={{
+                      padding: 5,
+                      marginLeft: 10
                 }}>
                   <h5>
                     By <span style={{color: '#983898'}}><a href={"/author?user="+ doc.ownerId._id}>{doc.ownerId.name.first} {doc.ownerId.name.last}</a> </span> ON &nbsp;
                     {moment(doc.createdAt).format('MMMM Do YYYY')}
                   </h5>
                 </div>
-                <div className="col-md-3 category" style={{
+                <div className="col-xs-3
+                col-sm-3
+                col-md-3
+                col-lg-3 category" style={{
                   padding: 5
                 }}>
                   <h5 style={{color: '#894388'}}><a href={"/category?category="+ doc.category.category}>{doc.category.category}</a></h5>
                 </div>
                 {this.state.isLoggedIn ?
-                  <div className="actionButtons col-md-4">
+                  <div className="actionButtons col-xs-4
+                col-sm-4
+                col-md-4
+                col-lg-4">
                     <IconButton tooltip="Edit" linkButton href={"/edit?document=" + doc._id}>
                       <Edit color={Colors.lightBlue300}/>
                     </IconButton>
@@ -167,11 +176,6 @@ class DocumentPage extends React.Component {
                 Share this:
               </div>
               <div className="col-md-12 socialButtons">
-                <FloatingActionButton mini backgroundColor="#55ACEE" href="http://twitter.com/bryomckim" linkButton target="_blank" style={{
-                  marginLeft: 0
-                }}>
-                  <i className="fa fa-twitter fa-1x"></i>
-                </FloatingActionButton>
                 <FloatingActionButton mini backgroundColor="#3B5998" href={"https://www.facebook.com/sharer/sharer.php?u="+ window.location.href} linkButton target="_blank" style={{
                   marginLeft: 15
                 }}>

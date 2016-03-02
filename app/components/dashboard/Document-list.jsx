@@ -40,7 +40,6 @@ class DocumentList extends React.Component {
 
   componentWillMount() {
     var token = localStorage.getItem('x-access-token');
-    console.log('TOKEN', token);
     if(token) {
       SessionActions.getSession(token);
     } else {
@@ -108,7 +107,7 @@ class DocumentList extends React.Component {
       documentNodes = this.state.documents.map((document) => {
         return (
           <div key={document._id} className="col-xs-12
-                col-sm-8
+                col-sm-6
                 col-md-6
                 col-lg-4">
             <Document user={this.state.user} handleDelete={this.handleDelete} document={document} ref={'item'} open={this.handleOpen} className="box" />

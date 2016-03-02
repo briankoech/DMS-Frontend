@@ -143,9 +143,18 @@ class CreateDoc extends React.Component {
             <MenuItem value={this.state.category} primaryText={this.state.category}/>
         </FormsySelect>
           <FormsyRadioGroup className="row" name="accessLevel" fullWidth defaultSelected="3">
-            <FormsyRadio className="col-md-4" value="3" label="Public"/>
-            <FormsyRadio className="col-md-4" value="2" label="Contributors"/>
-            <FormsyRadio className="col-md-4" value="1" label="Admins"/>
+            <FormsyRadio className="col-xs-4
+                col-sm-4
+                col-md-4
+                col-lg-4" value="3" label="Public"/>
+              <FormsyRadio className="col-xs-4
+                col-sm-4
+                col-md-4
+                col-lg-4" value="2" label="Contributors"/>
+              <FormsyRadio className="col-xs-4
+                col-sm-4
+                col-md-4
+                col-lg-4" value="1" label="Admins"/>
           </FormsyRadioGroup>
           <FormsyText className="" name='content' value={this.state.content} validations="minLength:10" validationError="Miminum of 10 chars required" required fullWidth hintText="Content" multiLine={true} rows={4} floatingLabelText="Document Content" style={{
             margin: 5,

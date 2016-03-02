@@ -45,13 +45,13 @@ a {
 }
 .mastheadtitle {
   color: #2196F3;
-  
+
   text-transform: uppercase;
   text-justify: inter-word;
   font-size: 10em;
   font-family: 'Dancing Script', cursive;
   ;
-  margin: 0;
+  margin: 0 auto;
 }
 .masthead {
   color: #2196F3;

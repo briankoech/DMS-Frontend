@@ -145,9 +145,7 @@ class App extends React.Component {
                   targetOrigin={{horizontal: 'left', vertical: 'top'}}
                 >
                   <MenuItem primaryText="Refresh" onTouchTap={this.refresh}/>
-                  <MenuItem primaryText="Send feedback" />
                   <MenuItem primaryText="My profile" onTouchTap={this.handleprofile}/>
-                  <MenuItem primaryText="Help" />
                   <MenuItem primaryText="Sign out" onTouchTap={this.handleLogout}/>
                 </IconMenu>
             </div>
