@@ -1,4 +1,4 @@
-### Document Management System - FrontEnd
+### Document Management System [![codecov.io](https://codecov.io/github/bryomckim/DMS-Frontend/coverage.svg?branch=master)](https://codecov.io/github/bryomckim/DMS-Frontend?branch=master)
 
 Create, edit and view documents.
 
