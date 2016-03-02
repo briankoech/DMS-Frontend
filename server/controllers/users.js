@@ -18,7 +18,7 @@
     create: function(req, res) {
       // get the roleid from
       Role.findOne({
-        'title': req.body.role
+        'title': req.body.role || 'contributor'
       }, function(err, role) {
         if (err) {
           res.status(500).send({
@@ -93,7 +93,9 @@
               }
             }, {
               new: true
-            }, function(err, result) {
+            })
+            .populate('role')
+            .exec(function(err, result) {
               if (err) {
                 res.status(500).send({
                   error: err
@@ -125,6 +127,26 @@
       });
     },
 
+    session: function(req, res) {
+      var errormsg = {
+        success: false,
+        message: 'Failed to authenticate user'
+      };
+      User.findById(req.decoded._doc._id)
+      .populate('role')
+      .exec(function(err, user) {
+        if (err) {
+          res.status(401).send({error: errormsg});
+        } else {
+          if (user && user.loggedIn) {
+            user.password = null;
+            res.status(200).send(user);
+          } else {
+            res.status(401).send({error: errormsg});
+          }
+        }
+      });
+    },
     // middlewarre to check user auth
     getToken: function(req, res, next) {
       var token = req.headers['x-access-token'];
@@ -136,28 +158,15 @@
       if (token) {
         jwt.verify(token, secretKey, function(err, decoded) {
           if (err) {
-            res.status(401).send(err);
+            res.status(401).send({error: errormsg});
           } else {
             // check if loggedIn is true
             req.decoded = decoded;
-            User.findById(req.decoded._doc._id, function(err, user) {
-              if (err) {
-                res.status(401).send(errormsg);
-              } else {
-                if (user && user.loggedIn) {
-                  next();
-                } else {
-                  res.status(401).send(errormsg);
-                }
-              }
-            });
+            next();
           }
         });
       } else {
-        res.status(401).send({
-          success: false,
-          message: 'No token provided'
-        });
+        res.status(401).send({error: errormsg});
       }
     },
 

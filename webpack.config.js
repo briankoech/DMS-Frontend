@@ -11,32 +11,32 @@ module.exports = {
     main: [
       'webpack-dev-server/client?http://localhost:8080',
       'webpack/hot/only-dev-server',
-      mainPath, // ./app/main.js
-    ],
+      mainPath // ./app/main.js
+    ]
   },
 
   output: {
     filename: '[name].js',
     path: path.join(__dirname, 'public'),
-    publicPath: '/public/',
+    publicPath: '/public/'
   },
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoErrorsPlugin()
   ],
 
   module: {
     loaders: [{
       test: /\.jsx?$/,
       include: path.join(__dirname, 'app'),
-      loader: 'react-hot!babel',
-      exclude: [nodeModulesPath],
+      loader: 'react-hot!babel-loader',
+      exclude: [nodeModulesPath]
     }, {
       test: /\.css?$/,
       include: path.join(__dirname, 'app'),
       exclude: [nodeModulesPath],
-      loader: 'style-loader!css-loader',
-    }],
-  },
+      loader: 'style-loader!css-loader'
+    }]
+  }
 };

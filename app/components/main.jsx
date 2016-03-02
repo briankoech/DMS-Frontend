@@ -1,5 +1,6 @@
 import React from 'react';
-import App from './app.jsx';
+import Nav from './nav-bar/App.jsx';
+import TitleHead from './nav-bar/TitleHead.jsx';
 
 export default class Main extends React.Component {
   constructor() {
@@ -9,8 +10,12 @@ export default class Main extends React.Component {
   render() {
     return (
       <div>
-        <App />
-        <div className="">
+        <Nav />
+        <div className="spacer"></div>
+        <div id="startchange" className="container titlehead">
+          <TitleHead />
+        </div>
+        <div className="container content">
           {this.props.children}
         </div>
       </div>
