@@ -128,31 +128,30 @@ class DocumentPage extends React.Component {
               </div>
               <Divider/>
               <div className="row">
-                <div className="col-xs-4
-                      col-sm-4
-                      col-md-4
-                      col-lg-4" style={{
-                      padding: 5,
-                      marginLeft: 10
+                <div className="col-xs-6
+                      col-sm-6
+                      col-md-6
+                      col-lg-6" style={{
+                      padding: 5
                 }}>
                   <h5>
                     By <span style={{color: '#983898'}}><a href={"/author?user="+ doc.ownerId._id}>{doc.ownerId.name.first} {doc.ownerId.name.last}</a> </span> ON &nbsp;
                     {moment(doc.createdAt).format('MMMM Do YYYY')}
                   </h5>
                 </div>
-                <div className="col-xs-3
-                col-sm-3
-                col-md-3
-                col-lg-3 category" style={{
+                <div className="col-xs-2
+                col-sm-2
+                col-md-2
+                col-lg-2 category" style={{
                   padding: 5
                 }}>
                   <h5 style={{color: '#894388'}}><a href={"/category?category="+ doc.category.category}>{doc.category.category}</a></h5>
                 </div>
                 {this.state.isLoggedIn ?
-                  <div className="actionButtons col-xs-4
-                col-sm-4
-                col-md-4
-                col-lg-4">
+                  <div className="actionButtons col-xs-3
+                col-sm-3
+                col-md-3
+                col-lg-3">
                     <IconButton tooltip="Edit" linkButton href={"/edit?document=" + doc._id}>
                       <Edit color={Colors.lightBlue300}/>
                     </IconButton>

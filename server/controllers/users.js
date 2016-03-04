@@ -42,7 +42,8 @@
           user.save(function(err, user) {
             if (err && err.errmsg.indexOf('duplicate key') > -1) {
               return res.status(409).send({
-                error: err
+                error: err,
+                message: err.errmsg
               });
             } else if (err) {
               return res.status(500).send({

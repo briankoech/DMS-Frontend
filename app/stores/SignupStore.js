@@ -24,8 +24,8 @@ class SignupStore {
     this.setState({message: user})
   }
 
-  handleError(error) {
-    this.setState({error: error, message: null})
+  handleError(err) {
+    this.setState({error: err, message: null})
   }
 }
 

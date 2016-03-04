@@ -11,7 +11,7 @@ class SignupActions {
         if(err) {
           this.signupError({error: err});
         } else if(result && result.body.error) {
-          this.signupError(result.body)
+          this.signupError(result.body);
         } else {
           this.signupSuccess(result.body);
         }
@@ -22,8 +22,8 @@ class SignupActions {
     return user;
   }
 
-  signupError(err) {
-    return err;
+  signupError(msg) {
+    return msg;
   }
 }
 

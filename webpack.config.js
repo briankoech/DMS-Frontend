@@ -1,9 +1,8 @@
 var path = require('path');
 var webpack = require('webpack');
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
-var buildPath = path.resolve(__dirname, 'public', 'build');
+var buildPath = path.resolve(__dirname, 'public');
 var mainPath = path.resolve(__dirname, 'app', 'main.js');
-
 
 module.exports = {
   devtool: 'eval-source-map',
@@ -16,7 +15,7 @@ module.exports = {
   },
 
   output: {
-    filename: '[name].js',
+    filename: 'bundle.js',
     path: path.join(__dirname, 'public'),
     publicPath: '/public/'
   },
@@ -27,6 +26,9 @@ module.exports = {
   ],
 
   module: {
+    preLoaders: [
+      {test: /\.js$/, loader: "eslint-loader", exclude: /node_modules/}
+    ],
     loaders: [{
       test: /\.jsx?$/,
       include: path.join(__dirname, 'app'),
@@ -38,5 +40,9 @@ module.exports = {
       exclude: [nodeModulesPath],
       loader: 'style-loader!css-loader'
     }]
+  },
+
+  resolve: {
+    extensions: ['', '.js', '.jsx']
   }
 };

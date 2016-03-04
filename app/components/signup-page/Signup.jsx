@@ -19,18 +19,12 @@ class Signup extends React.Component {
     this.state = {
       canSubmit: false,
       model: null,
-      success: false
+      success: false,
+      error: false,
+      message: '',
+      errormsg: ''
     }
   }
-
-  // static getStores(props) {
-  //   return [SignupStore];
-  // }
-  //
-  // static getPropsFromStores(props) {
-  //   // called when stores experience change in state
-  //   return SignupStore.getState();
-  // }
 
   componentDidMount() {
     SignupStore.listen(this.onChange);
@@ -38,8 +32,11 @@ class Signup extends React.Component {
 
   onChange = (state) => {
     if (state && state.message) {
-      this.setState({success: true});
-      console.log('success');
+      this.setState({success: true, errormsg: '', message: 'Signup success. Proceed to login.'});
+    } else {
+      if(state.error.error.response.body.message.indexOf('username') > -1) {
+        this.setState({success: false, error: true, errormsg: 'username already taken'});
+      }
     }
   };
 
@@ -72,13 +69,25 @@ class Signup extends React.Component {
                    {
                      display: 'block',
                      color: '#0ACA36',
-                     'text-align': 'center',
-                     'font-size': '1.2em',
-                     'font-family': 'monospace'
+                     textAlign: 'center',
+                     fontSize: '1.2em',
+                     fontFamily: 'monospace'
                     }
                  : {display: 'none'}
               }
-              >Signup success. Proceed to login.</p>
+              >{this.state.message}</p>
+              <p style={
+                  this.state.error ?
+                     {
+                       display: 'block',
+                       color: '#F12727',
+                       textAlign: 'center',
+                       fontSize: '1.2em',
+                       fontFamily: 'monospace'
+                      }
+                   : {display: 'none'}
+                }
+                >{this.state.errormsg}</p>
           </div>
           <Formsy.Form onValid={this.enableButton} onInvalid={this.disableButton} onValidSubmit={this.handleCreateUser}>
             <FormsyText className="" name='username' validations='isWords' validationError="Please use letters only" required fullWidth hintText="johndoe?" floatingLabelText="Username"/>
