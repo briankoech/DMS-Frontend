@@ -62,7 +62,7 @@
 
     getAllCategories: function(req, res) {
       Category.find({})
-        .limit(10)
+        .limit(30)
         .exec(function(err, categories) {
           if (err) {
             res.status(500).send({

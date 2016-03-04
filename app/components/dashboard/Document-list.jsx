@@ -98,7 +98,7 @@ class DocumentList extends React.Component {
 
   render() {
     var documentNodes;
-    if(!this.state.documents.length) {
+    if(typeof this.state.documents === 'string') {
       return (
         <Progress />
       );
