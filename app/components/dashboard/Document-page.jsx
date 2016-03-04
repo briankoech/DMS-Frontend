@@ -34,7 +34,9 @@ class DocumentPage extends React.Component {
       open: false,
       snackopen: false,
       isLoggedIn: false,
-      docId: null
+      docId: null,
+      userId: null,
+      role: null
     };
   }
 
@@ -57,7 +59,8 @@ class DocumentPage extends React.Component {
   onSession = (state) => {
     let id = this.props.params.id;
     if(!state.error && state.user) {
-      this.setState({isLoggedIn: true});
+      console.log('user state', state.user);
+      this.setState({isLoggedIn: true, userId: state.user._id, role: state.user.role.title});
       let token = localStorage.getItem('x-access-token');
       DocumentActions.getDocument(id, token);
     } else {
@@ -149,16 +152,24 @@ class DocumentPage extends React.Component {
                 </div>
                 {this.state.isLoggedIn ?
                   <div className="actionButtons col-xs-3
-                col-sm-3
-                col-md-3
-                col-lg-3">
-                    <IconButton tooltip="Edit" linkButton href={"/edit?document=" + doc._id}>
-                      <Edit color={Colors.lightBlue300}/>
-                    </IconButton>
-
-                    <IconButton tooltip="Delete" onTouchTap={this.handleOpen}>
-                      <Delete color={Colors.red500}/>
-                    </IconButton>
+                    col-sm-3
+                    col-md-3
+                    col-lg-3">
+                    {
+                      console.log('ownerId',doc.ownerId._id),
+                      this.state.userId === doc.ownerId._id || this.state.role === 'admin' || doc.contributors.indexOf(this.state.userId) > -1 ?
+                        <IconButton tooltip="Edit" linkButton href={"/edit?document=" + doc._id}>
+                          <Edit color={Colors.lightBlue300}/>
+                        </IconButton>
+                      : null
+                    }
+                    {
+                      this.state.userId === doc.ownerId._id || this.state.role === 'admin' ?
+                        <IconButton tooltip="Delete" onTouchTap={this.handleOpen}>
+                          <Delete color={Colors.red500}/>
+                        </IconButton>
+                      : null
+                    }
                   </div>
                   : null
                 }
