@@ -5,6 +5,6 @@ var stripLoader = {
   exclude: /node_modules/,
   loader: WebpackStrip.loader('console.log')
 }
-
+delete devConfig.module.preLoaders;
 devConfig.module.loaders.push(stripLoader);
 module.exports = devConfig;
