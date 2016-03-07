@@ -52,10 +52,15 @@ describe('<DocumentPage />', () => {
 
   it('Test onSession - valid', () => {
     stub(DocumentActions, 'getDocument').returns(true);
+    spy(DocumentActions, 'getDocumentSuccess');
     const instance = wrapper.instance();
     spy(instance, 'onSession');
     let state = {
-      user: {},
+      user: {
+        role: {
+          title: 'admin'
+        }
+      },
       error: null
     }
     instance.onSession(state);
@@ -63,6 +68,7 @@ describe('<DocumentPage />', () => {
     expect(DocumentActions.getDocument.called).toBe(true);
     instance.onSession.restore();
     DocumentActions.getDocument.restore();
+    DocumentActions.getDocumentSuccess.restore();
   });
 
   it('Test onSession - invalid', () => {

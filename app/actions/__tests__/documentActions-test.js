@@ -59,6 +59,8 @@ describe('Document Actions tests', () => {
       sinon.spy(DocumentActions, 'deleteDocument');
       sinon.spy(DocumentActions, 'fetchDocumentsByUser');
       sinon.spy(DocumentActions, 'getDocument');
+      sinon.spy(DocumentActions, 'getDocumentSuccess');
+      sinon.spy(DocumentActions, 'getDocumentError');
     });
 
     afterEach(() => {
@@ -73,6 +75,8 @@ describe('Document Actions tests', () => {
       DocumentActions.deleteResponse.restore();
       DocumentActions.fetchDocumentsByUser.restore();
       DocumentActions.getDocument.restore();
+      DocumentActions.getDocumentSuccess.restore();
+      DocumentActions.getDocumentError.restore();
     });
 
     it('calls fetchDocuments function', () => {
@@ -107,12 +111,11 @@ describe('Document Actions tests', () => {
       expect(DocumentActions.updateDocuments.called).toBe(true);
     });
 
-    it('calls getDocument function', () => {
+    it('calls getDocumentSuccess function', () => {
       let token = 'xvjf';
       let id = 'abc';
       DocumentActions.getDocument(id, token);
-      expect(DocumentActions.getDocument.called).toBe(true);
-      expect(DocumentActions.updateDocuments.called).toBe(true);
+      expect(DocumentActions.getDocumentSuccess.called).toBe(true);
     });
 
     it('calls createDocument', () => {
@@ -189,6 +192,8 @@ describe('Document Actions tests', () => {
       sinon.spy(DocumentActions, 'updateDocument');
       sinon.spy(DocumentActions, 'deleteDocument');
       sinon.spy(DocumentActions, 'deleteResponse');
+      sinon.spy(DocumentActions, 'getDocumentSuccess');
+      sinon.spy(DocumentActions, 'getDocumentError');
     });
 
     afterEach(() => {
@@ -201,6 +206,8 @@ describe('Document Actions tests', () => {
       DocumentActions.updateDocument.restore();
       DocumentActions.deleteDocument.restore();
       DocumentActions.deleteResponse.restore();
+      DocumentActions.getDocumentSuccess.restore();
+      DocumentActions.getDocumentError.restore();
     });
 
     it('calls documentsFailed on error', () => {
@@ -215,8 +222,7 @@ describe('Document Actions tests', () => {
       let id = 1123,
         token = 'kashjkd';
       DocumentActions.getDocument(id, token);
-      expect(DocumentActions.documentsFailed.called).toBe(true);
-      expect(DocumentActions.getDocument.called).toBe(true);
+      expect(DocumentActions.getDocumentError.called).toBe(true);
     });
 
     it('calls fetchByCategory on error', () => {

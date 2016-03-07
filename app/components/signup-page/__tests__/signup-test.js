@@ -56,7 +56,8 @@ describe('<SignupDialog />', () => {
   });
 
   it('Test onChange', () => {
-    let wrapper = mount(<SignupDialog open={true}/>);
+    let onClick = spy();
+    let wrapper = mount(<SignupDialog open={true} onClick={onClick}/>);
     const instance = wrapper.instance();
     spy(instance, 'onChange');
     let state = {message: 'store changed'};
