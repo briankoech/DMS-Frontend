@@ -59,7 +59,6 @@ class DocumentPage extends React.Component {
   onSession = (state) => {
     let id = this.props.params.id;
     if(!state.error && state.user) {
-      console.log('user state', state.user);
       this.setState({isLoggedIn: true, userId: state.user._id, role: state.user.role.title});
       let token = localStorage.getItem('x-access-token');
       DocumentActions.getDocument(id, token);
@@ -77,11 +76,12 @@ class DocumentPage extends React.Component {
   onChange = (state) => {
     if(state && state.message === 'delete successfuly') {
       browserHistory.push('/');
+    } else {
+      let doc = [];
+      this.setState({docId: state.doc.data._id});
+      doc.push(state.doc.data);
+      this.setState({documents: doc});
     }
-    let doc = [];
-    this.setState({docId: state.documents.data._id});
-    doc.push(state.documents.data);
-    this.setState({documents: doc});
   };
 
   handleDelete = () => {
@@ -156,7 +156,6 @@ class DocumentPage extends React.Component {
                     col-md-3
                     col-lg-3">
                     {
-                      console.log('ownerId',doc.ownerId._id),
                       this.state.userId === doc.ownerId._id || this.state.role === 'admin' || doc.contributors.indexOf(this.state.userId) > -1 ?
                         <IconButton tooltip="Edit" linkButton href={"/edit?document=" + doc._id}>
                           <Edit color={Colors.lightBlue300}/>

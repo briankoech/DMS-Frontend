@@ -57,11 +57,19 @@ class Actions {
       .set('x-access-token', token)
       .end((err, res) => {
         if(err) {
-          this.documentsFailed({error: err});
+          this.getDocumentError({error: err});
         } else {
-          this.updateDocuments(res.body);
+          this.getDocumentSuccess(res.body);
         }
       });
+  }
+
+  getDocumentSuccess(documents) {
+    return documents;
+  }
+
+  getDocumentError(err) {
+    return err;
   }
 
   fetchByCategory(type, token) {

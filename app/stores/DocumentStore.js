@@ -3,12 +3,15 @@ import Actions from '../actions/DocumentActions';
 
 class DocumentStore {
   constructor() {
-    this.state = {documents: [], errorMessage: null, message: null };
+    this.state = {documents: [], errorMessage: null, message: null, doc: [], err: null };
     this.bindListeners({
       handleDocumentsFetch: Actions.updateDocuments,
       handleFetchDocuments: Actions.fetchDocuments,
       handleFetchErrors: Actions.documentsFailed,
-      handleDeleteResponse: Actions.deleteResponse
+      handleDeleteResponse: Actions.deleteResponse,
+      handleGetDocument: Actions.getDocument,
+      handleGetDocumentSuccess: Actions.getDocumentSuccess,
+      handleGetDocumentError: Actions.getDocumentError
     });
   }
 
@@ -30,6 +33,18 @@ class DocumentStore {
 
   handleDeleteResponse(msg) {
     this.setState({message: msg});
+  }
+
+  handleGetDocument(doc) {
+    this.setState({doc: []});
+  }
+
+  handleGetDocumentSuccess(doc) {
+    this.setState({doc: doc});
+  }
+
+  handleGetDocumentError(err) {
+    this.setState({err: err});
   }
 }
 
