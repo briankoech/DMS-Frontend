@@ -6,14 +6,19 @@ import {spy, stub} from 'sinon';
 import { shallow, mount, render } from 'enzyme';
 import DocumentPage from '../Document-page.jsx';
 import DocumentActions from '../../../actions/DocumentActions';
+import { browserHistory } from 'react-router';
 
 describe('<DocumentPage />', () => {
   let wrapper;
+  let instance;
   beforeEach(() => {
+    stub(localStorage, 'getItem').returns(true);
     wrapper = mount(<DocumentPage params={{id:21}} />);
+    instance = wrapper.instance();
   });
 
   afterEach(() => {
+    localStorage.getItem.restore();
     wrapper.unmount();
   });
   it('expects component to render', ()  => {
@@ -26,16 +31,13 @@ describe('<DocumentPage />', () => {
   });
 
   it('Test handleRequestClose', () => {
-    const instance = wrapper.instance();
     spy(instance, 'handleRequestClose');
     instance.handleRequestClose();
     expect(wrapper.state().snackopen).toBe(false);
     instance.handleRequestClose.restore();
-    wrapper.unmount();
   });
 
   it('Test handleOpen', () => {
-    const instance = wrapper.instance();
     spy(instance, 'handleOpen');
     instance.handleOpen();
     expect(wrapper.state().open).toBe(true);
@@ -43,7 +45,6 @@ describe('<DocumentPage />', () => {
   });
 
   it('Test handleClose', () => {
-    const instance = wrapper.instance();
     spy(instance, 'handleClose');
     instance.handleClose();
     expect(wrapper.state().open).toBe(false);
@@ -53,7 +54,6 @@ describe('<DocumentPage />', () => {
   it('Test onSession - valid', () => {
     stub(DocumentActions, 'getDocument').returns(true);
     spy(DocumentActions, 'getDocumentSuccess');
-    const instance = wrapper.instance();
     spy(instance, 'onSession');
     let state = {
       user: {
@@ -73,7 +73,6 @@ describe('<DocumentPage />', () => {
 
   it('Test onSession - invalid', () => {
     stub(DocumentActions, 'getDocument').returns(true);
-    const instance = wrapper.instance();
     spy(instance, 'onSession');
     let state = {
       user: null,
@@ -88,7 +87,6 @@ describe('<DocumentPage />', () => {
 
   it('Test handleDelete', () => {
     stub(DocumentActions, 'deleteDocument').returns(true);
-    const instance = wrapper.instance();
     spy(instance, 'handleDelete');
     let state = {
       user: null,
@@ -100,6 +98,51 @@ describe('<DocumentPage />', () => {
     expect(DocumentActions.deleteDocument.called).toBe(true);
     expect(wrapper.state('snackopen')).toBe(true);
     DocumentActions.deleteDocument.restore();
+  });
+
+  it('Test onChange - success', () => {
+    stub(browserHistory, 'push').returns(true);
+    spy(instance, 'onChange');
+    let state = {
+      user: null,
+      message: 'delete successfuly'
+    }
+    instance.onChange(state);
+    expect(browserHistory.push.called).toBe(true);
+    instance.onChange.restore();
+    browserHistory.push.restore();
+  });
+
+  it('Test onChange -- error', () => {
+    spy(instance, 'onChange');
+    let state = {
+      doc: {
+        data: {
+          _id: 32,
+          ownerId: {
+            _id: 1,
+            name: {first: 'kodk', last: 'jdjsnj'}
+          },
+          category: {_id: 31, category: 'dbj'}
+        }
+      }
+    }
+    instance.onChange(state);
+    expect(wrapper.state('docId')).toBe(32);
+    instance.onChange.restore();
+  });
+
+  it('expects component to render without token', ()  => {
+    wrapper.unmount();
+    localStorage.getItem.restore();
+    stub(localStorage, 'getItem').returns(false);
+    wrapper = mount(<DocumentPage params={{id:21}} />);
+    let doc = {
+      ownerId: {
+        _id: 23
+      }
+    };
+    expect(wrapper).toExist();
   });
 
 });
