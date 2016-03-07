@@ -65,24 +65,4 @@ describe('<SignupDialog />', () => {
     expect(wrapper.state().success).toBe(true);
     instance.onChange.restore();
   });
-
-  it('Test onChange - error', () => {
-    let wrapper = mount(<SignupDialog open={true} />);
-    const instance = wrapper.instance();
-    spy(instance, 'onChange');
-    let state = {error: {
-      error: {
-        response: {
-          body: {
-            message: 'username'
-          }
-        }
-      }
-      }
-    };
-    instance.onChange(state);
-    expect(wrapper.state().success).toBe(false);
-    instance.onChange.restore();
-    wrapper.unmount();
-  });
 });
