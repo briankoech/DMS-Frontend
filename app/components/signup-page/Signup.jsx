@@ -32,7 +32,9 @@ class Signup extends React.Component {
 
   onChange = (state) => {
     if (state && state.message) {
-      this.setState({success: true, errormsg: '', message: 'Signup success. Proceed to login.'});
+    //  this.setState({success: true, errormsg: '', message: 'Signup success. Proceed to login.'});
+      LoginActions.loginUser(this.state.model);
+      this.props.onClick();
     } else {
       if(state.error.error.response.body.message.indexOf('username') > -1) {
         this.setState({success: false, error: true, errormsg: 'username already taken'});

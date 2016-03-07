@@ -78,6 +78,7 @@ class DocumentList extends React.Component {
       }
     } else {
       this.setState({isLoggedIn: false});
+      localStorage.removeItem('x-access-token');
       Actions.fetchDocuments();
     }
   };
@@ -98,12 +99,15 @@ class DocumentList extends React.Component {
 
   render() {
     var documentNodes;
-    if(typeof this.state.documents === 'string') {
+    if(!this.state.documents) {
       return (
         <Progress />
       );
-    }
-    if(this.state.documents) {
+    } else if(this.state.documents === 'No documens found') {
+      return (
+        <h3>No Documents found</h3>
+      );
+    } else if(this.state.documents) {
       documentNodes = this.state.documents.map((document) => {
         return (
           <div key={document._id} className="col-xs-12

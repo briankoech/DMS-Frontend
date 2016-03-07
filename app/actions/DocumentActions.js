@@ -26,7 +26,6 @@ class Actions {
         if(err) {
           this.documentsFailed({error: err});
         } else {
-          console.log('Documents', res.body);
           this.updateDocuments(res.body);
         }
       });

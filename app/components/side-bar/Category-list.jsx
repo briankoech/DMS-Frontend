@@ -44,9 +44,9 @@ class CategoryList extends React.Component {
     this.setState({categories: state.categories});
   };
 
-  handleCreateCategory = (modal, resetForm) => {
+  handleCreateCategory = (model, resetForm) => {
     let token = localStorage.getItem('x-access-token');
-    CategoryAction.addCategory(modal, token);
+    CategoryAction.addCategory(model, token);
     CategoryAction.fetchCategory();
     resetForm();
   };
