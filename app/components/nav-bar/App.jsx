@@ -100,8 +100,6 @@ class App extends React.Component {
 
   handleSnackBarClose = () => this.setState({opensnackbar: false});
 
-  handleTitleTouchTap = () => {};
-
   handleprofile = () => this.setState({openprofile: true});
 
   handleprofileclose = () => this.setState({openprofile: false});
@@ -130,7 +128,6 @@ class App extends React.Component {
           className="navbar"
           id="navbar"
           title={<span style={{cursor: 'pointer'}}>DMS</span>}
-          onTitleTouchTap={this.handleTitleTouchTap}
           iconElementLeft={
             <IconButton onTouchTap={this.handleToggle}>
               <FontIcon className="muidocs-icon-action-home" color={Colors.red500}><i className="fa fa-bars"></i></FontIcon>

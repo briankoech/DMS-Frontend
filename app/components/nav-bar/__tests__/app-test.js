@@ -102,4 +102,24 @@ describe('<App />', () => {
     instance.refresh.restore();
     window.location.reload.restore();
   });
+
+  it('Test handleSnackbar', () => {
+    let wrapper = mount(<App />);
+    let instance = wrapper.instance();
+    spy(instance, 'handleSnackBar');
+    instance.handleSnackBar('abcd');
+    expect(wrapper.state().opensnackbar).toBe(true);
+    expect(wrapper.state().snackbarmsg).toBe('abcd');
+    instance.handleSnackBar.restore();
+  });
+
+  it('Test handleToggle', () => {
+    let wrapper = mount(<App />);
+    let instance = wrapper.instance();
+    spy(instance, 'handleToggle');
+    instance.handleToggle();
+    expect(typeof wrapper.state().open).toBe('boolean');
+    instance.handleToggle.restore();
+  });
+
 });
