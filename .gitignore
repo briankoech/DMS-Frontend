@@ -1,6 +1,5 @@
 /node_modules
-/public/main.js
-/public/main.js.map
+/public/*.js
 /coverage
 .DS_Store
 npm-debug.log

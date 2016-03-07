@@ -40,7 +40,8 @@ class App extends React.Component {
       isLoggedIn: false,
       username: null,
       email: null,
-      openprofile: false
+      openprofile: false,
+      canSubmit: false
     };
 
     this.onSession = this.onSession.bind(this);
@@ -189,7 +190,8 @@ class App extends React.Component {
             </MenuItem>
           </a>
           <Divider />
-          <CategoryList closeNav={this.handleClose}/>
+          <CategoryList isLoggedIn={this.state.isLoggedIn} closeNav={this.handleClose}/>
+          <Divider />
         </LeftNav>
         <Snackbar
          open={this.state.opensnackbar}

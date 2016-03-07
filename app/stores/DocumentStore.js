@@ -13,11 +13,14 @@ class DocumentStore {
   }
 
   handleDocumentsFetch(docs) {
-    this.setState({documents: docs});
+    if(docs.length === 0) {
+      this.setState({documents: 'No documens found'});
+    } else {
+      this.setState({documents: docs});
+    }
   }
   handleFetchDocuments(docs) {
     // while its fetching
-    //this.documents = [];
     this.setState({documents: []});
   }
 
@@ -26,7 +29,6 @@ class DocumentStore {
   }
 
   handleDeleteResponse(msg) {
-    console.log(msg);
     this.setState({message: msg});
   }
 }

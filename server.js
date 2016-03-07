@@ -12,6 +12,7 @@
   var proxy = httpProxy.createProxyServer();
 
   var isProduction = process.env.NODE_ENV === 'production';
+  var port = isProduction ? process.env.PORT || 3000 : 3000;
   var publicPath = path.resolve(__dirname, 'public');
 
   // establish connection to mongoose
@@ -48,7 +49,6 @@
       console.log('Could not connect to proxy, please try again....');
   });
 
-  let port = process.env.PORT ||  3000;
 
   var routes = require('./server/routes');
   // all our routes goes here

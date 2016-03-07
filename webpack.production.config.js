@@ -1,4 +1,4 @@
-(() => {
+
   'use strict';
 
   var webpack = require('webpack');
@@ -12,15 +12,15 @@
   let mainPath = path.resolve(__dirname, 'app', 'main.js');
 
   var config = {
-    entry: [mainPath],
+    entry: mainPath,
     target: 'web',
     // Render source-map file for final build
     devtool: 'source-map',
     // output config
     output: {
       path: buildPath, // Path of output file
-      filename: 'main.js', // Name of output file
-      publicPath: '/public/'
+      filename: 'bundle.js' // Name of output file
+      //publicPath: '/public/'
     },
     plugins: [
       // Minify the bundle
@@ -50,4 +50,3 @@
   };
 
   module.exports = config;
-})();

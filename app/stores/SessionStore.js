@@ -20,7 +20,7 @@ class SessionStore {
   }
 
   handleSessionError(error) {
-    this.setState({error: error});
+    this.setState({error: error, user: null});
   }
 }
 

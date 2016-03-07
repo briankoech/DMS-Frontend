@@ -5,7 +5,7 @@
   module.exports = {
     create: function(req, res) {
       var category = new Category({
-        category: req.body.category
+        category: req.body.category.toLowerCase()
       });
 
       category.save(function(err, category) {
@@ -62,7 +62,7 @@
 
     getAllCategories: function(req, res) {
       Category.find({})
-        .limit(10)
+        .limit(30)
         .exec(function(err, categories) {
           if (err) {
             res.status(500).send({

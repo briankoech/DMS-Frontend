@@ -15,6 +15,19 @@ class CategoryAction {
       });
   }
 
+  addCategory(type, token) {
+    request
+      .post('/api/category')
+      .send(type)
+      .set('x-access-token', token)
+      .end((err, result) => {
+        if(err) {
+          this.handleError({error: err});
+        } else {
+          this.updateCategory(result.body);
+        }
+      });
+  }
   updateCategory(category) {
     return category;
   }
