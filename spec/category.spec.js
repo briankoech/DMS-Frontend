@@ -48,21 +48,6 @@
         });
     });
 
-    it('Cannot create category if title isnt provided', function(done) {
-      request(app)
-        .post('/api/category')
-        .send({})
-        .set('Accept', 'application/json')
-        .set('x-access-token', token)
-        .end(function(err, res) {
-          expect(err).toBeNull();
-          expect(res.body).toBeDefined();
-          expect(res.status).toBe(406);
-          expect(res.body.error).toContain('Category validation failed');
-          done();
-        });
-    });
-
     it('Types can be fetched', function(done) {
       request(app)
         .get('/api/category')
