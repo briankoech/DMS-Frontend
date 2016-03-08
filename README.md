@@ -1,6 +1,4 @@
-### Document Management System [![codecov.io](https://codecov.io/github/bryomckim/DMS-Frontend/coverage.svg?branch=master)](https://codecov.io/github/bryomckim/DMS-Frontend?branch=master)[![Code Climate](https://codeclimate.com/github/bryomckim/DMS-Frontend/badges/gpa.svg)](https://codeclimate.com/github/bryomckim/DMS-Frontend)
-[![Test Coverage](https://codeclimate.com/github/bryomckim/DMS-Frontend/badges/coverage.svg)](https://codeclimate.com/github/bryomckim/DMS-Frontend/coverage)
-
+### Document Management System [![codecov.io](https://codecov.io/github/bryomckim/DMS-Frontend/coverage.svg?branch=master)](https://codecov.io/github/bryomckim/DMS-Frontend?branch=master)[![Code Climate](https://codeclimate.com/github/bryomckim/DMS-Frontend/badges/gpa.svg)](https://codeclimate.com/github/bryomckim/DMS-Frontend) [![Coverage Status](https://coveralls.io/repos/github/bryomckim/DMS-Frontend/badge.svg?branch=master)](https://coveralls.io/github/bryomckim/DMS-Frontend?branch=master)
 Create, edit and view documents.
 
 The DMS helps you create Documents and view them based on priviledges the user has been given. There are 3 roles allowed: Admin, contributor and viewer.
