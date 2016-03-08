@@ -68,7 +68,6 @@ class CreateDoc extends React.Component {
   }
 
   onCategoryChange = (state) => {
-    console.log(state.categories);
     this.setState({categories: state.categories});
   };
 

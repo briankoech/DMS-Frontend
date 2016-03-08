@@ -64,9 +64,9 @@ export default class Document extends React.Component {
                 col-sm-9
                 col-md-9
                 col-lg-9" >
-            <a href={`/document/${this.props.document._id}`}>
+            <Link to={`/document/${this.props.document._id}`}>
               <CardTitle actAsExpander expandable showExpandableButton title={this.props.document.title} />
-            </a>
+            </Link>
           </div>
           <div className="col-xs-3
                 col-sm-3
@@ -104,7 +104,7 @@ export default class Document extends React.Component {
                 {moment(this.props.document.createdAt).format('MMM Do')} in &nbsp;
                 <a href={'/category?category='+ this.props.document.category.category} style={{color: '#982893'}}>
                     {this.props.document.category.category}
-                  </a>
+                </a>
               </div>
               <div className="col-xs-1
                 col-sm-1
