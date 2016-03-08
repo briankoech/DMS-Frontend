@@ -7,12 +7,8 @@ node_js:
 cache:
   directories:
   - node_modules
-# after_success:
-# - npm run codecov
 after_success:
-- cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
-- cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+- npm run codecov
 addons:
     code_climate:
         repo_token: a637071943a468b545d1fe6b94be7b30667842bd60c5342ef7077f6ee8834f52
-after_script: NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage

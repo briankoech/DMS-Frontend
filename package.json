@@ -6,8 +6,9 @@
   "scripts": {
     "test:frontend": "./node_modules/.bin/karma start",
     "test:backend": "jasmine",
-    "test": "npm run test:frontend",
+    "test:frontend": "npm run test:frontend",
     "codecov": "cat coverage/lcov/lcov.info | codecov",
+    "coverage": "NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "start": "node server.js",
     "postinstall": "webpack --config webpack-production.config.js -p --progress --colors"
   },
