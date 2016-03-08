@@ -29,10 +29,11 @@ describe('<SignupDialog />', () => {
 
   it('handle Create user', () => {
     let wrapper = mount(<SignupDialog open={true}/>);
+    let resetForm = spy();
     const instance = wrapper.instance();
     spy(instance, 'handleCreateUser');
     let model = {username: 'Brian'};
-    instance.handleCreateUser(model);
+    instance.handleCreateUser(model, resetForm);
     expect(wrapper.state().model).toBe(model);
     instance.handleCreateUser.restore();
   });
