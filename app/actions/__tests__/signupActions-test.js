@@ -105,7 +105,13 @@ describe('Signup Actions tests', () =>  {
     });
 
     it('dispatches an error on request err', () => {
-      let err = 'error';
+      let err = {
+        response : {
+          body: {
+            message: 'error'
+          }
+        }
+      };
       let user = {name: 'koech'};
       request.Request.prototype.end.restore();
       sinon.stub(request.Request.prototype, 'end', function(cb) {

@@ -18,12 +18,12 @@ class CategoryList extends React.Component {
     }
   }
 
-  static getStores(props) {
-    return [CategoryStore];
-  }
-  static getPropsFromStores(props) {
-    return CategoryStore.getState();
-  }
+  // static getStores(props) {
+  //   return [CategoryStore];
+  // }
+  // static getPropsFromStores(props) {
+  //   return CategoryStore.getState();
+  // }
 
   componentWillMount() {
     CategoryAction.fetchCategory();
@@ -85,5 +85,5 @@ class CategoryList extends React.Component {
     );
   }
 }
-//export default CategoryList;
-export default connectToStores(CategoryList);
+export default CategoryList;
+// export default connectToStores(CategoryList);

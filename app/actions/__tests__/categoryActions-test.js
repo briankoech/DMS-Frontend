@@ -18,6 +18,7 @@ describe('Category Actions tests', () =>  {
       sinon.stub(CategoryActions, 'updateCategory').returns(true);
       sinon.stub(CategoryActions, 'handleError').returns(true);
       sinon.spy(CategoryActions, 'fetchCategory');
+      sinon.spy(CategoryActions, 'addCategory');
     });
 
     afterEach(() => {
@@ -25,11 +26,19 @@ describe('Category Actions tests', () =>  {
       CategoryActions.updateCategory.restore();
       CategoryActions.handleError.restore();
       CategoryActions.fetchCategory.restore();
+      CategoryActions.addCategory.restore();
     });
 
     it('calls fetchCategory function', () => {
       CategoryActions.fetchCategory();
       expect(CategoryActions.fetchCategory.called).toBe(true);
+      expect(CategoryActions.updateCategory.called).toBe(true);
+    });
+
+    it('calls add category', () => {
+      let type = 'music';
+      let token = 'dksndjd';
+      CategoryActions.addCategory(type, token);
       expect(CategoryActions.updateCategory.called).toBe(true);
     });
 
@@ -62,12 +71,14 @@ describe('Category Actions tests', () =>  {
       });
       sinon.stub(CategoryActions, 'handleError').returns(true);
       sinon.spy(CategoryActions, 'fetchCategory');
+      sinon.spy(CategoryActions, 'addCategory');
     });
 
     afterEach(() => {
       request.Request.prototype.end.restore();
       CategoryActions.handleError.restore();
       CategoryActions.fetchCategory.restore();
+      CategoryActions.addCategory.restore();
     });
 
     it('returns an error', () => {
@@ -79,6 +90,13 @@ describe('Category Actions tests', () =>  {
     it('called fetchcategory on error', () => {
       CategoryActions.fetchCategory();
       expect(CategoryActions.fetchCategory.called).toBe(true);
+    });
+
+    it('called addCategory on error', () => {
+      let type = 'jskf';
+      let token = 'djkbvf';
+      CategoryActions.addCategory(type, token);
+      expect(CategoryActions.handleError.called).toBe(true);
     });
   });
 });
