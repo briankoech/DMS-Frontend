@@ -9,6 +9,7 @@ cache:
   - node_modules
 after_success:
 - npm run codecov
+- npm run coverage
 addons:
     code_climate:
         repo_token: a637071943a468b545d1fe6b94be7b30667842bd60c5342ef7077f6ee8834f52
