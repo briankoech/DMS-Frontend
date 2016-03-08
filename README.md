@@ -1,4 +1,5 @@
 ### Document Management System [![codecov.io](https://codecov.io/github/bryomckim/DMS-Frontend/coverage.svg?branch=master)](https://codecov.io/github/bryomckim/DMS-Frontend?branch=master)[![Code Climate](https://codeclimate.com/github/bryomckim/DMS-Frontend/badges/gpa.svg)](https://codeclimate.com/github/bryomckim/DMS-Frontend)
+[![Test Coverage](https://codeclimate.com/github/bryomckim/DMS-Frontend/badges/coverage.svg)](https://codeclimate.com/github/bryomckim/DMS-Frontend/coverage)
 
 Create, edit and view documents.
 

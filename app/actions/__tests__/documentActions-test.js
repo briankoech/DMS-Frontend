@@ -45,6 +45,12 @@ describe('Document Actions tests', () => {
       body: ['a', 'b', 'c'],
       statusCode: 200
     };
+    let token = 'xvjf';
+    let data = {
+      title: 'ABC',
+      content: 'lorem ipsum'
+    };
+    let id = 'sdv472vsd674hygg';
     beforeEach(() => {
       sinon.stub(request.Request.prototype, 'end', function(cb) {
         cb(null, response);
@@ -80,20 +86,17 @@ describe('Document Actions tests', () => {
     });
 
     it('calls fetchDocuments function', () => {
-      let token = 'xvjf';
       DocumentActions.fetchDocuments(token);
       expect(DocumentActions.fetchDocuments.called).toBe(true);
     });
 
     it('calls updateDocuments on success', () => {
-      let token = 'xvjf';
       DocumentActions.fetchDocuments(token);
       expect(DocumentActions.fetchDocuments.called).toBe(true);
       expect(DocumentActions.updateDocuments.called).toBe(true);
     });
 
     it('calls fetchByCategory function', () => {
-      let token = 'xvjf';
       let type = "music";
       DocumentActions.fetchByCategory(type, token);
       expect(DocumentActions.fetchByCategory.called).toBe(true);
@@ -101,8 +104,6 @@ describe('Document Actions tests', () => {
     });
 
     it('calls fetchDocumentsByUser function', () => {
-      let token = 'xvjf';
-      let id = 'abc';
       DocumentActions.fetchDocumentsByUser(id, token);
       expect(DocumentActions.fetchDocumentsByUser.called).toBe(true);
       expect(DocumentActions.updateDocuments.called).toBe(true);
@@ -112,36 +113,22 @@ describe('Document Actions tests', () => {
     });
 
     it('calls getDocumentSuccess function', () => {
-      let token = 'xvjf';
-      let id = 'abc';
       DocumentActions.getDocument(id, token);
       expect(DocumentActions.getDocumentSuccess.called).toBe(true);
     });
 
     it('calls createDocument', () => {
-      let token = 'xvjf';
-      let data = {
-        title: 'ABC',
-        content: 'lorem ipsum'
-      };
       DocumentActions.createDocument(data, token);
       expect(DocumentActions.createDocument.called).toBe(true);
       expect(DocumentActions.updateDocuments.called).toBe(true);
     });
     it('calls updateDocuments on success', () => {
-      let token = 'xvjf';
-      let data = {
-        title: 'ABC',
-        content: 'lorem ipsum'
-      };
       DocumentActions.updateDocument(data, token);
       expect(DocumentActions.updateDocument.called).toBe(true);
       expect(DocumentActions.updateDocuments.called).toBe(true);
     });
 
     it('calls deleteDocument on success', () => {
-      let token = 'xvjf';
-      let id = 'sdv472vsd674hygg';
       DocumentActions.deleteDocument(id, token);
       expect(DocumentActions.deleteDocument.called).toBe(true);
       expect(DocumentActions.deleteResponse.called).toBe(true);
@@ -180,6 +167,8 @@ describe('Document Actions tests', () => {
     let err = {
       body: 'error'
     };
+    let token = 'kashjkd',
+      id = 123;
     beforeEach(() => {
       sinon.stub(request.Request.prototype, 'end', function(cb) {
         cb(err, null);
@@ -211,31 +200,24 @@ describe('Document Actions tests', () => {
     });
 
     it('calls documentsFailed on error', () => {
-      let id = 1123,
-        token = 'kashjkd';
       DocumentActions.fetchDocumentsByUser(id, token);
       expect(DocumentActions.documentsFailed.called).toBe(true);
       expect(DocumentActions.fetchDocumentsByUser.called).toBe(true);
     });
 
     it('calls getDocument on error', () => {
-      let id = 1123,
-        token = 'kashjkd';
       DocumentActions.getDocument(id, token);
       expect(DocumentActions.getDocumentError.called).toBe(true);
     });
 
     it('calls fetchByCategory on error', () => {
-      let id = 1123,
-        token = 'kashjkd';
       DocumentActions.fetchByCategory(id);
       expect(DocumentActions.documentsFailed.called).toBe(true);
       expect(DocumentActions.fetchByCategory.called).toBe(true);
     });
 
     it('calls createDocument on error', () => {
-      let data = {title: 'TIA'},
-        token = 'kashjkd';
+      let data = {title: 'TIA'};
       DocumentActions.createDocument(data);
       expect(DocumentActions.documentsFailed.called).toBe(true);
       expect(DocumentActions.createDocument.called).toBe(true);
@@ -252,9 +234,7 @@ describe('Document Actions tests', () => {
     });
 
     it('calls updateDocument on error', () => {
-      let data = {title: 'TIA'},
-        token = 'kashjkd',
-        id = 123;
+      let data = {title: 'TIA'};
       DocumentActions.updateDocument(data, token, id);
       expect(DocumentActions.documentsFailed.called).toBe(true);
       expect(DocumentActions.updateDocument.called).toBe(true);
@@ -271,8 +251,6 @@ describe('Document Actions tests', () => {
     });
 
     it('calls deleteDocument on error', () => {
-      let token = 'kashjkd',
-        id = 123;
       DocumentActions.deleteDocument(id, token);
       expect(DocumentActions.deleteResponse.called).toBe(true);
       expect(DocumentActions.deleteDocument.called).toBe(true);
