@@ -1,38 +1,46 @@
 import request from 'superagent';
 
-export const get = (url, token) => {
-  console.log('Called');
-  request
-    .get(url)
-    .set('x-access-token', token)
-    .end((err, result) => {
-      console.log(result.body);
-      return result.body;
-    });
-};
+module.exports = {
+  get : (url) => {
+    console.log('Called');
+    request
+      .get(url)
+      .set('x-access-token', localStorage.getItem('x-access-token'))
+      .end((err, result) => {
+        console.log(result.body);
+        return result.body;
+      });
+  },
 
-export const post = (url, data) => {
-  request
-    .post(url)
-    .send(data)
-    .end((err, result) => {
-      return result.body;
-    });
-};
+  post : (url, data) => {
+    request
+      .post(url)
+      .send(data)
+      .end((err, result) => {
+        if(err) {
+          return {error: err};
+        } else if (result && result.body.error) {
+          return {error: result.body};
+        } else {
+          return result.body;
+        }
+      });
+  },
 
-export const remove = (url) => {
-  request
-    .delete(url)
-    .end((err, result) => {
-      return result.body;
-    });
-};
+  remove : (url) => {
+    request
+      .delete(url)
+      .end((err, result) => {
+        return result.body;
+      });
+  },
 
-export const put = (url, data) => {
-  request
-    .get(url)
-    .send(data)
-    .end((err, result) => {
-      return result.body;
-    });
-};
+  put : (url, data) => {
+    request
+      .get(url)
+      .send(data)
+      .end((err, result) => {
+        return result.body;
+      });
+  }
+}

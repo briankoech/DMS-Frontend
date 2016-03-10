@@ -17,11 +17,12 @@ import { browserHistory } from 'react-router';
 import Snackbar from 'material-ui/lib/snackbar';
 import SessionActions from '../../actions/SessionActions';
 import SessionStore from '../../stores/SessionStore';
+import ContentAdd from 'material-ui/lib/svg-icons/content/add';
 
 const style = {
   height: 'auto',
   width: '100%',
-  margin: 20,
+  margin: 0,
   textAlign: 'center',
   display: 'inline-block'
 };
@@ -124,31 +125,28 @@ class DocumentPage extends React.Component {
     if (this.state.documents) {
       var data = this.state.documents.map((doc, index) => {
         return (
-          <div key={index}>
-            <Paper style={style} zDepth={3}>
+          <div key={index} className="docPage">
+            <Paper zDepth={3}>
               <div className="row">
                 <h3 className="docTitle">{doc.title}</h3>
               </div>
               <Divider/>
-              <div className="row">
+              <div className="row subTitle">
                 <div className="col-xs-6
                       col-sm-6
                       col-md-6
-                      col-lg-6" style={{
-                      padding: 5
-                }}>
+                      col-lg-6"
+                      >
                   <h5>
-                    By <span style={{color: '#983898'}}><a href={"/author?user="+ doc.ownerId._id}>{doc.ownerId.name.first} {doc.ownerId.name.last}</a> </span> ON &nbsp;
+                    By <span className="docAuthor"><a href={"/author?user="+ doc.ownerId._id}>{doc.ownerId.name.first} {doc.ownerId.name.last}</a> </span> ON &nbsp;
                     {moment(doc.createdAt).format('MMMM Do YYYY')}
                   </h5>
                 </div>
                 <div className="col-xs-2
                 col-sm-2
                 col-md-2
-                col-lg-2 category" style={{
-                  padding: 5
-                }}>
-                  <h5 style={{color: '#894388'}}><a href={"/category?category="+ doc.category.category}>{doc.category.category}</a></h5>
+                col-lg-2 category">
+                  <h5><a href={"/category?category="+ doc.category.category}>{doc.category.category}</a></h5>
                 </div>
                 {this.state.isLoggedIn ?
                   <div className="actionButtons col-xs-3
@@ -185,14 +183,10 @@ class DocumentPage extends React.Component {
                 Share this:
               </div>
               <div className="col-md-12 socialButtons">
-                <FloatingActionButton mini backgroundColor="#3B5998" href={"https://www.facebook.com/sharer/sharer.php?u="+ window.location.href} linkButton target="_blank" style={{
-                  marginLeft: 15
-                }}>
+                <FloatingActionButton mini backgroundColor="#3B5998" href={"https://www.facebook.com/sharer/sharer.php?u="+ window.location.href} linkButton target="_blank">
                   <i className="fa fa-facebook fa-1x"></i>
                 </FloatingActionButton>
-                <FloatingActionButton mini backgroundColor="#DD4B39" href={"https://plus.google.com/share?url=" + window.location.href} linkButton target="_blank" style={{
-                  marginLeft: 15
-                }}>
+                <FloatingActionButton mini backgroundColor="#DD4B39" href={"https://plus.google.com/share?url=" + window.location.href} linkButton target="_blank">
                   <i className="fa fa-google-plus fa-1x"></i>
                 </FloatingActionButton>
               </div>
@@ -219,6 +213,9 @@ class DocumentPage extends React.Component {
             autoHideDuration={4000}
             onRequestClose={this.handleRequestClose}
           />
+          <FloatingActionButton className="add-button">
+            <ContentAdd />
+          </FloatingActionButton>
         </div>
       )
     }

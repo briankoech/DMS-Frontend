@@ -13,7 +13,6 @@ export default class Main extends React.Component {
         <Nav />
         <div className="spacer"></div>
         <div id="startchange" className="container titlehead">
-          <TitleHead />
         </div>
         <div className="container content">
           {this.props.children}

@@ -60,53 +60,40 @@ export default class Document extends React.Component {
           <img src="http://lorempixel.com/600/337/technics/" />
         </CardMedia>
         <div className="row">
-          <div className="col-xs-9
-                col-sm-9
-                col-md-9
-                col-lg-9" >
+          <div className="col-xs-12
+                col-sm-12
+                col-md-12
+                col-lg-12 cardTitle" >
             <Link to={`/document/${this.props.document._id}`}>
               <CardTitle actAsExpander expandable showExpandableButton title={this.props.document.title} />
             </Link>
-          </div>
-          <div className="col-xs-3
-                col-sm-3
-                col-md-3
-                col-lg-3">
-            <FloatingActionButton primary mini style={{margin: 10}} linkButton href={'/document/' + this.props.document._id}  >
-              <Content />
-            </FloatingActionButton>
           </div>
         </div>
         <Divider />
         <CardActions>
           <CardText>
-            <div className="row" style={{marginBottom: 10}}>
-              <div className="col-xs-2
-                    col-sm-2
-                    col-md-2
-                    col-lg-2"
+            <div className="row cardText">
+              <span className="col-xs-4
+                    col-sm-4
+                    col-md-4
+                    col-lg-4"
               >
                 <Avatar
                   src="http://lorempixel.com/600/337/people/"
                   color={Colors.blue500}
                 />
-              </div>
-              <div className="col-xs-3
-                col-sm-3
-                col-md-3
-                col-lg-3">
-                <a href={'/author?user=' + this.props.document.ownerId._id} style={{color: '#982893'}}>{this.props.document.ownerId.username}</a>
-              </div>
-              <div className="col-xs-6
+                <a href={'/author?user=' + this.props.document.ownerId._id}>{this.props.document.ownerId.username}</a>
+              </span>
+              <span className="col-xs-6
                 col-sm-6
                 col-md-6
                 col-lg-6">
                 {moment(this.props.document.createdAt).format('MMM Do')} in &nbsp;
-                <a href={'/category?category='+ this.props.document.category.category} style={{color: '#982893'}}>
+                <a href={'/category?category='+ this.props.document.category.category}>
                     {this.props.document.category.category}
                 </a>
-              </div>
-              <div className="col-xs-1
+              </span>
+              <span className="col-xs-1
                 col-sm-1
                 col-md-1
                 col-lg-1">
@@ -118,7 +105,7 @@ export default class Document extends React.Component {
                    <MenuItem primaryText="More info" href={'/document/' + this.props.document._id} leftIcon={<Info />}/>
                    {ActionNodes()}
                  </IconMenu>
-              </div>
+              </span>
             </div>
           </CardText>
         </CardActions>
