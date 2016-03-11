@@ -168,5 +168,18 @@ div.docAuthor {
 }
 
 .add-button {
-  
+
+}
+.popover {
+  background-color: transparent;
+  padding-left: 20px;
+  float:left;
+}
+.popover-list {
+  list-style-type: none;
+  background-color: transparent;
+}
+.popover-button {
+  background-color: transparent;
+  padding: 20px;
 }

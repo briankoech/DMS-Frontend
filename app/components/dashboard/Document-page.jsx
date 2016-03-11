@@ -18,6 +18,8 @@ import Snackbar from 'material-ui/lib/snackbar';
 import SessionActions from '../../actions/SessionActions';
 import SessionStore from '../../stores/SessionStore';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
+import Popover from 'material-ui/lib/popover/popover';
+import PopoverAnimationFromTop from 'material-ui/lib/popover/popover-animation-from-top';
 
 const style = {
   height: 'auto',
@@ -37,7 +39,8 @@ class DocumentPage extends React.Component {
       isLoggedIn: false,
       docId: null,
       userId: null,
-      role: null
+      role: null,
+      openPop: false
     };
   }
 
@@ -103,6 +106,19 @@ class DocumentPage extends React.Component {
     this.setState({open: false});
   };
 
+  handleTouchTap = (event) => {
+    this.setState({
+      openPop: true,
+      anchorEl: event.currentTarget
+    });
+  };
+
+  handleRequestClose = () => {
+    this.setState({
+      openPop: false
+    });
+  };
+
   render() {
     const actions = [
       <FlatButton
@@ -148,28 +164,6 @@ class DocumentPage extends React.Component {
                 col-lg-2 category">
                   <h5><a href={"/category?category="+ doc.category.category}>{doc.category.category}</a></h5>
                 </div>
-                {this.state.isLoggedIn ?
-                  <div className="actionButtons col-xs-3
-                    col-sm-3
-                    col-md-3
-                    col-lg-3">
-                    {
-                      this.state.userId === doc.ownerId._id || this.state.role === 'admin' || doc.contributors.indexOf(this.state.userId) > -1 ?
-                        <IconButton tooltip="Edit" linkButton href={"/edit?document=" + doc._id}>
-                          <Edit color={Colors.lightBlue300}/>
-                        </IconButton>
-                      : null
-                    }
-                    {
-                      this.state.userId === doc.ownerId._id || this.state.role === 'admin' ?
-                        <IconButton tooltip="Delete" onTouchTap={this.handleOpen}>
-                          <Delete color={Colors.red500}/>
-                        </IconButton>
-                      : null
-                    }
-                  </div>
-                  : null
-                }
               </div>
               <Divider/>
               <div className="row">
@@ -200,6 +194,40 @@ class DocumentPage extends React.Component {
                 These operation will delete the article permanently
               </Dialog>
             </Paper>
+
+            <Popover
+              style={{border: 'none', boxShadow: 'none', backgroundColor: 'transparent'}}
+              className="popover"
+              open={this.state.openPop}
+              anchorEl={this.state.anchorEl}
+              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'left', vertical: 'top'}}
+              onRequestClose={this.handleRequestClose}
+              animation={PopoverAnimationFromTop}
+            >
+              <div className="popover-button">
+                <ul className="popover-list">
+                  <li>
+                    {
+                      this.state.userId === doc.ownerId._id || this.state.role === 'admin' || doc.contributors.indexOf(this.state.userId) > -1 ?
+                      <IconButton tooltip="Delete" onTouchTap={this.handleOpen}>
+                        <Delete color={Colors.red500}/>
+                      </IconButton>
+                  : null
+                  }
+                </li>
+                <li>
+                  {
+                    this.state.userId === doc.ownerId._id || this.state.role === 'admin' ?
+                      <IconButton tooltip="Edit" linkButton href={"/edit?document=" + doc._id}>
+                        <Edit color={Colors.lightBlue300}/>
+                      </IconButton>
+                  : null
+                }
+                </li>
+                </ul>
+              </div>
+            </Popover>
           </div>
         );
       });
@@ -213,11 +241,16 @@ class DocumentPage extends React.Component {
             autoHideDuration={4000}
             onRequestClose={this.handleRequestClose}
           />
-        <FloatingActionButton style={{position: 'fixed',
-        bottom: '5em',
-        left: '90%'}} >
-            <ContentAdd />
+        {
+          this.state.isLoggedIn ?
+          <FloatingActionButton  onTouchTap={this.handleTouchTap} style={{position: 'fixed',
+            bottom: '5em',
+            left: '90%'}} >
+            <Edit />
           </FloatingActionButton>
+          : null
+        }
+
         </div>
       )
     }
