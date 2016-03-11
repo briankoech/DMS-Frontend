@@ -151,6 +151,7 @@ div.docAuthor {
 .cardText {
   text-align: center;
   line-height: 10px;
+  font-size: 1em;
 }
 .cardText a {
   text-align: center;
@@ -186,4 +187,24 @@ div.docAuthor {
 .title {
   padding-left: 40px;
   text-align: center;
+}
+.username {
+  line-height: 1.5;
+  vertical-align: middle;
+  display: inline-block;
+  margin-bottom: 30px;
+  padding-left: 10px;
+  font-size: 1.2em;
+}
+
+.info {
+  line-height: 1.5;
+  vertical-align: middle;
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 1.2em;
+}
+
+a:hover {
+  color: #4082EC;
 }
