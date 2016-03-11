@@ -68,7 +68,6 @@ class CreateDoc extends React.Component {
   }
 
   onCategoryChange = (state) => {
-    console.log(state.categories);
     this.setState({categories: state.categories});
   };
 
@@ -134,28 +133,36 @@ class CreateDoc extends React.Component {
         <h5>create && edit</h5>
         <Formsy.Form onValid={this.enableButton} onInvalid={this.disableButton} onValidSubmit={this.onSubmit}>
 
-          <FormsyText className="" name='title' validationError="This field is required" value={this.state.title} required fullWidth hintText="Title" floatingLabelText="Title" style={{
+          <FormsyText className="row" name='title' validationError="This field is required" value={this.state.title} required fullWidth hintText="Title" floatingLabelText="Title" style={{
             margin: 5,
             paddingLeft: 10
           }}/>
+        <div className="row">
+          <div className="col-xs-12
+              col-sm-12 col-md-6 col-lg-6 category-list">
         <FormsySelect name='category' fullWidth required floatingLabelText="Document Category">
             {categoryNodes}
             <MenuItem value={this.state.category} primaryText={this.state.category}/>
         </FormsySelect>
-          <FormsyRadioGroup className="row" name="accessLevel" fullWidth defaultSelected="3">
-            <FormsyRadio className="col-xs-4
-                col-sm-4
-                col-md-4
-                col-lg-4" value="3" label="Public"/>
-              <FormsyRadio className="col-xs-4
-                col-sm-4
-                col-md-4
-                col-lg-4" value="2" label="Contributors"/>
-              <FormsyRadio className="col-xs-4
-                col-sm-4
-                col-md-4
-                col-lg-4" value="1" label="Admins"/>
-          </FormsyRadioGroup>
+      </div>
+          <div className="col-xs-12
+              col-sm-12 col-md-6 col-lg-6 access-level">
+            <FormsyRadioGroup className="row" name="accessLevel" fullWidth defaultSelected="3">
+              <FormsyRadio className="col-xs-12
+                  col-sm-12
+                  col-md-4
+                  col-lg-4" value="3" label="Public"/>
+                <FormsyRadio className="col-xs-12
+                  col-sm-12
+                  col-md-4
+                  col-lg-4" value="2" label="Contributors"/>
+                <FormsyRadio className="col-xs-12
+                  col-sm-12
+                  col-md-4
+                  col-lg-4" value="1" label="Admins"/>
+            </FormsyRadioGroup>
+          </div>
+          </div>
           <FormsyText className="" name='content' value={this.state.content} validations="minLength:10" validationError="Miminum of 10 chars required" required fullWidth hintText="Content" multiLine={true} rows={4} floatingLabelText="Document Content" style={{
             margin: 5,
             paddingLeft: 10

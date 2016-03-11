@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  background-color: #F5F5F5;
 }
 * {
  font-family: 'Inconsolata';
@@ -13,6 +14,7 @@ a {
 }
 .container {
   margin: 0 auto;
+  margin-top: 20px;
   text-align: center;
 }
 .box {
@@ -50,7 +52,6 @@ a {
   text-justify: inter-word;
   font-size: 10em;
   font-family: 'Dancing Script', cursive;
-  ;
   margin: 0 auto;
 }
 .masthead {
@@ -58,19 +59,20 @@ a {
   text-shadow: 1px 2px #C5CDDE;
   font-size: 4em;
   font-family: inherit;
-  ;
   text-justify: inter-word;
   font-weight: lighter;
   margin: 0;
 }
 .docTitle {
-  text-align: center;
   margin: 0 auto;
-  padding: 10px 10px;
-  font-weight: lighter;
-  font-size: 3em;
+  text-align: center;
+  /*padding: 2px 10px;*/
+  /*font-weight: lighter;*/
+  /*font-size: 3em;*/
+  /*padding-left: 40px;*/
 }
 .content {
+  margin-top: 20px;
   text-align: center;
   justify: center;
   text-justify: inter-word;
@@ -89,17 +91,22 @@ a {
   width: 90%;
 }
 .editor {
-  background-color: #F5F5F5;
+  background-color: #FFF;
+  border: 3px solid #FFF;
+  border-radius: 5px;
+  padding: 5px;
+  padding-right: 30px;
   width: 70%;
   margin: 0 auto;
-  padding: 10px;
   margin-top: 20px;
   text-align: center;
 }
 .spacer {
   height: 40px;
 }
-.navbar {}
+.navbar {
+  background-color: #2196F3;
+}
 .doc-content p {
   text-align: justify;
   font-size: 1.2em;
@@ -123,7 +130,81 @@ a {
 .actionButtons {
  float: right;
 }
-
+.subTitle {
+  text-align: left;
+  padding-left: 40px;
+}
 div.category h5 {
-  text-transform: uppercase;;
+  text-transform: uppercase;
+  display: inline-block;
+  border: 2px solid #888;
+  padding: 5px;
+  border-radius: 5px;
+  color: #333;
+}
+div.docAuthor {
+
+}
+.cardTitle {
+  text-align: left;
+}
+.cardText {
+  text-align: center;
+  line-height: 10px;
+  font-size: 1em;
+}
+.cardText a {
+  text-align: center;
+}
+
+.access-level {
+  padding-top: 20px;
+}
+
+.category-list {
+  padding-left: 20px;
+}
+
+.add-button {
+
+}
+
+.popover {
+  background-color: transparent;
+  padding-right: 20px;
+  float:left;
+}
+
+.popover-list {
+  list-style-type: none;
+  background-color: transparent;
+}
+
+.popover-button {
+  background-color: transparent;
+  /*padding: 20px;*/
+}
+.title {
+  padding-left: 40px;
+  text-align: center;
+}
+.username {
+  line-height: 1.5;
+  vertical-align: middle;
+  display: inline-block;
+  margin-bottom: 30px;
+  padding-left: 10px;
+  font-size: 1.2em;
+}
+
+.info {
+  line-height: 1.5;
+  vertical-align: middle;
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 1.2em;
+}
+
+a:hover {
+  color: #4082EC;
 }

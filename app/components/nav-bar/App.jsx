@@ -127,7 +127,7 @@ class App extends React.Component {
         <AppBar
           className="navbar"
           id="navbar"
-          title={<span style={{cursor: 'pointer'}}>DMS</span>}
+          title={<span style={{cursor: 'pointer'}}>Document Management System</span>}
           iconElementLeft={
             <IconButton onTouchTap={this.handleToggle}>
               <FontIcon className="muidocs-icon-action-home" color={Colors.red500}><i className="fa fa-bars"></i></FontIcon>
@@ -136,7 +136,7 @@ class App extends React.Component {
           iconElementRight={
             (this.state.isLoggedIn) ?
             <div>
-              <RaisedButton label="Create Document" linkButton href="/create" primary={true} style={{margin: 10}}/>
+              {/*<RaisedButton label="Create Document" linkButton href="/create" primary={true} style={{margin: 10}}/>*/}
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                   anchorOrigin={{horizontal: 'left', vertical: 'top'}}
@@ -149,7 +149,7 @@ class App extends React.Component {
             </div>
           : <FlatButton label="Login" style={{color: 'red'}} onTouchTap={this.handleLogin}/>
           }
-          style={{backgroundColor: '#FFF', position: 'fixed', boxShadow: 'none'}}
+          style={{backgroundColor: '#2196F3', position: 'fixed', boxShadow: 'none'}}
         />
       <Login
         openlogin={this.state.openlogin}
