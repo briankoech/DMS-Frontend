@@ -143,8 +143,8 @@ class DocumentPage extends React.Component {
         return (
           <div key={index} className="docPage">
             <Paper zDepth={3}>
-              <div className="row">
-                <h3 className="docTitle">{doc.title}</h3>
+              <div className="row docTitle">
+                <h3 className="title">{doc.title}</h3>
               </div>
               <Divider/>
               <div className="row subTitle">
@@ -177,10 +177,10 @@ class DocumentPage extends React.Component {
                 Share this:
               </div>
               <div className="col-md-12 socialButtons">
-                <FloatingActionButton mini backgroundColor="#3B5998" href={"https://www.facebook.com/sharer/sharer.php?u="+ window.location.href} linkButton target="_blank">
+                <FloatingActionButton style={{margin: 5}} mini backgroundColor="#3B5998" href={"https://www.facebook.com/sharer/sharer.php?u="+ window.location.href} linkButton target="_blank">
                   <i className="fa fa-facebook fa-1x"></i>
                 </FloatingActionButton>
-                <FloatingActionButton mini backgroundColor="#DD4B39" href={"https://plus.google.com/share?url=" + window.location.href} linkButton target="_blank">
+                <FloatingActionButton style={{margin: 5}} mini backgroundColor="#DD4B39" href={"https://plus.google.com/share?url=" + window.location.href} linkButton target="_blank">
                   <i className="fa fa-google-plus fa-1x"></i>
                 </FloatingActionButton>
               </div>
