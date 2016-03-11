@@ -15,8 +15,11 @@ import StarBorder from 'material-ui/lib/svg-icons/toggle/star-border';
 import IconButton from 'material-ui/lib/icon-button';
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
+import ContentAdd from 'material-ui/lib/svg-icons/content/add';
+import FloatingActionButton from 'material-ui/lib/floating-action-button';
 
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router';
 
 const styles = {
   root: {
@@ -105,7 +108,20 @@ class DocumentList extends React.Component {
       );
     } else if(this.state.documents === 'No documens found') {
       return (
-        <h3>No Documents found</h3>
+        <div>
+          <h3>No Documents found</h3>
+            {
+              this.state.isLoggedIn ?
+              <Link to="/create">
+              <FloatingActionButton  linkButton style={{position: 'fixed',
+                bottom: '5em',
+                left: '90%'}} >
+                  <ContentAdd />
+              </FloatingActionButton>
+              </Link>
+              : null
+            }
+        </div>
       );
     } else if(this.state.documents) {
       documentNodes = this.state.documents.map((document) => {
@@ -125,6 +141,18 @@ class DocumentList extends React.Component {
     return (
       <div className="row">
         {documentNodes}
+        {
+          this.state.isLoggedIn ?
+          <Link to="/create">
+          <FloatingActionButton  linkButton style={{position: 'fixed',
+            bottom: '5em',
+            left: '90%'}} >
+              <ContentAdd />
+          </FloatingActionButton>
+          </Link>
+          : null
+        }
+
       </div>
     );
   }

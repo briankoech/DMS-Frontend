@@ -213,7 +213,9 @@ class DocumentPage extends React.Component {
             autoHideDuration={4000}
             onRequestClose={this.handleRequestClose}
           />
-          <FloatingActionButton className="add-button">
+        <FloatingActionButton style={{position: 'fixed',
+        bottom: '5em',
+        left: '90%'}} >
             <ContentAdd />
           </FloatingActionButton>
         </div>

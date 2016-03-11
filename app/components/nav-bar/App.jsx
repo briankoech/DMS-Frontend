@@ -136,7 +136,7 @@ class App extends React.Component {
           iconElementRight={
             (this.state.isLoggedIn) ?
             <div>
-              <RaisedButton label="Create Document" linkButton href="/create" primary={true} style={{margin: 10}}/>
+              {/*<RaisedButton label="Create Document" linkButton href="/create" primary={true} style={{margin: 10}}/>*/}
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                   anchorOrigin={{horizontal: 'left', vertical: 'top'}}
