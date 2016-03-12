@@ -5,9 +5,9 @@ class DocumentStore {
   constructor() {
     this.state = {documents: [], errorMessage: null, message: null, doc: [], err: null };
     this.bindListeners({
-      handleDocumentsFetch: Actions.updateDocuments,
+      handleDocumentsFetch: Actions.documentsSuccessDispatcher,
       handleFetchDocuments: Actions.fetchDocuments,
-      handleFetchErrors: Actions.documentsFailed,
+      handleFetchErrors: Actions.documentsFailedDispatcher,
       handleDeleteResponse: Actions.deleteResponse,
       handleGetDocument: Actions.getDocument,
       handleGetDocumentSuccess: Actions.getDocumentSuccess,

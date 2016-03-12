@@ -6,8 +6,8 @@ class LogoutStore {
     this.state = {message: '', error: null, success: false};
     this.bindListeners({
       handleLogout: LogoutActions.logoutUser,
-      logoutSuccess: LogoutActions.logoutSuccess,
-      logoutError: LogoutActions.logoutError
+      logoutSuccess: LogoutActions.logoutSuccessDispatcher,
+      logoutError: LogoutActions.logoutErrorDispatcher
     });
   }
 

@@ -8,18 +8,18 @@ import alt from '../../alt';
 describe('Document Actions tests', () => {
   describe('Document dispatches the data', () => {
     let dispatcherSpy;
-    let updateDocumentsSpy;
+    let documentsSuccessDispatcherSpy;
     beforeEach(() => {
       // here we use sinon to create a spy on the alt.dispatcher.dispatch function
       dispatcherSpy = sinon.spy(alt.dispatcher, 'dispatch');
-      updateDocumentsSpy = sinon.spy(DocumentActions, 'updateDocuments');
+      documentsSuccessDispatcherSpy = sinon.spy(DocumentActions, 'documentsSuccessDispatcher');
 
     });
 
     afterEach(() => {
       // clean up our sinon spy so we do not affect other tests
       alt.dispatcher.dispatch.restore();
-      DocumentActions.updateDocuments.restore();
+      DocumentActions.documentsSuccessDispatcher.restore();
     });
 
     it('dispatches documents', () => {
@@ -27,10 +27,10 @@ describe('Document Actions tests', () => {
           title: 'TIA',
           content: 'ABC'
         },
-        action = DocumentActions.UPDATE_DOCUMENTS;
+        action = DocumentActions.DOCUMENTS_SUCCESS_DISPATCHER;
 
       // fire the action
-      DocumentActions.updateDocuments(document);
+      DocumentActions.documentsSuccessDispatcher(document);
       // use our spy to see what payload the dispatcher was called with
       // this lets us ensure that the expected payload was fired
       var dispatcherArgs = dispatcherSpy.args[0];
@@ -55,8 +55,8 @@ describe('Document Actions tests', () => {
       sinon.stub(request.Request.prototype, 'end', function(cb) {
         cb(null, response);
       });
-      sinon.stub(DocumentActions, 'updateDocuments').returns(true);
-      sinon.stub(DocumentActions, 'documentsFailed').returns(true);
+      sinon.stub(DocumentActions, 'documentsSuccessDispatcher').returns(true);
+      sinon.stub(DocumentActions, 'documentsFailedDispatcher').returns(true);
       sinon.stub(DocumentActions, 'deleteResponse').returns(true);
       sinon.spy(DocumentActions, 'fetchDocuments');
       sinon.spy(DocumentActions, 'fetchByCategory');
@@ -71,8 +71,8 @@ describe('Document Actions tests', () => {
 
     afterEach(() => {
       request.Request.prototype.end.restore();
-      DocumentActions.updateDocuments.restore();
-      DocumentActions.documentsFailed.restore();
+      DocumentActions.documentsSuccessDispatcher.restore();
+      DocumentActions.documentsFailedDispatcher.restore();
       DocumentActions.fetchDocuments.restore();
       DocumentActions.fetchByCategory.restore();
       DocumentActions.createDocument.restore();
@@ -90,26 +90,26 @@ describe('Document Actions tests', () => {
       expect(DocumentActions.fetchDocuments.called).toBe(true);
     });
 
-    it('calls updateDocuments on success', () => {
+    it('calls documentsSuccessDispatcher on success', () => {
       DocumentActions.fetchDocuments(token);
       expect(DocumentActions.fetchDocuments.called).toBe(true);
-      expect(DocumentActions.updateDocuments.called).toBe(true);
+      expect(DocumentActions.documentsSuccessDispatcher.called).toBe(true);
     });
 
     it('calls fetchByCategory function', () => {
       let type = "music";
       DocumentActions.fetchByCategory(type, token);
       expect(DocumentActions.fetchByCategory.called).toBe(true);
-      expect(DocumentActions.updateDocuments.called).toBe(true);
+      expect(DocumentActions.documentsSuccessDispatcher.called).toBe(true);
     });
 
     it('calls fetchDocumentsByUser function', () => {
       DocumentActions.fetchDocumentsByUser(id, token);
       expect(DocumentActions.fetchDocumentsByUser.called).toBe(true);
-      expect(DocumentActions.updateDocuments.called).toBe(true);
+      expect(DocumentActions.documentsSuccessDispatcher.called).toBe(true);
       DocumentActions.fetchDocumentsByUser(id);
       expect(DocumentActions.fetchDocumentsByUser.called).toBe(true);
-      expect(DocumentActions.updateDocuments.called).toBe(true);
+      expect(DocumentActions.documentsSuccessDispatcher.called).toBe(true);
     });
 
     it('calls getDocumentSuccess function', () => {
@@ -120,12 +120,12 @@ describe('Document Actions tests', () => {
     it('calls createDocument', () => {
       DocumentActions.createDocument(data, token);
       expect(DocumentActions.createDocument.called).toBe(true);
-      expect(DocumentActions.updateDocuments.called).toBe(true);
+      expect(DocumentActions.documentsSuccessDispatcher.called).toBe(true);
     });
-    it('calls updateDocuments on success', () => {
+    it('calls documentsSuccessDispatcher on success', () => {
       DocumentActions.updateDocument(data, token);
       expect(DocumentActions.updateDocument.called).toBe(true);
-      expect(DocumentActions.updateDocuments.called).toBe(true);
+      expect(DocumentActions.documentsSuccessDispatcher.called).toBe(true);
     });
 
     it('calls deleteDocument on success', () => {
@@ -146,20 +146,20 @@ describe('Document Actions tests', () => {
       sinon.stub(request.Request.prototype, 'end', function(cb) {
         cb(err, null);
       });
-      sinon.stub(DocumentActions, 'documentsFailed').returns(true);
+      sinon.stub(DocumentActions, 'documentsFailedDispatcher').returns(true);
       sinon.spy(DocumentActions, 'fetchDocuments');
     });
 
     afterEach(() => {
       request.Request.prototype.end.restore();
-      DocumentActions.documentsFailed.restore();
+      DocumentActions.documentsFailedDispatcher.restore();
       DocumentActions.fetchDocuments.restore();
     });
 
     it('calls documentFailed on error', () => {
       DocumentActions.fetchDocuments();
       expect(DocumentActions.fetchDocuments.called).toBe(true);
-      expect(DocumentActions.documentsFailed.called).toBe(true);
+      expect(DocumentActions.documentsFailedDispatcher.called).toBe(true);
     });
   });
 
@@ -173,7 +173,7 @@ describe('Document Actions tests', () => {
       sinon.stub(request.Request.prototype, 'end', function(cb) {
         cb(err, null);
       });
-      sinon.stub(DocumentActions, 'documentsFailed').returns(true);
+      sinon.stub(DocumentActions, 'documentsFailedDispatcher').returns(true);
       sinon.spy(DocumentActions, 'fetchDocumentsByUser');
       sinon.spy(DocumentActions, 'getDocument');
       sinon.spy(DocumentActions, 'fetchByCategory');
@@ -188,7 +188,7 @@ describe('Document Actions tests', () => {
     afterEach(() => {
       request.Request.prototype.end.restore();
       DocumentActions.fetchDocumentsByUser.restore();
-      DocumentActions.documentsFailed.restore();
+      DocumentActions.documentsFailedDispatcher.restore();
       DocumentActions.getDocument.restore();
       DocumentActions.fetchByCategory.restore();
       DocumentActions.createDocument.restore();
@@ -199,9 +199,9 @@ describe('Document Actions tests', () => {
       DocumentActions.getDocumentError.restore();
     });
 
-    it('calls documentsFailed on error', () => {
+    it('calls documentsFailedDispatcher on error', () => {
       DocumentActions.fetchDocumentsByUser(id, token);
-      expect(DocumentActions.documentsFailed.called).toBe(true);
+      expect(DocumentActions.documentsFailedDispatcher.called).toBe(true);
       expect(DocumentActions.fetchDocumentsByUser.called).toBe(true);
     });
 
@@ -212,14 +212,14 @@ describe('Document Actions tests', () => {
 
     it('calls fetchByCategory on error', () => {
       DocumentActions.fetchByCategory(id);
-      expect(DocumentActions.documentsFailed.called).toBe(true);
+      expect(DocumentActions.documentsFailedDispatcher.called).toBe(true);
       expect(DocumentActions.fetchByCategory.called).toBe(true);
     });
 
     it('calls createDocument on error', () => {
       let data = {title: 'TIA'};
       DocumentActions.createDocument(data);
-      expect(DocumentActions.documentsFailed.called).toBe(true);
+      expect(DocumentActions.documentsFailedDispatcher.called).toBe(true);
       expect(DocumentActions.createDocument.called).toBe(true);
       request.Request.prototype.end.restore();
       let res = {
@@ -229,14 +229,14 @@ describe('Document Actions tests', () => {
         cb(null, res);
       });
       DocumentActions.createDocument(data);
-      expect(DocumentActions.documentsFailed.called).toBe(true);
+      expect(DocumentActions.documentsFailedDispatcher.called).toBe(true);
       expect(DocumentActions.createDocument.called).toBe(true);
     });
 
     it('calls updateDocument on error', () => {
       let data = {title: 'TIA'};
       DocumentActions.updateDocument(data, token, id);
-      expect(DocumentActions.documentsFailed.called).toBe(true);
+      expect(DocumentActions.documentsFailedDispatcher.called).toBe(true);
       expect(DocumentActions.updateDocument.called).toBe(true);
       request.Request.prototype.end.restore();
       let res = {
@@ -246,7 +246,7 @@ describe('Document Actions tests', () => {
         cb(null, res);
       });
       DocumentActions.updateDocument(data, token, id);
-      expect(DocumentActions.documentsFailed.called).toBe(true);
+      expect(DocumentActions.documentsFailedDispatcher.called).toBe(true);
       expect(DocumentActions.updateDocument.called).toBe(true);
     });
 

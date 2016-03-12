@@ -9,7 +9,7 @@ class LogoutActions {
       .end((err, result) => {
         if(err) {
           this.logoutErrorDispatcher(err);
-        } else if(result && result.body.error) {
+        } else if (result && result.body.error) {
           this.logoutErrorDispatcher(result.body);
         } else {
           this.logoutSuccessDispatcher(result.body);

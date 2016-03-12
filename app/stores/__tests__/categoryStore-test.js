@@ -8,9 +8,9 @@ import CategoryStore from '../CategoryStore';
 import AltTestingUtils from 'alt-utils/lib/AltTestingUtils';
 
 describe('Category Store tests', () => {
-  it('listens for updateCategory Actions', () => {
+  it('listens for categorySuccessDispatcher Actions', () => {
     let data = ['Music', 'Education', 'Film', 'Programming'];
-    let action = CategoryActions.UPDATE_CATEGORY;
+    let action = CategoryActions.CATEGORY_SUCCESS_DISPATCHER;
     alt.dispatcher.dispatch({action, data});
     expect(CategoryStore.getState().categories.length).toEqual(4);
   });

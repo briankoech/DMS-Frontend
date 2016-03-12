@@ -123,7 +123,8 @@ describe('<DocumentPage />', () => {
             _id: 1,
             name: {first: 'kodk', last: 'jdjsnj'}
           },
-          category: {_id: 31, category: 'dbj'}
+          category: {_id: 31, category: 'dbj'},
+          contributors: [123, 42]
         }
       }
     }
