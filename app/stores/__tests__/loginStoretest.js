@@ -11,7 +11,7 @@ describe('Login Store tests', () => {
   it('listens for login Actions', () => {
     spy(alt.dispatcher, 'dispatch');
     let message = 'success';
-    let action = LoginActions.LOGIN_SUCCESS;
+    let action = LoginActions.LOGIN_SUCCESS_DISPATCHER;
     alt.dispatcher.dispatch.restore();
     alt.dispatcher.dispatch({action, message});
     expect(typeof LoginStore.getState().message).toBe('string');

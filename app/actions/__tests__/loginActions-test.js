@@ -8,28 +8,28 @@ import alt from '../../alt';
 describe('Login Actions tests', () => {
   describe('Login Actions', () => {
     let dispatcherSpy;
-    let loginSuccessSpy;
-    let loginErrorSpy
+    let loginSuccessDispatcherSpy;
+    let loginErrorDispatcherSpy
     beforeEach(() => {
       // here we use sinon to create a spy on the alt.dispatcher.dispatch function
       dispatcherSpy = sinon.spy(alt.dispatcher, 'dispatch');
-      loginSuccessSpy = sinon.spy(LoginActions, 'loginSuccess');
-      loginErrorSpy = sinon.spy(LoginActions, 'loginError');
+      loginSuccessDispatcherSpy = sinon.spy(LoginActions, 'loginSuccessDispatcher');
+      loginErrorDispatcherSpy = sinon.spy(LoginActions, 'loginErrorDispatcher');
     });
 
     afterEach(() => {
       // clean up our sinon spy so we do not affect other tests
       alt.dispatcher.dispatch.restore();
-      LoginActions.loginSuccess.restore();
-      LoginActions.loginError.restore();
+      LoginActions.loginSuccessDispatcher.restore();
+      LoginActions.loginErrorDispatcher.restore();
     });
 
     it('dispatches correct data', () => {
       let user = 'Brian',
-        action = LoginActions.LOGIN_SUCCESS;
+        action = LoginActions.LOGIN_SUCCESS_DISPATCHER;
 
       // fire the action
-      LoginActions.loginSuccess(user);
+      LoginActions.loginSuccessDispatcher(user);
       // use our spy to see what payload the dispatcher was called with
       // this lets us ensure that the expected payload was fired
       var dispatcherArgs = dispatcherSpy.args[0];
@@ -40,10 +40,10 @@ describe('Login Actions tests', () => {
 
     it('dispatches an error', () => {
       let error = 'error',
-        action = LoginActions.LOGIN_ERROR;
+        action = LoginActions.LOGIN_ERROR_DISPATCHER;
 
       // fire the action
-      LoginActions.loginError(error);
+      LoginActions.loginErrorDispatcher(error);
       // use our spy to see what payload the dispatcher was called with
       // this lets us ensure that the expected payload was fired
       let dispatcherArgs = dispatcherSpy.args[0];
@@ -64,15 +64,15 @@ describe('Login Actions tests', () => {
       sinon.stub(request.Request.prototype, 'end', function(cb) {
         cb(null, response);
       });
-      sinon.stub(LoginActions, 'loginSuccess').returns(true);
-      sinon.stub(LoginActions, 'loginError').returns(true);
+      sinon.stub(LoginActions, 'loginSuccessDispatcher').returns(true);
+      sinon.stub(LoginActions, 'loginErrorDispatcher').returns(true);
       sinon.spy(LoginActions, 'loginUser');
     });
 
     afterEach(() => {
       request.Request.prototype.end.restore();
-      LoginActions.loginSuccess.restore();
-      LoginActions.loginError.restore();
+      LoginActions.loginSuccessDispatcher.restore();
+      LoginActions.loginErrorDispatcher.restore();
       LoginActions.loginUser.restore();
     });
 
@@ -83,7 +83,7 @@ describe('Login Actions tests', () => {
       };
       LoginActions.loginUser(user);
       expect(LoginActions.loginUser.called).toBe(true);
-      expect(LoginActions.loginSuccess.called).toBe(true);
+      expect(LoginActions.loginSuccessDispatcher.called).toBe(true);
     });
   });
 
@@ -98,13 +98,13 @@ describe('Login Actions tests', () => {
       sinon.stub(request.Request.prototype, 'end', function(cb) {
         cb(null, response);
       });
-      sinon.stub(LoginActions, 'loginError').returns(true);
+      sinon.stub(LoginActions, 'loginErrorDispatcher').returns(true);
       sinon.spy(LoginActions, 'loginUser');
     });
 
     afterEach(() => {
       request.Request.prototype.end.restore();
-      LoginActions.loginError.restore();
+      LoginActions.loginErrorDispatcher.restore();
       LoginActions.loginUser.restore();
     });
 
@@ -115,7 +115,7 @@ describe('Login Actions tests', () => {
       };
       LoginActions.loginUser(user);
       expect(LoginActions.loginUser.called).toBe(true);
-      expect(LoginActions.loginError.called).toBe(true);
+      expect(LoginActions.loginErrorDispatcher.called).toBe(true);
     });
 
     it('returns an error on wrong credentials', () => {
@@ -134,13 +134,13 @@ describe('Login Actions tests', () => {
       sinon.stub(request.Request.prototype, 'end', function(cb) {
         cb(err, null);
       });
-      sinon.stub(LoginActions, 'loginError').returns(true);
+      sinon.stub(LoginActions, 'loginErrorDispatcher').returns(true);
       sinon.spy(LoginActions, 'loginUser');
     });
 
     afterEach(() => {
       request.Request.prototype.end.restore();
-      LoginActions.loginError.restore();
+      LoginActions.loginErrorDispatcher.restore();
       LoginActions.loginUser.restore();
     });
 
@@ -151,7 +151,7 @@ describe('Login Actions tests', () => {
       };
       LoginActions.loginUser(user);
       expect(LoginActions.loginUser.called).toBe(true);
-      expect(LoginActions.loginError.called).toBe(true);
+      expect(LoginActions.loginErrorDispatcher.called).toBe(true);
     });
 
     it('returns an error on wrong credentials', () => {

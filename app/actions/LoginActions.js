@@ -9,20 +9,20 @@ class LoginActions {
       .set('Accept', 'application/json')
       .end((err, result) => {
         if(err) {
-          this.loginError(err);
+          this.loginErrorDispatcher(err);
         } else if(result && result.body.error) {
-          this.loginError(result.body);
+          this.loginErrorDispatcher(result.body);
         } else {
-          this.loginSuccess(result.body);
+          this.loginSuccessDispatcher(result.body);
         }
       });
   }
 
-  loginSuccess(user) {
+  loginSuccessDispatcher(user) {
     return user;
   }
 
-  loginError(err) {
+  loginErrorDispatcher(err) {
     return err;
   }
 }
