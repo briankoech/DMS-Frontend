@@ -15,30 +15,30 @@ describe('Logout Actions tests', () => {
       sinon.stub(request.Request.prototype, 'end', function(cb) {
         cb(null, response);
       });
-      sinon.stub(LogoutActions, 'logoutSuccess').returns(true);
+      sinon.stub(LogoutActions, 'logoutSuccessDispatcher').returns(true);
       sinon.spy(LogoutActions, 'logoutUser');
-      sinon.spy(LogoutActions, 'logoutError');
+      sinon.spy(LogoutActions, 'logoutErrorDispatcher');
     });
 
     afterEach(() => {
       request.Request.prototype.end.restore();
-      LogoutActions.logoutSuccess.restore();
+      LogoutActions.logoutSuccessDispatcher.restore();
       LogoutActions.logoutUser.restore();
-      LogoutActions.logoutError.restore();
+      LogoutActions.logoutErrorDispatcher.restore();
     });
 
     it('calls logoutUser function', () => {
       let token = 'xsvxsyhshxs';
       LogoutActions.logoutUser(token);
       expect(LogoutActions.logoutUser.called).toBe(true);
-      expect(LogoutActions.logoutSuccess.called).toBe(true);
+      expect(LogoutActions.logoutSuccessDispatcher.called).toBe(true);
     });
 
     it('returns message on logout', () => {
       let token = 'knfj';
       LogoutActions.logoutUser(token);
       expect(LogoutActions.logoutUser.called).toBe(true);
-      expect(LogoutActions.logoutSuccess.calledWithMatch(/success/)).toBe(true);
+      expect(LogoutActions.logoutSuccessDispatcher.calledWithMatch(/success/)).toBe(true);
     });
 
     it('throws an error on err', () => {
@@ -52,7 +52,7 @@ describe('Logout Actions tests', () => {
       let token = 'knfj';
       LogoutActions.logoutUser(token);
       expect(LogoutActions.logoutUser.called).toBe(true);
-      expect(LogoutActions.logoutError.called).toBe(true);
+      expect(LogoutActions.logoutErrorDispatcher.called).toBe(true);
     });
   });
 
@@ -65,55 +65,55 @@ describe('Logout Actions tests', () => {
       sinon.stub(request.Request.prototype, 'end', function(cb) {
         cb(err, null);
       });
-      sinon.stub(LogoutActions, 'logoutError').returns(true);
+      sinon.stub(LogoutActions, 'logoutErrorDispatcher').returns(true);
       sinon.spy(LogoutActions, 'logoutUser');
     });
 
     afterEach(() => {
       request.Request.prototype.end.restore();
-      LogoutActions.logoutError.restore();
+      LogoutActions.logoutErrorDispatcher.restore();
       LogoutActions.logoutUser.restore();
     });
 
-    it('calls logoutError function', () => {
+    it('calls logoutErrorDispatcher function', () => {
       let token = 'xsvxsyhshxs';
       LogoutActions.logoutUser(token);
       expect(LogoutActions.logoutUser.called).toBe(true);
-      expect(LogoutActions.logoutError.called).toBe(true);
+      expect(LogoutActions.logoutErrorDispatcher.called).toBe(true);
     });
 
     it('returns an error message', () => {
       let token = 'knfj';
       LogoutActions.logoutUser(token);
       expect(LogoutActions.logoutUser.called).toBe(true);
-      expect(LogoutActions.logoutError.called).toBe(true);
+      expect(LogoutActions.logoutErrorDispatcher.called).toBe(true);
     });
   });
 
   describe('Dispatches data successfully Actions', () => {
     let dispatcherSpy;
-    let logoutSuccessSpy;
-    let logoutErrorSpy
+    let logoutSuccessDispatcherSpy;
+    let logoutErrorDispatcherSpy
     beforeEach(() => {
       // here we use sinon to create a spy on the alt.dispatcher.dispatch function
       dispatcherSpy = sinon.spy(alt.dispatcher, 'dispatch');
-      logoutSuccessSpy = sinon.spy(LogoutActions, 'logoutSuccess');
-      logoutErrorSpy = sinon.spy(LogoutActions, 'logoutError');
+      logoutSuccessDispatcherSpy = sinon.spy(LogoutActions, 'logoutSuccessDispatcher');
+      logoutErrorDispatcherSpy = sinon.spy(LogoutActions, 'logoutErrorDispatcher');
     });
 
     afterEach(() => {
       // clean up our sinon spy so we do not affect other tests
       alt.dispatcher.dispatch.restore();
-      LogoutActions.logoutSuccess.restore();
-      LogoutActions.logoutError.restore();
+      LogoutActions.logoutSuccessDispatcher.restore();
+      LogoutActions.logoutErrorDispatcher.restore();
     });
 
     it('dispatches correct data', () => {
       let data = 'logout successfully',
-        action = LogoutActions.LOGOUT_SUCCESS;
+        action = LogoutActions.LOGOUT_SUCCESS_DISPATCHER;
 
       // fire the action
-      LogoutActions.logoutSuccess(data);
+      LogoutActions.logoutSuccessDispatcher(data);
       // use our spy to see what payload the dispatcher was called with
       // this lets us ensure that the expected payload was fired
       var dispatcherArgs = dispatcherSpy.args[0];
@@ -124,10 +124,10 @@ describe('Logout Actions tests', () => {
 
     it('dispatches an error', () => {
       let error = 'error',
-        action = LogoutActions.LOGOUT_ERROR;
+        action = LogoutActions.LOGOUT_ERROR_DISPATCHER;
 
       // fire the action
-      LogoutActions.logoutError(error);
+      LogoutActions.logoutErrorDispatcher(error);
       // use our spy to see what payload the dispatcher was called with
       // this lets us ensure that the expected payload was fired
       var dispatcherArgs = dispatcherSpy.args[0];
