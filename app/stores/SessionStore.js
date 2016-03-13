@@ -6,8 +6,8 @@ class SessionStore {
     this.state = {user: [], error: null};
     this.bindListeners({
       handleSession: SessionActions.getSession,
-      handleSessionSuccess: SessionActions.sessionSuccess,
-      handleSessionError: SessionActions.invalidSession
+      handleSessionSuccess: SessionActions.sessionSuccessDispatcher,
+      handleSessionError: SessionActions.invalidSessionDispatcher
     });
   }
 

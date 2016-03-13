@@ -8,28 +8,28 @@ import alt from '../../alt';
 describe('UserProfileActions Actions tests', () =>  {
   describe('UserProfileActions dispatches the correct data', () => {
     let dispatcherSpy;
-    let updateSuccessSpy;
-    let updateErrorSpy
+    let updateSuccessDispatcherSpy;
+    let updateErrorDispatcherSpy
     beforeEach(() => {
       // here we use sinon to create a spy on the alt.dispatcher.dispatch function
       dispatcherSpy = sinon.spy(alt.dispatcher, 'dispatch');
-      updateSuccessSpy = sinon.spy(UserProfileActions, 'updateSuccess');
-      updateErrorSpy = sinon.spy(UserProfileActions, 'updateError');
+      updateSuccessDispatcherSpy = sinon.spy(UserProfileActions, 'updateSuccessDispatcher');
+      updateErrorDispatcherSpy = sinon.spy(UserProfileActions, 'updateErrorDispatcher');
     });
 
     afterEach(() => {
       // clean up our sinon spy so we do not affect other tests
       alt.dispatcher.dispatch.restore();
-      UserProfileActions.updateSuccess.restore();
-      UserProfileActions.updateError.restore();
+      UserProfileActions.updateSuccessDispatcher.restore();
+      UserProfileActions.updateErrorDispatcher.restore();
     });
 
     it('dispatches correct data', () => {
       let user = 'Brian',
-        action = UserProfileActions.UPDATE_SUCCESS;
+        action = UserProfileActions.UPDATE_SUCCESS_DISPATCHER;
 
       // fire the action
-      UserProfileActions.updateSuccess(user);
+      UserProfileActions.updateSuccessDispatcher(user);
       // use our spy to see what payload the dispatcher was called with
       // this lets us ensure that the expected payload was fired
       var dispatcherArgs = dispatcherSpy.args[0];
@@ -40,10 +40,10 @@ describe('UserProfileActions Actions tests', () =>  {
 
     it('dispatches correct data', () => {
       let error = 'error',
-        action = UserProfileActions.UPDATE_ERROR;
+        action = UserProfileActions.UPDATE_ERROR_DISPATCHER;
 
       // fire the action
-      UserProfileActions.updateError(error);
+      UserProfileActions.updateErrorDispatcher(error);
       // use our spy to see what payload the dispatcher was called with
       // this lets us ensure that the expected payload was fired
       var dispatcherArgs = dispatcherSpy.args[0];
@@ -62,15 +62,15 @@ describe('UserProfileActions Actions tests', () =>  {
       sinon.stub(request.Request.prototype, 'end', function(cb) {
         cb(null, response);
       });
-      sinon.stub(UserProfileActions, 'updateSuccess').returns(true);
-      sinon.stub(UserProfileActions, 'updateError').returns(true);
+      sinon.stub(UserProfileActions, 'updateSuccessDispatcher').returns(true);
+      sinon.stub(UserProfileActions, 'updateErrorDispatcher').returns(true);
       sinon.spy(UserProfileActions, 'updateUser');
     });
 
     afterEach(() => {
       request.Request.prototype.end.restore();
-      UserProfileActions.updateSuccess.restore();
-      UserProfileActions.updateError.restore();
+      UserProfileActions.updateSuccessDispatcher.restore();
+      UserProfileActions.updateErrorDispatcher.restore();
       UserProfileActions.updateUser.restore();
     });
 
@@ -78,7 +78,7 @@ describe('UserProfileActions Actions tests', () =>  {
       let user = {name: 'abc123'};
       UserProfileActions.updateUser(user);
       expect(UserProfileActions.updateUser.called).toBe(true);
-      expect(UserProfileActions.updateSuccess.called).toBe(true);
+      expect(UserProfileActions.updateSuccessDispatcher.called).toBe(true);
     });
   });
 
@@ -93,15 +93,15 @@ describe('UserProfileActions Actions tests', () =>  {
       sinon.stub(request.Request.prototype, 'end', function(cb) {
         cb(null, response);
       });
-      sinon.stub(UserProfileActions, 'updateSuccess').returns(false);
-      sinon.stub(UserProfileActions, 'updateError').returns(true);
+      sinon.stub(UserProfileActions, 'updateSuccessDispatcher').returns(false);
+      sinon.stub(UserProfileActions, 'updateErrorDispatcher').returns(true);
       sinon.spy(UserProfileActions, 'updateUser');
     });
 
     afterEach(() => {
       request.Request.prototype.end.restore();
-      UserProfileActions.updateError.restore();
-      UserProfileActions.updateSuccess.restore();
+      UserProfileActions.updateErrorDispatcher.restore();
+      UserProfileActions.updateSuccessDispatcher.restore();
       UserProfileActions.updateUser.restore();
     });
 
@@ -109,13 +109,13 @@ describe('UserProfileActions Actions tests', () =>  {
       let user = {name: 'abc'};
       UserProfileActions.updateUser(user);
       expect(UserProfileActions.updateUser.called).toBe(true);
-      expect(UserProfileActions.updateError.called).toBe(true);
+      expect(UserProfileActions.updateErrorDispatcher.called).toBe(true);
     });
 
-    it('fails to call updateSuccess on invalid data', () => {
+    it('fails to call updateSuccessDispatcher on invalid data', () => {
       UserProfileActions.updateUser();
       expect(UserProfileActions.updateUser.called).toBe(true);
-      expect(UserProfileActions.updateSuccess.called).toBe(false);
+      expect(UserProfileActions.updateSuccessDispatcher.called).toBe(false);
     });
 
     it('dispatches an error on request err', () => {
@@ -127,7 +127,7 @@ describe('UserProfileActions Actions tests', () =>  {
       });
       UserProfileActions.updateUser(user);
       expect(UserProfileActions.updateUser.called).toBe(true);
-      expect(UserProfileActions.updateError.called).toBe(true);
+      expect(UserProfileActions.updateErrorDispatcher.called).toBe(true);
     });
   });
 });

@@ -6,8 +6,8 @@ class UserProfileStore {
     this.state = {user: null, error: null};
     this.bindListeners({
       handleUpdate: UserProfileActions.updateUser,
-      updateSuccess: UserProfileActions.updateSuccess,
-      updateError: UserProfileActions.updateError
+      updateSuccess: UserProfileActions.updateSuccessDispatcher,
+      updateError: UserProfileActions.updateErrorDispatcher
     });
   }
 
