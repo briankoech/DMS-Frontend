@@ -8,9 +8,9 @@ class CategoryAction {
       .set('Accept', 'application/json')
       .end((err, result) => {
         if(err) {
-          this.handleError({error: err});
+          this.categoryErrorDispatcher({error: err});
         } else {
-          this.updateCategory(result.body);
+          this.categorySuccessDispatcher(result.body);
         }
       });
   }
@@ -22,17 +22,17 @@ class CategoryAction {
       .set('x-access-token', token)
       .end((err, result) => {
         if(err) {
-          this.handleError({error: err});
+          this.categoryErrorDispatcher({error: err});
         } else {
-          this.updateCategory(result.body);
+          this.categorySuccessDispatcher(result.body);
         }
       });
   }
-  updateCategory(category) {
+  categorySuccessDispatcher(category) {
     return category;
   }
 
-  handleError(err) {
+  categoryErrorDispatcher(err) {
     return err;
   }
 }

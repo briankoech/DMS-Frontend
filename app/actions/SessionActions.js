@@ -8,20 +8,20 @@ class SessionAction {
       .set('x-access-token', token)
       .end((err, res) => {
         if(err) {
-          this.invalidSession(err);
-        } else if(res.body.error){
-          this.invalidSession(res.body);
+          this.invalidSessionDispatcher(err);
+        } else if(res.body.error) {
+          this.invalidSessionDispatcher(res.body);
         } else {
-          this.sessionSuccess(res.body);
+          this.sessionSuccessDispatcher(res.body);
         }
       });
   }
 
-  sessionSuccess(user) {
+  sessionSuccessDispatcher(user) {
     return user;
   }
 
-  invalidSession(err) {
+  invalidSessionDispatcher(err) {
     return err;
   }
 }

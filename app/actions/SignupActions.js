@@ -9,20 +9,20 @@ class SignupActions {
       .set('Accept', 'application/json')
       .end((err, result) => {
         if(err) {
-          this.signupError(err.response.body.message);
+          this.signupErrorDispatcher(err.response.body.message);
         } else if(result && result.body.error) {
-          this.signupError(result.body);
+          this.signupErrorDispatcher(result.body);
         } else {
-          this.signupSuccess(result.body);
+          this.signupSuccessDispatcher(result.body);
         }
       });
   }
 
-  signupSuccess(user) {
+  signupSuccessDispatcher (user) {
     return user;
   }
 
-  signupError(err) {
+  signupErrorDispatcher (err) {
     return err;
   }
 }

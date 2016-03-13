@@ -8,28 +8,28 @@ import alt from '../../alt';
 describe('Signup Actions tests', () =>  {
   describe('Signup dispatches the data', () => {
     let dispatcherSpy;
-    let signupSuccessSpy;
-    let signupErrorSpy
+    let signupSuccessDispatcherSpy;
+    let signupErrorDispatcherSpy
     beforeEach(() => {
       // here we use sinon to create a spy on the alt.dispatcher.dispatch function
       dispatcherSpy = sinon.spy(alt.dispatcher, 'dispatch');
-      signupSuccessSpy = sinon.spy(SignupActions, 'signupSuccess');
-      signupErrorSpy = sinon.spy(SignupActions, 'signupError');
+      signupSuccessDispatcherSpy = sinon.spy(SignupActions, 'signupSuccessDispatcher');
+      signupErrorDispatcherSpy = sinon.spy(SignupActions, 'signupErrorDispatcher');
     });
 
     afterEach(() => {
       // clean up our sinon spy so we do not affect other tests
       alt.dispatcher.dispatch.restore();
-      SignupActions.signupSuccess.restore();
-      SignupActions.signupError.restore();
+      SignupActions.signupSuccessDispatcher.restore();
+      SignupActions.signupErrorDispatcher.restore();
     });
 
     it('dispatches correct data', () => {
       let user = 'Brian',
-        action = SignupActions.SIGNUP_SUCCESS;
+        action = SignupActions.SIGNUP_SUCCESS_DISPATCHER;
 
       // fire the action
-      SignupActions.signupSuccess(user);
+      SignupActions.signupSuccessDispatcher(user);
       // use our spy to see what payload the dispatcher was called with
       // this lets us ensure that the expected payload was fired
       var dispatcherArgs = dispatcherSpy.args[0];
@@ -48,15 +48,15 @@ describe('Signup Actions tests', () =>  {
       sinon.stub(request.Request.prototype, 'end', function(cb) {
         cb(null, response);
       });
-      sinon.stub(SignupActions, 'signupSuccess').returns(true);
-      sinon.stub(SignupActions, 'signupError').returns(true);
+      sinon.stub(SignupActions, 'signupSuccessDispatcher').returns(true);
+      sinon.stub(SignupActions, 'signupErrorDispatcher').returns(true);
       sinon.spy(SignupActions, 'createUser');
     });
 
     afterEach(() => {
       request.Request.prototype.end.restore();
-      SignupActions.signupSuccess.restore();
-      SignupActions.signupError.restore();
+      SignupActions.signupSuccessDispatcher.restore();
+      SignupActions.signupErrorDispatcher.restore();
       SignupActions.createUser.restore();
     });
 
@@ -64,7 +64,7 @@ describe('Signup Actions tests', () =>  {
       let user = {name: 'abc123'};
       SignupActions.createUser(user);
       expect(SignupActions.createUser.called).toBe(true);
-      expect(SignupActions.signupSuccess.called).toBe(true);
+      expect(SignupActions.signupSuccessDispatcher.called).toBe(true);
     });
   });
 
@@ -79,15 +79,15 @@ describe('Signup Actions tests', () =>  {
       sinon.stub(request.Request.prototype, 'end', function(cb) {
         cb(null, response);
       });
-      sinon.stub(SignupActions, 'signupSuccess').returns(false);
-      sinon.stub(SignupActions, 'signupError').returns(true);
+      sinon.stub(SignupActions, 'signupSuccessDispatcher').returns(false);
+      sinon.stub(SignupActions, 'signupErrorDispatcher').returns(true);
       sinon.spy(SignupActions, 'createUser');
     });
 
     afterEach(() => {
       request.Request.prototype.end.restore();
-      SignupActions.signupError.restore();
-      SignupActions.signupSuccess.restore();
+      SignupActions.signupErrorDispatcher.restore();
+      SignupActions.signupSuccessDispatcher.restore();
       SignupActions.createUser.restore();
     });
 
@@ -95,13 +95,13 @@ describe('Signup Actions tests', () =>  {
       let user = {name: 'abc'};
       SignupActions.createUser(user);
       expect(SignupActions.createUser.called).toBe(true);
-      expect(SignupActions.signupError.called).toBe(true);
+      expect(SignupActions.signupErrorDispatcher.called).toBe(true);
     });
 
-    it('fails to call signupSuccess on invalid data', () => {
+    it('fails to call signupSuccessDispatcher on invalid data', () => {
       SignupActions.createUser();
       expect(SignupActions.createUser.called).toBe(true);
-      expect(SignupActions.signupSuccess.called).toBe(false);
+      expect(SignupActions.signupSuccessDispatcher.called).toBe(false);
     });
 
     it('dispatches an error on request err', () => {
@@ -119,7 +119,7 @@ describe('Signup Actions tests', () =>  {
       });
       SignupActions.createUser(user);
       expect(SignupActions.createUser.called).toBe(true);
-      expect(SignupActions.signupError.called).toBe(true);
+      expect(SignupActions.signupErrorDispatcher.called).toBe(true);
     });
   });
 });

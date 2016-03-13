@@ -8,20 +8,20 @@ class LogoutActions {
       .set('x-access-token', token)
       .end((err, result) => {
         if(err) {
-          this.logoutError(err);
-        } else if(result && result.body.error) {
-          this.logoutError(result.body);
+          this.logoutErrorDispatcher(err);
+        } else if (result && result.body.error) {
+          this.logoutErrorDispatcher(result.body);
         } else {
-          this.logoutSuccess(result.body);
+          this.logoutSuccessDispatcher(result.body);
         }
       });
   }
 
-  logoutSuccess(data) {
+  logoutSuccessDispatcher(data) {
     return data;
   }
 
-  logoutError(err) {
+  logoutErrorDispatcher(err) {
     return err;
   }
 }

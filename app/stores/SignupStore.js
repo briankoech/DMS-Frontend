@@ -10,8 +10,8 @@ class SignupStore {
 
     this.bindListeners({
       handleSignup: SignupAction.createUser,
-      handleSignupSuccess: SignupAction.signupSuccess,
-      handleError: SignupAction.signupError
+      handleSignupSuccess: SignupAction.signupSuccessDispatcher,
+      handleError: SignupAction.signupErrorDispatcher
     });
   }
 

@@ -6,8 +6,8 @@ class LoginStore {
     this.state = {message: '', error: ''};
     this.bindListeners({
       handleLogin: LoginActions.loginUser,
-      loginSuccess: LoginActions.loginSuccess,
-      loginError: LoginActions.loginError
+      loginSuccess: LoginActions.loginSuccessDispatcher,
+      loginError: LoginActions.loginErrorDispatcher
     });
   }
 

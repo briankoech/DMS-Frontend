@@ -10,20 +10,20 @@ class UserProfileActions {
       .set('x-access-token', token)
       .end((err, result) => {
         if(err) {
-          this.updateError(err);
+          this.updateErrorDispatcher(err);
         } else if(result && result.body.error) {
-          this.updateError(result.body);
+          this.updateErrorDispatcher(result.body);
         } else {
-          this.updateSuccess(result.body);
+          this.updateSuccessDispatcher(result.body);
         }
       });
   }
 
-  updateSuccess(user) {
+  updateSuccessDispatcher(user) {
     return user;
   }
 
-  updateError(err) {
+  updateErrorDispatcher(err) {
     return err;
   }
 }

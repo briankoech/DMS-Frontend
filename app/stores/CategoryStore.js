@@ -7,8 +7,8 @@ class CategoryStore {
     this.state = {categories: [], error: ''};
     this.bindListeners({
       fetchCategory: CategoryActions.fetchCategory,
-      updateCategory: CategoryActions.updateCategory,
-      handleError: CategoryActions.handleError
+      updateCategory: CategoryActions.categorySuccessDispatcher,
+      handleError: CategoryActions.categoryErrorDispatcher
     });
   }
 

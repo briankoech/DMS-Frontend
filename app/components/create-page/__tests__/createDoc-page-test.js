@@ -17,7 +17,7 @@ describe('<CreateDoc />', () => {
     it('it has divs and form as parent and children', () => {
       const wrapper = shallow(<CreateDocPage location="/"/>);
       expect(wrapper.find('.editor').length).toBe(1);
-      expect(wrapper.find('div').children().length).toEqual(4);
+      expect(wrapper.find('div').children().length).toEqual(8);
     });
 
   });
@@ -44,7 +44,7 @@ describe('<CreateDoc />', () => {
 
   describe('class functions test', () => {
     it('Test create onSubmit function', () => {
-      sinon.stub(DocumentActions, 'updateDocuments').returns(true);
+      sinon.stub(DocumentActions, 'documentsSuccessDispatcher').returns(true);
       let wrapper = mount(<CreateDocPage location="/create"/>);
       const instance = wrapper.instance();
       sinon.spy(instance, 'onSubmit');
@@ -54,9 +54,9 @@ describe('<CreateDoc />', () => {
       };
       instance.onSubmit(model);
       expect(instance.onSubmit.calledOnce).toBe(true);
-      //expect(DocumentActions.updateDocuments.called).toBe(true);
+      //expect(DocumentActions.documentsSuccessDispatcher.called).toBe(true);
       instance.onSubmit.restore();
-      DocumentActions.updateDocuments.restore();
+      DocumentActions.documentsSuccessDispatcher.restore();
       wrapper.mount();
     });
 

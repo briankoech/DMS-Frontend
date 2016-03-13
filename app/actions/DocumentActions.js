@@ -1,12 +1,11 @@
 import alt from '../alt';
-//import {get, post, remove, put} from './BaseActions.js';
 import request from 'superagent';
 
 class Actions {
   constructor() {
   }
 
-  updateDocuments(documents) {
+  documentsSuccessDispatcher(documents) {
     return documents;
   }
 
@@ -24,9 +23,9 @@ class Actions {
       .set('x-access-token', token)
       .end((err, res) => {
         if(err) {
-          this.documentsFailed({error: err});
+          this.documentsFailedDispatcher({error: err});
         } else {
-          this.updateDocuments(res.body);
+          this.documentsSuccessDispatcher(res.body);
         }
       });
   }
@@ -44,9 +43,9 @@ class Actions {
       .set('x-access-token', token)
       .end((err, res) => {
         if(err) {
-          this.documentsFailed({error: err});
+          this.documentsFailedDispatcher({error: err});
         } else {
-          this.updateDocuments(res.body);
+          this.documentsSuccessDispatcher(res.body);
         }
       });
   }
@@ -84,9 +83,9 @@ class Actions {
       .set('x-access-token', token)
       .end((err, res) => {
         if(err) {
-          this.documentsFailed({error: err});
+          this.documentsFailedDispatcher({error: err});
         } else {
-          this.updateDocuments(res.body);
+          this.documentsSuccessDispatcher(res.body);
         }
       });
   }
@@ -100,11 +99,11 @@ class Actions {
       .set('Accept', 'application/json')
       .end((err, result) => {
         if(err) {
-          this.documentsFailed({error: err})
+          this.documentsFailedDispatcher({error: err})
         } else if(result.body.error) {
-          this.documentsFailed(result.body);
+          this.documentsFailedDispatcher(result.body);
         } else {
-          this.updateDocuments(result.body);
+          this.documentsSuccessDispatcher(result.body);
         }
       });
   }
@@ -117,11 +116,11 @@ class Actions {
       .set('Accept', 'application/json')
       .end((err, result) => {
         if(err) {
-          this.documentsFailed({error: err})
+          this.documentsFailedDispatcher({error: err})
         } else if(result.body.error) {
-          this.documentsFailed(result.body);
+          this.documentsFailedDispatcher(result.body);
         } else {
-          this.updateDocuments(result.body);
+          this.documentsSuccessDispatcher(result.body);
         }
       });
   }
@@ -140,10 +139,9 @@ class Actions {
   deleteResponse(message) {
     return message;
   }
-  documentsFailed(errorMessage) {
+  documentsFailedDispatcher(errorMessage) {
     return errorMessage;
   }
-
 }
 
 export default alt.createActions(Actions);
