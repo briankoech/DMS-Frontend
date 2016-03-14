@@ -6,5 +6,10 @@ var stripLoader = {
   loader: WebpackStrip.loader('console.log')
 }
 delete devConfig.module.preLoaders;
+delete devConfig.plugins;
+delete devConfig.devtool;
+delete devConfig.entry.main[0];
+delete devConfig.entry.main[1];
+devConfig.devtool = 'source-map';
 devConfig.module.loaders.push(stripLoader);
 module.exports = devConfig;

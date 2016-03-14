@@ -63,8 +63,8 @@ class Actions {
       });
   }
 
-  getDocumentSuccess(documents) {
-    return documents;
+  getDocumentSuccess(docs) {
+    return docs;
   }
 
   getDocumentError(err) {
@@ -98,6 +98,7 @@ class Actions {
       .set('x-access-token', token)
       .set('Accept', 'application/json')
       .end((err, result) => {
+        console.log(err, result.body);
         if(err) {
           this.documentsFailedDispatcher({error: err})
         } else if(result.body.error) {

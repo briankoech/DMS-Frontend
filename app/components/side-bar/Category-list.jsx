@@ -6,8 +6,7 @@ import connectToStores from 'alt-utils/lib/connectToStores';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
 
-const FMUI = require('formsy-material-ui');
-const {FormsyText} = FMUI;
+import { FormsyText } from 'formsy-material-ui';
 
 class CategoryList extends React.Component {
   constructor(props) {

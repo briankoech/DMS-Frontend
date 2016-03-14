@@ -17,8 +17,7 @@ import { browserHistory } from 'react-router';
 import SessionActions from '../../actions/SessionActions';
 import SessionStore from '../../stores/SessionStore';
 
-const FMUI = require('formsy-material-ui');
-const {FormsyText, FormsySelect, FormsyRadioGroup, FormsyRadio} = FMUI;
+import { FormsyText, FormsySelect, FormsyRadioGroup, FormsyRadio } from 'formsy-material-ui';
 
 require('../../styles/component.css');
 
@@ -77,11 +76,10 @@ class CreateDoc extends React.Component {
       this.handleTouchTap();
       browserHistory.push(`/document/${state.documents.doc._id}`);
     }
-    if (!state.errorMessage && state.documents.data) {
-      this.setState({title: state.documents.data.title, content: state.documents.data.content, accessLevel: state.documents.data.accessLevel, category: state.documents.data.category.category});
+    if (!state.errorMessage && state.doc.data) {
+      this.setState({title: state.doc.data.title, content: state.doc.data.content, accessLevel: state.doc.data.accessLevel, category: state.doc.data.category.category});
     }
     if (!state.errorMessage && state.documents.title) {
-      console.log('updated');
       this.setState({title: '', content: '', category: ''});
       this.setState({snackbarmsg: 'updated successfully'});
       this.handleTouchTap();
@@ -95,10 +93,6 @@ class CreateDoc extends React.Component {
   };
 
   onSubmit = (model) => {
-    console.log(model);
-    //resetForm();
-    // get token
-    // get the url
     let token = localStorage.getItem('x-access-token');
     let url = this.props.location.pathname;
     if (url === '/create') {

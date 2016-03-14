@@ -9,9 +9,6 @@ import SessionActions from '../../actions/SessionActions';
 import SessionStore from '../../stores/SessionStore';
 
 // grid start
-import GridList from 'material-ui/lib/grid-list/grid-list';
-import GridTile from 'material-ui/lib/grid-list/grid-tile';
-import StarBorder from 'material-ui/lib/svg-icons/toggle/star-border';
 import IconButton from 'material-ui/lib/icon-button';
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
@@ -26,12 +23,6 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around'
-  },
-  gridList: {
-    width: '100%',
-    height: 900,
-    overflowY: 'auto',
-    marginBottom: 24
   }
 };
 // @connectToStores(DocumentStore);

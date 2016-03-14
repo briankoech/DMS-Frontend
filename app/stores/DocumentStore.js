@@ -40,7 +40,7 @@ class DocumentStore {
   }
 
   handleGetDocumentSuccess(doc) {
-    this.setState({doc: doc});
+    this.setState({doc: doc, err: null});
   }
 
   handleGetDocumentError(err) {
