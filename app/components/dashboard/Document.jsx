@@ -57,7 +57,7 @@ export default class Document extends React.Component {
       <Card style={{margin: 15}}>
         <CardMedia
         >
-          <img src="http://lorempixel.com/600/337/technics/" />
+          <img src={`http://lorempixel.com/600/337/technics/${this.props.index}`} />
         </CardMedia>
         <div className="row">
           <div className="col-xs-12
