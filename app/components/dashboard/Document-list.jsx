@@ -115,13 +115,13 @@ class DocumentList extends React.Component {
         </div>
       );
     } else if(this.state.documents) {
-      documentNodes = this.state.documents.map((document) => {
+      documentNodes = this.state.documents.map((document, index) => {
         return (
           <div key={document._id} className="col-xs-12
                 col-sm-6
                 col-md-6
                 col-lg-4">
-            <Document user={this.state.user} handleDelete={this.handleDelete} document={document} ref={'item'} open={this.handleOpen} className="box" />
+            <Document index={index} user={this.state.user} handleDelete={this.handleDelete} document={document} ref={'item'} open={this.handleOpen} className="box" />
           </div>
         );
       });
