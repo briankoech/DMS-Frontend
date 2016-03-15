@@ -146,15 +146,18 @@ div.category h5 {
 div.docAuthor {
 
 }
-.cardTitle {
+.card-title {
   text-align: left;
+  margin-left: 0.5em;
 }
-.cardText {
+.card-text {
+  margin-bottom: -32px;
+  margin-top: -15px;
   text-align: center;
   line-height: 10px;
   font-size: 1em;
 }
-.cardText a {
+.card-text a {
   text-align: center;
 }
 
@@ -196,6 +199,7 @@ div.docAuthor {
   margin-bottom: 30px;
   padding-left: 10px;
   font-size: 1.2em;
+  overflow-y: inherit;;
 }
 
 .info {

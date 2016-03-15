@@ -63,7 +63,7 @@ export default class Document extends React.Component {
           <div className="col-xs-12
                 col-sm-12
                 col-md-12
-                col-lg-12 cardTitle" >
+                col-lg-12 card-title" >
             <Link to={`/document/${this.props.document._id}`}>
               <CardTitle actAsExpander expandable showExpandableButton title={this.props.document.title} />
             </Link>
@@ -72,33 +72,37 @@ export default class Document extends React.Component {
         <Divider />
         <CardActions>
           <CardText>
-            <div className="row cardText">
-              <div className="start-md col-xs-4
-                    col-sm-4
-                    col-md-4
-                    col-lg-4"
+            <div className="row card-text">
+              <div className="start-md col-xs-2
+                    col-sm-2
+                    col-md-2
+                    col-lg-2"
               >
 
                 <Avatar
                   src="http://lorempixel.com/600/337/people/"
                   color={Colors.blue500}
                 />
-              <a className="username" href={'/author?user=' + this.props.document.ownerId._id}>{this.props.document.ownerId.username}</a>
               </div>
-              <div className="col-xs-6
-                col-sm-6
-                col-md-6
-                col-lg-6">
-                <span className="info">
-                  <span className="date">{moment(this.props.document.createdAt).format('MMM Do')} </span> in &nbsp;
+              <div className="start-xs col-xs-8
+                col-sm-8
+                col-md-8
+                col-lg-8">
+                <div className="username">
+                  <a href={'/author?user=' + this.props.document.ownerId._id}>{this.props.document.ownerId.username}  </a><br />
+                  <span className="date">{moment(this.props.document.createdAt).format('MMM Do')}  </span>
+                  in &nbsp;
                   <span className="category">
                   <a href={'/category?category='+ this.props.document.category.category}>
                       {this.props.document.category.category}
                   </a>
                   </span>
+                </div>
+                <span className="info">
+
                 </span>
               </div>
-              <div className="col-xs-1
+              <div className="end-xs col-xs-1
                 col-sm-1
                 col-md-1
                 col-lg-1">
