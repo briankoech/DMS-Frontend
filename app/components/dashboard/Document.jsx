@@ -78,7 +78,6 @@ export default class Document extends React.Component {
                     col-md-2
                     col-lg-2"
               >
-
                 <Avatar
                   src="http://lorempixel.com/600/337/people/"
                   color={Colors.blue500}
