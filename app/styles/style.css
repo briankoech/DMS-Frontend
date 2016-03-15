@@ -15,7 +15,7 @@ a {
 .container {
   margin: 0 auto;
   margin-top: 20px;
-  text-align: center;
+  /*text-align: center;*/
 }
 .box {
   margin-top: 10px;
@@ -73,7 +73,7 @@ a {
 }
 .content {
   margin-top: 20px;
-  text-align: center;
+  /*text-align: center;*/
   justify: center;
   text-justify: inter-word;
   font-weight: lighter;
@@ -97,9 +97,9 @@ a {
   padding: 5px;
   padding-right: 30px;
   width: 70%;
-  margin: 0 auto;
+  /*margin: 0 auto;*/
   margin-top: 20px;
-  text-align: center;
+  /*text-align: center;*/
 }
 .spacer {
   height: 40px;
@@ -123,6 +123,7 @@ a {
 }
 
 .socialButtons {
+  text-align: center;
   margin: 0 auto;
   padding: 10px;
   margin-bottom: 20px;
@@ -207,4 +208,19 @@ div.docAuthor {
 
 a:hover {
   color: #4082EC;
+}
+.create-header {
+  text-align: center;
+}
+.radios {
+  display: inline-block;
+}
+.radio {
+  margin: 1em;
+}
+.date {
+  color: #FF4081;
+}
+.category {
+  color: #2196F3;
 }

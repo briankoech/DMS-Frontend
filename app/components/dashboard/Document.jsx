@@ -90,10 +90,12 @@ export default class Document extends React.Component {
                 col-md-6
                 col-lg-6">
                 <span className="info">
-                  {moment(this.props.document.createdAt).format('MMM Do')} in &nbsp;
+                  <span className="date">{moment(this.props.document.createdAt).format('MMM Do')} </span> in &nbsp;
+                  <span className="category">
                   <a href={'/category?category='+ this.props.document.category.category}>
                       {this.props.document.category.category}
                   </a>
+                  </span>
                 </span>
               </div>
               <div className="col-xs-1
